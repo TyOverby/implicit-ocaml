@@ -1,0 +1,5 @@
+(library
+ (name jitsy)
+ (libraries base core_kernel ctypes)
+ (preprocess
+  (pps ppx_jane)))
