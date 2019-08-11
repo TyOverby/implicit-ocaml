@@ -5,7 +5,9 @@ module Expr : sig
 
   val int_lit : int -> int t
   val bool_lit : bool -> bool t
+  val float_lit : float -> float t
   val add_int : int t -> int t -> int t
+  val add_float : float t -> float t -> float t
   val eq_int : int t -> int t -> bool t
   val cond : bool t -> 'a t -> 'a t -> 'a t
   val typeof : 'a t -> 'a Ctypes.typ

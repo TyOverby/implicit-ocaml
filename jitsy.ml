@@ -2,9 +2,10 @@ open Core_kernel
 open Async
 
 module Id = struct
-  include Core_kernel.Unique_id.Int ()
-
-  let to_string t = "var_" ^ to_string t
+  module M = Core_kernel.Unique_id.Int ()
+  type t = M.t
+  let create = M.create 
+  module Table = M.Table
 end
 
 module Expr = struct
@@ -12,6 +13,8 @@ module Expr = struct
     | Var : 'a Ctypes.typ * Id.t -> 'a t
     | Int_lit : int -> int t
     | Bool_lit : bool -> bool t
+    | Float_lit : float -> float t
+    | Add_float: float t * float t -> float t
     | Add_int : int t * int t -> int t
     | Eq_int : int t * int t -> bool t
     | Cond : 'a Ctypes.typ * bool t * 'a t * 'a t -> 'a t
@@ -19,14 +22,18 @@ module Expr = struct
   let rec typeof (type a) : a t -> a Ctypes.typ = function
     | Var (typ, _) -> typ
     | Int_lit _ -> Ctypes.int
+    | Float_lit _ -> Ctypes.float
     | Bool_lit _ -> Ctypes.bool
     | Add_int _ -> Ctypes.int
+    | Add_float _ -> Ctypes.float
     | Eq_int (_, _) -> Ctypes.bool
     | Cond (c, _, _, _) -> c
 
   and int_lit i = Int_lit i
+  and float_lit i = Float_lit i
   and bool_lit i = Bool_lit i
   and add_int a b = Add_int (a, b)
+  and add_float a b = Add_float (a, b)
   and eq_int a b = Eq_int (a, b)
 
   and cond c t f =
@@ -78,10 +85,10 @@ module Function = struct
 end
 
 module Compile = struct
-  let rec compile_expression : type a. Buffer.t -> a Expr.t -> string =
-   fun buffer expr ->
+  let rec compile_expression : type a. Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string =
+   fun buffer ~idgen expr ->
     let open Expr in
-    let temp = Id.to_string (Id.create ()) in
+    let temp = idgen (Id.create ()) in
     let typ = Type.to_string (Expr.typeof expr) in
     let rprint s =
       bprintf buffer "%s %s = " typ temp;
@@ -90,36 +97,52 @@ module Compile = struct
     (match expr with
     | Int_lit i -> rprint "%d" i
     | Bool_lit b -> rprint "%b" b
+    | Float_lit f -> rprint "%f" f
+    | Add_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s + %s" temp_a temp_b
     | Add_int (a, b) ->
-      let temp_a = compile_expression buffer a in
-      let temp_b = compile_expression buffer b in
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
       rprint "%s + %s" temp_a temp_b
     | Eq_int (a, b) ->
-      let temp_a = compile_expression buffer a in
-      let temp_b = compile_expression buffer b in
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
       rprint "%s == %s" temp_a temp_b
     | Cond (_, c, a, b) ->
-      let temp_c = compile_expression buffer c in
-      let temp_a = compile_expression buffer a in
-      let temp_b = compile_expression buffer b in
+      let temp_c = compile_expression buffer ~idgen c in
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
       rprint "%s ? %s : %s" temp_c temp_a temp_b
-    | Var (_, id) -> rprint "%s" (Id.to_string id));
+    | Var (_, id) -> rprint "%s" (idgen id));
     temp
  ;;
 
-  let compile ~name { Function.expression; typ = _; param_map } =
+  let compile ~name ~idgen { Function.expression; typ = _; param_map } =
     let buffer = Buffer.create 32 in
     bprintf buffer "extern %s %s(" (Type.to_string (Expr.typeof expression)) name;
     param_map
-    |> List.map ~f:(fun (id, typ) -> sprintf "%s %s" typ (Id.to_string id))
+    |> List.map ~f:(fun (id, typ) -> sprintf "%s %s" typ (idgen id))
     |> List.intersperse ~sep:", "
     |> List.iter ~f:(Buffer.add_string buffer);
     bprintf buffer ") {\n";
-    let return_temp = compile_expression buffer expression in
+    let return_temp = compile_expression buffer ~idgen expression in
     bprintf buffer "return %s;\n" return_temp;
     bprintf buffer "}";
     Buffer.contents buffer
   ;;
+
+  let compile f = 
+    let module Id_gen = Unique_id.Int () in 
+    let mapping = Id.Table.create () in 
+    let idgen id = 
+        let new_id = Hashtbl.find_or_add mapping id ~default:(Id_gen.create) in
+        sprintf "var_%s" (Id_gen.to_string new_id)
+    in 
+    let name = idgen (Id.create ()) in 
+    (compile ~name ~idgen f), name
+
 
   let compile_c source = 
    let open Async.Deferred.Or_error.Let_syntax in 
@@ -140,10 +163,9 @@ module Compile = struct
 
  let jit f = 
   let open Async.Deferred.Let_syntax in 
-  let name = Id.create () |> Id.to_string in 
-  let c_source = compile ~name f in
+  let c_source, name = compile f in
   let%bind compiled_filename = compile_c c_source |> Deferred.Or_error.ok_exn  in 
-  let library =  load compiled_filename in 
+  let library = load compiled_filename in 
   return (Foreign.foreign ~from:library name  f.typ)
 end
 
@@ -156,15 +178,16 @@ let f =
 ;;
 
 let%expect_test "" =
-  print_endline (Compile.compile ~name:"my_function" f);
+  let source, _name =  (Compile.compile f) in
+  print_endline source;
   [%expect
     {|
-    extern int my_function(_Bool var_0, int var_1, int var_2) {
-    _Bool var_4 = var_0;
-    int var_5 = var_1;
+    extern int var_0(_Bool var_1, int var_2, int var_3) {
+    _Bool var_5 = var_1;
     int var_6 = var_2;
-    int var_3 = var_4 ? var_5 : var_6;
-    return var_3;
+    int var_7 = var_3;
+    int var_4 = var_5 ? var_6 : var_7;
+    return var_4;
     } |}]
 ;;
 
@@ -196,7 +219,6 @@ let%expect_test "jitsy" = let f =
    ("f 3 5" false)
    ("f 3 3" true) |}]
 ;;
-
 
 let%expect_test "" =
   let open Ctypes in
