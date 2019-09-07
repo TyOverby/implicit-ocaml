@@ -206,7 +206,8 @@ let%expect_test "bool literal" =
     return (Expr.bool_lit true)
   in
   let%bind () = test f (fun f -> [ [%message (f 0 : bool)] ]) in
-  [%expect{|
+  [%expect
+    {|
     ===== source ===
     extern _Bool var_0(int var_1) {
     _Bool var_2 = 1;
@@ -223,7 +224,8 @@ let%expect_test "bool literal" =
     return (Expr.bool_lit false)
   in
   let%bind () = test f (fun f -> [ [%message (f 0 : bool)] ]) in
-  [%expect{|
+  [%expect
+    {|
     ===== source ===
     extern _Bool var_0(int var_1) {
     _Bool var_2 = 0;
@@ -240,12 +242,15 @@ let%expect_test "add int" =
     let%bind y = Ctypes.int in
     return (Expr.add_int x y)
   in
-  let%bind () = test f (fun f -> [ 
-      [%message (f 1 3 : int)] ;
-      [%message (f 3 4 : int)] ;
-      [%message (f (-3) 3 : int)] ;
-      ]) in
-  [%expect{|
+  let%bind () =
+    test f (fun f ->
+        [ [%message (f 1 3 : int)]
+        ; [%message (f 3 4 : int)]
+        ; [%message (f (-3) 3 : int)]
+        ])
+  in
+  [%expect
+    {|
     ===== source ===
     extern int var_0(int var_1, int var_2) {
     int var_4 = var_1;
@@ -266,12 +271,15 @@ let%expect_test "add float" =
     let%bind y = Ctypes.float in
     return (Expr.add_float x y)
   in
-  let%bind () = test f (fun f -> [ 
-      [%message (f 1.0 3.0 : float)] ;
-      [%message (f 3.0 4.0 : float)] ;
-      [%message (f (-3.0) 3.0 : float)] ;
-      ]) in
-  [%expect{|
+  let%bind () =
+    test f (fun f ->
+        [ [%message (f 1.0 3.0 : float)]
+        ; [%message (f 3.0 4.0 : float)]
+        ; [%message (f (-3.0) 3.0 : float)]
+        ])
+  in
+  [%expect
+    {|
     ===== source ===
     extern float var_0(float var_1, float var_2) {
     float var_4 = var_1;
@@ -292,12 +300,15 @@ let%expect_test "eq int" =
     let%bind y = Ctypes.int in
     return (Expr.eq_int x y)
   in
-  let%bind () = test f (fun f -> [ 
-      [%message (f 1 1 : bool)] ;
-      [%message (f 3 4 : bool)] ;
-      [%message (f 0 0 : bool)] ;
-      ]) in
-  [%expect{|
+  let%bind () =
+    test f (fun f ->
+        [ [%message (f 1 1 : bool)]
+        ; [%message (f 3 4 : bool)]
+        ; [%message (f 0 0 : bool)]
+        ])
+  in
+  [%expect
+    {|
     ===== source ===
     extern _Bool var_0(int var_1, int var_2) {
     int var_4 = var_1;

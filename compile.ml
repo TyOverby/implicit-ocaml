@@ -14,8 +14,8 @@ let rec compile_expression
   in
   (match expr with
   | Int_lit i -> rprint "%d" i
-  | Bool_lit true -> rprint "1" 
-  | Bool_lit false -> rprint "0" 
+  | Bool_lit true -> rprint "1"
+  | Bool_lit false -> rprint "0"
   | Float_lit f -> rprint "%f" f
   | Add_float (a, b) ->
     let temp_a = compile_expression buffer ~idgen a in
