@@ -116,4 +116,4 @@ S /home/tyoverby/workspace/ocaml/jitsy/_opam/lib/typerep
 S /home/tyoverby/workspace/ocaml/jitsy/_opam/lib/variantslib
 S .
 FLG -ppx '/home/tyoverby/workspace/ocaml/jitsy/_build/default/.ppx/03c5d02a89234e3c15ee43299325fe40/ppx.exe --as-ppx --cookie '\''library-name="jitsy"'\'''
-FLG -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs
+FLG -open Jitsy__ -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs

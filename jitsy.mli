@@ -32,5 +32,5 @@ module Function : sig
 end
 
 module Compile : sig
-  val jit: ('a, ('b -> 'c)) Function.t -> ('b -> 'c) Deferred.t
+  val jit : ('a, 'b -> 'c) Function.t -> ('b -> 'c) Deferred.t
 end
