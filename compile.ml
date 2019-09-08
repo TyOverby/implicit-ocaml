@@ -6,36 +6,69 @@ let rec compile_expression
   =
  fun buffer ~idgen expr ->
   let open Expr in
-  let temp = idgen (Id.create ()) in
-  let typ = Type.to_string (Expr.typeof expr) in
-  let rprint s =
-    bprintf buffer "%s %s = " typ temp;
-    bprintf buffer (s ^^ ";\n")
-  in
-  (match expr with
-  | Int_lit i -> rprint "%d" i
-  | Bool_lit true -> rprint "1"
-  | Bool_lit false -> rprint "0"
-  | Float_lit f -> rprint "%f" f
-  | Add_float (a, b) ->
-    let temp_a = compile_expression buffer ~idgen a in
-    let temp_b = compile_expression buffer ~idgen b in
-    rprint "%s + %s" temp_a temp_b
-  | Add_int (a, b) ->
-    let temp_a = compile_expression buffer ~idgen a in
-    let temp_b = compile_expression buffer ~idgen b in
-    rprint "%s + %s" temp_a temp_b
-  | Eq_int (a, b) ->
-    let temp_a = compile_expression buffer ~idgen a in
-    let temp_b = compile_expression buffer ~idgen b in
-    rprint "%s == %s" temp_a temp_b
-  | Cond (_, c, a, b) ->
-    let temp_c = compile_expression buffer ~idgen c in
-    let temp_a = compile_expression buffer ~idgen a in
-    let temp_b = compile_expression buffer ~idgen b in
-    rprint "%s ? %s : %s" temp_c temp_a temp_b
-  | Var (_, id) -> rprint "%s" (idgen id));
-  temp
+  match expr with
+  | Var (_, id) -> idgen id
+  | _other ->
+    let temp = idgen (Id.create ()) in
+    let typ = Type.to_string (Expr.typeof expr) in
+    let rprint s =
+      bprintf buffer "%s %s = " typ temp;
+      bprintf buffer (s ^^ ";\n")
+    in
+    (match expr with
+    | Int_lit i -> rprint "%d" i
+    | Float_lit f -> rprint "%f" f
+    | Bool_lit true -> rprint "1"
+    | Bool_lit false -> rprint "0"
+    | Add_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s + %s" temp_a temp_b
+    | Sub_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s - %s" temp_a temp_b
+    | Mul_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s * %s" temp_a temp_b
+    | Div_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s / %s" temp_a temp_b
+    | Add_int (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s + %s" temp_a temp_b
+    | Sub_int (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s - %s" temp_a temp_b
+    | Div_int (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s / %s" temp_a temp_b
+    | Mul_int (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s * %s" temp_a temp_b
+    | Int_to_float a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "(float) %s" temp_a
+    | Float_to_int a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "(int) %s" temp_a
+    | Eq_int (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s == %s" temp_a temp_b
+    | Cond (_, c, a, b) ->
+      let temp_c = compile_expression buffer ~idgen c in
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s ? %s : %s" temp_c temp_a temp_b
+    | Var (_, id) -> rprint "%s" (idgen id));
+    temp
 ;;
 
 let compile ~name ~idgen { Function.expression; typ = _; param_map } =
