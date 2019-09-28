@@ -8,6 +8,17 @@ let rec compile_expression
   let open Expr in
   match expr with
   | Var (_, id) -> idgen id
+  | Array_set (a, b, c) ->
+    let temp_a = compile_expression buffer ~idgen a in
+    let temp_b = compile_expression buffer ~idgen b in
+    let temp_c = compile_expression buffer ~idgen c in
+    bprintf buffer "%s[%s] = %s;\n" temp_a temp_b temp_c;
+    ""
+  | Progn (_t, l, a) ->
+    List.iter l ~f:(fun expr ->
+        let _ = compile_expression buffer ~idgen expr in
+        ());
+    compile_expression buffer ~idgen a
   | _other ->
     let temp = idgen (Id.create ()) in
     let typ = Type.to_string (Expr.typeof expr) in
@@ -62,12 +73,12 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s == %s" temp_a temp_b
+    | Array_set _ | Var _ | Progn _ -> failwith "unreachable"
     | Cond (_, c, a, b) ->
       let temp_c = compile_expression buffer ~idgen c in
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
-      rprint "%s ? %s : %s" temp_c temp_a temp_b
-    | Var (_, id) -> rprint "%s" (idgen id));
+      rprint "%s ? %s : %s" temp_c temp_a temp_b);
     temp
 ;;
 
@@ -105,7 +116,7 @@ let compile_c source =
   let basepath, _ = Core.Filename.split_extension name in
   let out = basepath ^ ".so" in
   let log = basepath ^ ".sh" in
-  let args = [ "-shared"; name; "-lm"; "-o"; out ] in
+  let args = [ "-shared"; name; "-lm"; "-O3"; "-o"; out ] in
   Out_channel.write_all log ~data:(String.concat ("gcc" :: args) ~sep:" ");
   let%bind (_ : string) = Async.Process.run () ~prog:"gcc" ~args in
   return out
@@ -117,6 +128,10 @@ let jit f =
   let open Async.Deferred.Let_syntax in
   let c_source, name = compile f in
   let%bind compiled_filename = compile_c c_source |> Deferred.Or_error.ok_exn in
+  let disas () =
+    Async.Process.run () ~prog:"./dump_asm.sh" ~args:[ compiled_filename ]
+    |> Deferred.Or_error.ok_exn
+  in
   let library = load compiled_filename in
-  return (Foreign.foreign ~from:library name f.typ)
+  return (Foreign.foreign ~from:library name f.typ, disas)
 ;;

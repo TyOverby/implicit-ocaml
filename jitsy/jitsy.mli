@@ -10,7 +10,7 @@ module Expr : sig
   val add_float : float t -> float t -> float t
   val eq_int : int t -> int t -> bool t
   val cond : bool t -> 'a t -> 'a t -> 'a t
-  val typeof : 'a t -> 'a Ctypes.typ
+  val typeof : 'a t -> 'a Type.t
 end
 
 module Type : sig
@@ -32,5 +32,7 @@ module Function : sig
 end
 
 module Compile : sig
-  val jit : ('a, 'b -> 'c) Function.t -> ('b -> 'c) Deferred.t
+  val jit
+    :  ('a, 'b -> 'c) Function.t
+    -> (('b -> 'c) * (unit -> string Deferred.t)) Deferred.t
 end

@@ -1,5 +1,5 @@
 type 'a t =
-  | Var : 'a Ctypes.typ * Id.t -> 'a t
+  | Var : 'a Type.t * Id.t -> 'a t
   | Int_lit : int -> int t
   | Bool_lit : bool -> bool t
   | Float_lit : float -> float t
@@ -14,24 +14,28 @@ type 'a t =
   | Int_to_float : int t -> float t
   | Float_to_int : float t -> int t
   | Eq_int : int t * int t -> bool t
-  | Cond : 'a Ctypes.typ * bool t * 'a t * 'a t -> 'a t
+  | Array_set : 'a Ctypes.ptr t * int t * 'a t -> unit t
+  | Progn : 'a Type.t * unit t list * 'a t -> 'a t
+  | Cond : 'a Type.t * bool t * 'a t * 'a t -> 'a t
 
-let rec typeof (type a) : a t -> a Ctypes.typ = function
+let rec typeof (type a) : a t -> a Type.t = function
   | Var (typ, _) -> typ
-  | Int_lit _ -> Ctypes.int
-  | Float_lit _ -> Ctypes.float
-  | Bool_lit _ -> Ctypes.bool
-  | Add_int _ -> Ctypes.int
-  | Sub_int _ -> Ctypes.int
-  | Div_int _ -> Ctypes.int
-  | Mul_int _ -> Ctypes.int
-  | Add_float _ -> Ctypes.float
-  | Sub_float _ -> Ctypes.float
-  | Mul_float _ -> Ctypes.float
-  | Div_float _ -> Ctypes.float
-  | Eq_int (_, _) -> Ctypes.bool
-  | Int_to_float _ -> Ctypes.float
-  | Float_to_int _ -> Ctypes.int
+  | Int_lit _ -> Type.int
+  | Float_lit _ -> Type.float
+  | Bool_lit _ -> Type.bool
+  | Add_int _ -> Type.int
+  | Sub_int _ -> Type.int
+  | Div_int _ -> Type.int
+  | Mul_int _ -> Type.int
+  | Add_float _ -> Type.float
+  | Sub_float _ -> Type.float
+  | Mul_float _ -> Type.float
+  | Div_float _ -> Type.float
+  | Eq_int (_, _) -> Type.bool
+  | Int_to_float _ -> Type.float
+  | Float_to_int _ -> Type.int
+  | Array_set _ -> Type.unit
+  | Progn (c, _, _) -> c
   | Cond (c, _, _, _) -> c
 
 and int_lit i = Int_lit i
@@ -48,6 +52,11 @@ and div_float a b = Div_float (a, b)
 and eq_int a b = Eq_int (a, b)
 and int_to_float a = Int_to_float a
 and float_to_int a = Float_to_int a
+and array_set a b c = Array_set (a, b, c)
+
+and progn l a =
+  let typ = typeof a in
+  Progn (typ, l, a)
 
 and cond c t f =
   let typ = typeof t in

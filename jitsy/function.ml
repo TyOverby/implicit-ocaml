@@ -13,13 +13,13 @@ let with_parameter { typ; id } ~f =
   let ( @-> ) = Ctypes.( @-> ) in
   let { expression; typ = expr_typ; param_map } = f (Expr.Var (typ, id)) in
   let param_map = (id, Type.to_string typ) :: param_map in
-  { expression; typ = typ @-> expr_typ; param_map }
+  { expression; typ = typ.ctype @-> expr_typ; param_map }
 ;;
 
 module Let_syntax = struct
   let return constant =
     { expression = constant
-    ; typ = Ctypes.returning (Expr.typeof constant)
+    ; typ = Ctypes.returning (Expr.typeof constant).ctype
     ; param_map = []
     }
   ;;
