@@ -75,6 +75,9 @@ let rec compile_expression
     | Square_int32 a ->
       let temp_a = compile_expression buffer ~idgen a in
       rprint "%s * %s" temp_a temp_a
+    | Square_float a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "%s * %s" temp_a temp_a
     | Sqrt_int32 a ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = idgen (Id.create ()) in
@@ -122,6 +125,9 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s / %s" temp_a temp_b
+    | Neg_float a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "-%s " temp_a
     | Neg_int32 a ->
       let temp_a = compile_expression buffer ~idgen a in
       rprint "-%s " temp_a
@@ -141,10 +147,18 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s * %s" temp_a temp_b
+    | Min_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "(%s < %s ? %s : %s)" temp_a temp_b temp_a temp_b
     | Min_int32 (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "(%s < %s ? %s : %s)" temp_a temp_b temp_a temp_b
+    | Max_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "(%s > %s ? %s : %s)" temp_a temp_b temp_a temp_b
     | Max_int32 (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in

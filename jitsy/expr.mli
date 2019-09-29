@@ -5,6 +5,7 @@ val int_lit : int -> int t
 val int32_lit : int32 -> int32 t
 val float_lit : float -> float t
 val bool_lit : bool -> bool t
+val neg_float : float t -> float t
 val neg_int32 : int32 t -> int32 t
 val add_int32 : int32 t -> int32 t -> int32 t
 val sub_int32 : int32 t -> int32 t -> int32 t
@@ -20,9 +21,12 @@ val add_float : float t -> float t -> float t
 val sub_float : float t -> float t -> float t
 val mul_float : float t -> float t -> float t
 val div_float : float t -> float t -> float t
+val min_float : float t -> float t -> float t
+val max_float : float t -> float t -> float t
 val sqrt_float : float t -> float t
 val sqrt_int32 : int32 t -> int32 t
 val square_int32 : int32 t -> int32 t
+val square_float : float t -> float t
 val array_set : 'a Ctypes.ptr t -> int t -> 'a t -> unit t
 
 val range2

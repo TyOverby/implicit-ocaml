@@ -8,14 +8,18 @@ type 'a t =
   | Sub_float : float t * float t -> float t
   | Mul_float : float t * float t -> float t
   | Div_float : float t * float t -> float t
+  | Max_float : float t * float t -> float t
+  | Min_float : float t * float t -> float t
   | Sqrt_float : float t -> float t
   | Sqrt_int32 : int32 t -> int32 t
   | Square_int32 : int32 t -> int32 t
+  | Square_float : float t -> float t
   | Add_int : int t * int t -> int t
   | Sub_int : int t * int t -> int t
   | Mul_int : int t * int t -> int t
   | Div_int : int t * int t -> int t
   | Neg_int32 : int32 t -> int32 t
+  | Neg_float : float t -> float t
   | Add_int32 : int32 t * int32 t -> int32 t
   | Sub_int32 : int32 t * int32 t -> int32 t
   | Mul_int32 : int32 t * int32 t -> int32 t

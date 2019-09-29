@@ -1,10 +1,10 @@
 type t
 
-val create : x:int32 -> y:int32 -> t
+val create : x:int -> y:int -> t
 
 val apply
   :  t
-  -> f:(x:int32 -> y:int32 -> int32 Ctypes.ptr -> int -> 'c)
+  -> f:(x:int -> y:int -> float Ctypes.ptr -> int -> 'c)
   -> 'c
 
 module Debug : sig

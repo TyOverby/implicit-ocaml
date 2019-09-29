@@ -16,6 +16,9 @@ let rec typeof (type a) : a t -> a Type.t = function
   | Mul_int32 _ -> Type.int32
   | Min_int32 _ -> Type.int32
   | Max_int32 _ -> Type.int32
+  | Min_float _ -> Type.float
+  | Max_float _ -> Type.float
+  | Square_float _ -> Type.float
   | Add_float _ -> Type.float
   | Sub_float _ -> Type.float
   | Mul_float _ -> Type.float
@@ -25,6 +28,7 @@ let rec typeof (type a) : a t -> a Type.t = function
   | Sqrt_int32 _ -> Type.int32
   | Eq_int (_, _) -> Type.bool
   | Int_to_float _ -> Type.float
+  | Neg_float _ -> Type.float
   | Neg_int32 _ -> Type.int32
   | Int_to_int32 _ -> Type.int32
   | Int32_to_float _ -> Type.float
@@ -43,6 +47,7 @@ and add_int a b = Add_int (a, b)
 and sub_int a b = Sub_int (a, b)
 and div_int a b = Div_int (a, b)
 and mul_int a b = Mul_int (a, b)
+and neg_float a = Neg_float a
 and neg_int32 a = Neg_int32 a
 and add_int32 a b = Add_int32 (a, b)
 and sub_int32 a b = Sub_int32 (a, b)
@@ -54,9 +59,12 @@ and add_float a b = Add_float (a, b)
 and sub_float a b = Sub_float (a, b)
 and mul_float a b = Mul_float (a, b)
 and div_float a b = Div_float (a, b)
+and min_float a b = Min_float (a, b)
+and max_float a b = Max_float (a, b)
 and sqrt_float a = Sqrt_float a
 and sqrt_int32 a = Sqrt_int32 a
 and square_int32 a = Square_int32 a
+and square_float a = Square_float a
 and eq_int a b = Eq_int (a, b)
 and int_to_float a = Int_to_float a
 and int_to_int32 a = Int_to_int32 a

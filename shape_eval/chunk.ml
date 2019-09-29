@@ -1,11 +1,11 @@
 open! Core_kernel
 
 type t =
-  { x : int32
-  ; y : int32
+  { x : int
+  ; y : int
   ; array :
-      ( int32
-      , Bigarray.int32_elt
+      ( float
+      , Bigarray.float32_elt
       , Bigarray.c_layout )
       Bigarray.Array1.t
   }
@@ -14,15 +14,15 @@ let size = 88 * 88
 
 let create ~x ~y =
   let array =
-    Bigarray.Array1.create Bigarray.int32 Bigarray.c_layout size
+    Bigarray.Array1.create Bigarray.float32 Bigarray.c_layout size
   in
-  Bigarray.Array1.fill array Int32.zero;
+  Bigarray.Array1.fill array 0.0;
   { x; y; array }
 ;;
 
 let apply t ~f =
   let arr = Ctypes.array_of_bigarray Ctypes.array1 t.array in
-  let ptr : int32 Ctypes.ptr = Ctypes.CArray.start arr in
+  let ptr : float Ctypes.ptr = Ctypes.CArray.start arr in
   let length = Ctypes.CArray.length arr in
   f ~x:t.x ~y:t.y ptr length
 ;;
@@ -40,19 +40,18 @@ module Debug = struct
 
   let borders =
     debug ~f:(fun v ->
-        (match Int32.sign v with
+        (match Float.sign_exn v with
         | Sign.Neg -> '_'
         | Sign.Zero -> '-'
         | Sign.Pos -> '#')
         |> Char.to_string)
   ;;
 
-  let values = debug ~f:(fun v -> Int32.to_string_hum v ^ " ")
+  let values = debug ~f:(fun v -> Float.to_string_hum v ^ " ")
 end
 
 let%expect_test "empty chunk" =
-  Debug.borders
-    (create ~x:(Int32.of_int_exn 0) ~y:(Int32.of_int_exn 0));
+  Debug.borders (create ~x:0 ~y:0);
   [%expect
     {|
       --------------------------------------------
