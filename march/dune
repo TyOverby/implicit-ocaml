@@ -1,0 +1,23 @@
+(data_only_dirs libmarch)
+
+(rule
+ (deps (source_tree libmarch/src))
+ (targets libmarch_stubs.a dllmarch_stubs.so)
+ (action (progn
+          (chdir libmarch (run cargo build --release))
+          (copy libmarch/target/release/libmarch.a libmarch_stubs.a)
+          (copy libmarch/target/release/libmarch.so dllmarch_stubs.so))))
+
+(library
+  (name march)
+  (c_library_flags :standard)
+  (modules march)
+  (libraries ctypes ctypes.foreign)
+  (self_build_stubs_archive (march)))
+
+(executable 
+  (name march_exe)
+  (modules march_exe)
+  (libraries march))
+
+

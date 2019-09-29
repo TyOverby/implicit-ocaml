@@ -1,0 +1,11 @@
+[package]
+name = "libmarch"
+version = "0.1.0"
+authors = ["Ty Overby <ty@pre-alpha.com>"]
+edition = "2018"
+
+[lib]
+name = "march"
+crate_type = ["staticlib", "cdylib"]
+
+[dependencies]
