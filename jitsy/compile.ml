@@ -2,7 +2,8 @@ open Core_kernel
 open Async
 
 let rec compile_expression
-    : type a. Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
+    : type a.
+      Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
   =
  fun buffer ~idgen expr ->
   let open Expr_type in
@@ -37,13 +38,18 @@ let rec compile_expression
       xs
       width
       xs;
-    let x, y, pos = Var (Type.int, x), Var (Type.int, y), Var (Type.int, pos) in
+    let x, y, pos =
+      Var (Type.int, x), Var (Type.int, y), Var (Type.int, pos)
+    in
     let _ = compile_expression buffer ~idgen (f ~x ~y ~pos) in
-    bprintf buffer {|
+    bprintf
+      buffer
+      {|
               %s++;
           }
       }
-    |} pos_s;
+    |}
+      pos_s;
     ""
   | Progn (_t, l, a) ->
     List.iter l ~f:(fun expr ->
@@ -75,7 +81,7 @@ let rec compile_expression
       bprintf
         buffer
         {|
-        int32_t %s;
+        int32_t %s = 0;
         {
             int32_t v = %s;
             if (v > 0) {
@@ -116,6 +122,9 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s / %s" temp_a temp_b
+    | Neg_int32 a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "-%s " temp_a
     | Add_int32 (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
@@ -175,7 +184,8 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s == %s" temp_a temp_b
-    | Range2 _ | Array_set _ | Var _ | Progn _ -> failwith "unreachable"
+    | Range2 _ | Array_set _ | Var _ | Progn _ ->
+      failwith "unreachable"
     | Cond (_, c, a, b) ->
       let temp_c = compile_expression buffer ~idgen c in
       let temp_a = compile_expression buffer ~idgen a in
@@ -187,7 +197,11 @@ let rec compile_expression
 let compile ~name ~idgen { Function.expression; typ = _; param_map } =
   let buffer = Buffer.create 32 in
   bprintf buffer "#include \"stdint.h\"\n";
-  bprintf buffer "extern %s %s(" (Type.to_string (Expr.typeof expression)) name;
+  bprintf
+    buffer
+    "extern %s %s("
+    (Type.to_string (Expr.typeof expression))
+    name;
   param_map
   |> List.map ~f:(fun (id, typ) -> sprintf "%s %s" typ (idgen id))
   |> List.intersperse ~sep:", "
@@ -203,7 +217,9 @@ let compile f =
   let module Id_gen = Unique_id.Int () in
   let mapping = Id.Table.create () in
   let idgen id =
-    let new_id = Hashtbl.find_or_add mapping id ~default:Id_gen.create in
+    let new_id =
+      Hashtbl.find_or_add mapping id ~default:Id_gen.create
+    in
     sprintf "var_%s" (Id_gen.to_string new_id)
   in
   let name = idgen (Id.create ()) in
@@ -220,7 +236,9 @@ let compile_c source =
   let out = basepath ^ ".so" in
   let log = basepath ^ ".sh" in
   let args = [ "-shared"; name; "-lm"; "-O3"; "-o"; out ] in
-  Out_channel.write_all log ~data:(String.concat ("gcc" :: args) ~sep:" ");
+  Out_channel.write_all
+    log
+    ~data:(String.concat ("gcc" :: args) ~sep:" ");
   let%bind (_ : string) = Async.Process.run () ~prog:"gcc" ~args in
   return out
 ;;
@@ -230,9 +248,30 @@ let load source = Dl.dlopen ~filename:source ~flags:[ Dl.RTLD_NOW ]
 let jit f =
   let open Async.Deferred.Let_syntax in
   let c_source, name = compile f in
-  let%bind compiled_filename = compile_c c_source |> Deferred.Or_error.ok_exn in
+  let%bind compiled_filename =
+    compile_c c_source |> Deferred.Or_error.ok_exn
+  in
   let disas () =
-    Async.Process.run () ~prog:"./dump_asm.sh" ~args:[ compiled_filename ]
+    let dump =
+      {|
+#!/bin/bash
+
+gdb -batch "$1" -ex 'disassemble var_0' \
+    | head --lines=-1 \
+    | tail --lines=+2 \
+    | cut --fields="2"
+  |}
+    in
+    let name, writer =
+      Core.Filename.open_temp_file "dump_asm" ".sh"
+    in
+    Out_channel.output_string writer dump;
+    Out_channel.flush writer;
+    Out_channel.close writer;
+    Async.Process.run
+      ()
+      ~prog:"bash"
+      ~args:[ name; compiled_filename ]
     |> Deferred.Or_error.ok_exn
   in
   let library = load compiled_filename in

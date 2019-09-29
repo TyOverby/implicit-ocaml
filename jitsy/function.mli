@@ -8,6 +8,9 @@ module Let_syntax : sig
   val return : 'a Expr.t -> ('a, 'a) t
 
   module Let_syntax : sig
-    val bind : 'a Type.t -> f:('a Expr.t -> ('b, 'c) t) -> ('b, 'a -> 'c) t
+    val bind
+      :  'a Type.t
+      -> f:('a Expr.t -> ('b, 'c) t)
+      -> ('b, 'a -> 'c) t
   end
 end

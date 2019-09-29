@@ -5,6 +5,7 @@ val int_lit : int -> int t
 val int32_lit : int32 -> int32 t
 val float_lit : float -> float t
 val bool_lit : bool -> bool t
+val neg_int32 : int32 t -> int32 t
 val add_int32 : int32 t -> int32 t -> int32 t
 val sub_int32 : int32 t -> int32 t -> int32 t
 val mul_int32 : int32 t -> int32 t -> int32 t

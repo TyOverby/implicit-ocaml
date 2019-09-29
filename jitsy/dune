@@ -1,7 +1,6 @@
 (library
  (name jitsy)
  (libraries base core_kernel ctypes ctypes.foreign async)
- (inline_tests
-  (deps dump_asm.sh))
+ (inline_tests)
  (preprocess
   (pps ppx_jane)))

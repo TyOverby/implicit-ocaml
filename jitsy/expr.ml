@@ -25,6 +25,7 @@ let rec typeof (type a) : a t -> a Type.t = function
   | Sqrt_int32 _ -> Type.int32
   | Eq_int (_, _) -> Type.bool
   | Int_to_float _ -> Type.float
+  | Neg_int32 _ -> Type.int32
   | Int_to_int32 _ -> Type.int32
   | Int32_to_float _ -> Type.float
   | Float_to_int _ -> Type.int
@@ -42,6 +43,7 @@ and add_int a b = Add_int (a, b)
 and sub_int a b = Sub_int (a, b)
 and div_int a b = Div_int (a, b)
 and mul_int a b = Mul_int (a, b)
+and neg_int32 a = Neg_int32 a
 and add_int32 a b = Add_int32 (a, b)
 and sub_int32 a b = Sub_int32 (a, b)
 and div_int32 a b = Div_int32 (a, b)

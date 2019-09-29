@@ -424,14 +424,17 @@ let%expect_test "sqrt sqrt int32" =
     let%bind x = Type.int32 in
     return (Expr.sqrt_int32 (Expr.sqrt_int32 x))
   in
-  let%bind () = test f (fun f -> [ [%message (f (Int32.of_int_exn 16) : int32)] ]) in
+  let%bind () =
+    test f (fun f ->
+        [ [%message (f (Int32.of_int_exn 16) : int32)] ])
+  in
   [%expect
     {|
     ===== source =====
     #include "stdint.h"
     extern int32_t var_0(int32_t var_1) {
 
-            int32_t var_4;
+            int32_t var_4 = 0;
             {
                 int32_t v = var_1;
                 if (v > 0) {
@@ -453,7 +456,7 @@ let%expect_test "sqrt sqrt int32" =
             }
           int32_t var_3 = var_4;
 
-            int32_t var_5;
+            int32_t var_5 = 0;
             {
                 int32_t v = var_3;
                 if (v > 0) {
@@ -477,136 +480,139 @@ let%expect_test "sqrt sqrt int32" =
     return var_2;
     }
     ====== asm =======
+    xor    %eax,%eax
     test   %edi,%edi
-    jle    0x69d <var_0+285>
+    jle    0x738 <var_0+440>
     cmp    $0x3fffffff,%edi
-    jle    0x748 <var_0+456>
-    sub    $0x40000000,%edi
-    mov    $0x20000000,%edx
-    lea    0x4000000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x5b3 <var_0+51>
-    sub    %ecx,%edi
-    add    $0x4000000,%edx
-    lea    0x1000000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x5c7 <var_0+71>
-    sub    %ecx,%edi
-    add    $0x1000000,%edx
-    lea    0x400000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x5db <var_0+91>
-    sub    %ecx,%edi
-    add    $0x400000,%edx
-    lea    0x100000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x5ef <var_0+111>
-    sub    %ecx,%edi
-    add    $0x100000,%edx
-    lea    0x40000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x603 <var_0+131>
-    sub    %ecx,%edi
-    add    $0x40000,%edx
-    lea    0x10000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x617 <var_0+151>
-    sub    %ecx,%edi
-    add    $0x10000,%edx
-    lea    0x4000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x62b <var_0+171>
-    sub    %ecx,%edi
-    add    $0x4000,%edx
-    lea    0x1000(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x63f <var_0+191>
-    sub    %ecx,%edi
-    add    $0x1000,%edx
-    lea    0x400(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x653 <var_0+211>
-    sub    %ecx,%edi
-    add    $0x400,%edx
-    lea    0x100(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x667 <var_0+231>
-    sub    %ecx,%edi
-    add    $0x100,%edx
-    lea    0x40(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x675 <var_0+245>
-    sub    %ecx,%edi
-    add    $0x40,%edx
-    lea    0x10(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x683 <var_0+259>
-    sub    %ecx,%edi
-    add    $0x10,%edx
-    lea    0x4(%rdx),%ecx
-    shr    %edx
-    cmp    %ecx,%edi
-    jb     0x691 <var_0+273>
-    sub    %ecx,%edi
-    add    $0x4,%edx
-    mov    %edx,%ecx
-    add    $0x1,%edx
-    shr    %ecx
+    jg     0x740 <var_0+448>
+    cmp    $0xfffffff,%edi
+    jbe    0x753 <var_0+467>
+    sub    $0x10000000,%edi
+    mov    $0x10000000,%eax
+    lea    0x4000000(%rax),%edx
+    shr    %eax
     cmp    %edx,%edi
+    jb     0x5c0 <var_0+64>
+    sub    %edx,%edi
+    add    $0x4000000,%eax
+    lea    0x1000000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x5d3 <var_0+83>
+    sub    %edx,%edi
+    add    $0x1000000,%eax
+    lea    0x400000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x5e6 <var_0+102>
+    sub    %edx,%edi
+    add    $0x400000,%eax
+    lea    0x100000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x5f9 <var_0+121>
+    sub    %edx,%edi
+    add    $0x100000,%eax
+    lea    0x40000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x60c <var_0+140>
+    sub    %edx,%edi
+    add    $0x40000,%eax
+    lea    0x10000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x61f <var_0+159>
+    sub    %edx,%edi
+    add    $0x10000,%eax
+    lea    0x4000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x632 <var_0+178>
+    sub    %edx,%edi
+    add    $0x4000,%eax
+    lea    0x1000(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x645 <var_0+197>
+    sub    %edx,%edi
+    add    $0x1000,%eax
+    lea    0x400(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x658 <var_0+216>
+    sub    %edx,%edi
+    add    $0x400,%eax
+    lea    0x100(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x66b <var_0+235>
+    sub    %edx,%edi
+    add    $0x100,%eax
+    lea    0x40(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x679 <var_0+249>
+    sub    %edx,%edi
+    add    $0x40,%eax
+    lea    0x10(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x687 <var_0+263>
+    sub    %edx,%edi
+    add    $0x10,%eax
+    lea    0x4(%rax),%edx
+    shr    %eax
+    cmp    %edx,%edi
+    jb     0x695 <var_0+277>
+    sub    %edx,%edi
+    add    $0x4,%eax
+    mov    %eax,%ecx
+    add    $0x1,%eax
+    shr    %ecx
+    cmp    %eax,%edi
     sbb    $0xffffffff,%ecx
     test   %ecx,%ecx
-    jne    0x6a8 <var_0+296>
-    repz retq
-    nopl   0x0(%rax,%rax,1)
+    je     0x750 <var_0+464>
     xor    %edx,%edx
     cmp    $0x3fff,%ecx
-    ja     0x728 <var_0+424>
+    jbe    0x6be <var_0+318>
+    sub    $0x4000,%ecx
+    mov    $0x4000,%edx
     lea    0x1000(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x6c6 <var_0+326>
+    jb     0x6d2 <var_0+338>
     sub    %eax,%ecx
     add    $0x1000,%edx
     lea    0x400(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x6da <var_0+346>
+    jb     0x6e6 <var_0+358>
     sub    %eax,%ecx
     add    $0x400,%edx
     lea    0x100(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x6ee <var_0+366>
+    jb     0x6fa <var_0+378>
     sub    %eax,%ecx
     add    $0x100,%edx
     lea    0x40(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x6fc <var_0+380>
+    jb     0x708 <var_0+392>
     sub    %eax,%ecx
     add    $0x40,%edx
     lea    0x10(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x70a <var_0+394>
+    jb     0x716 <var_0+406>
     sub    %eax,%ecx
     add    $0x10,%edx
     lea    0x4(%rdx),%eax
     shr    %edx
     cmp    %eax,%ecx
-    jb     0x718 <var_0+408>
+    jb     0x724 <var_0+420>
     sub    %eax,%ecx
     add    $0x4,%edx
     mov    %edx,%eax
@@ -615,22 +621,16 @@ let%expect_test "sqrt sqrt int32" =
     cmp    %edx,%ecx
     sbb    $0xffffffff,%eax
     retq
-    nopl   (%rax)
-    mov    $0x4000,%edx
-    sub    $0x4000,%ecx
-    lea    0x1000(%rdx),%eax
-    shr    %edx
-    cmp    %eax,%ecx
-    jb     0x6c6 <var_0+326>
-    jmpq   0x6be <var_0+318>
     nopl   0x0(%rax)
-    cmp    $0xfffffff,%edi
-    jbe    0x760 <var_0+480>
-    sub    $0x10000000,%edi
-    mov    $0x10000000,%edx
-    jmpq   0x59f <var_0+31>
-    xor    %edx,%edx
-    jmpq   0x59f <var_0+31>
+    repz retq
+    nopw   0x0(%rax,%rax,1)
+    sub    $0x40000000,%edi
+    mov    $0x20000000,%eax
+    jmpq   0x5ad <var_0+45>
+    xor    %eax,%eax
+    retq
+    xor    %eax,%eax
+    jmpq   0x5ad <var_0+45>
     ====== out =======
     ("f (Int32.of_int_exn 16)" 2) |}]
 ;;
@@ -643,7 +643,8 @@ let%expect_test "sqrt int32" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f (Int32.of_int_exn 4) : int32)]
+        [ [%message (f (Int32.of_int_exn 0) : int32)]
+        ; [%message (f (Int32.of_int_exn 4) : int32)]
         ; [%message (f (Int32.of_int_exn 3) : int32)]
         ; [%message (f (Int32.of_int_exn 153) : int32)]
         ])
@@ -654,7 +655,7 @@ let%expect_test "sqrt int32" =
     #include "stdint.h"
     extern int32_t var_0(int32_t var_1) {
 
-            int32_t var_3;
+            int32_t var_3 = 0;
             {
                 int32_t v = var_1;
                 if (v > 0) {
@@ -778,6 +779,7 @@ let%expect_test "sqrt int32" =
     xor    %edx,%edx
     jmpq   0x5ad <var_0+45>
     ====== out =======
+    ("f (Int32.of_int_exn 0)" 0)
     ("f (Int32.of_int_exn 4)" 2)
     ("f (Int32.of_int_exn 3)" 1)
     ("f (Int32.of_int_exn 153)" 12) |}]
@@ -1209,7 +1211,9 @@ let%expect_test "div int" =
 
 let bigarray_to_list bigarray =
   let len = Bigarray.Array1.dim bigarray in
-  let rec loop i = if i >= len then [] else bigarray.{i} :: loop (i + 1) in
+  let rec loop i =
+    if i >= len then [] else bigarray.{i} :: loop (i + 1)
+  in
   loop 0
 ;;
 
@@ -1221,14 +1225,22 @@ let%expect_test "range2" =
     let open Expr in
     return
       (progn
-         [ range2 ~width:(int_lit 5) ~height:(int_lit 5) ~f:(fun ~x ~y ~pos ->
+         [ range2
+             ~width:(int_lit 5)
+             ~height:(int_lit 5)
+             ~f:(fun ~x ~y ~pos ->
                array_set a pos (Expr.int_to_float (Expr.add_int x y)))
          ]
          y)
   in
   let%bind () =
     test f (fun f ->
-        let bigarray = Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 25 in
+        let bigarray =
+          Bigarray.Array1.create
+            Bigarray.float32
+            Bigarray.C_layout
+            25
+        in
         Bigarray.Array1.fill bigarray 0.0;
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 0 in
         let list = bigarray_to_list bigarray in
@@ -1280,20 +1292,32 @@ let%expect_test "big-array" =
     let%bind y = Type.int in
     return
       (Expr.progn
-         [ Expr.array_set a y (Expr.div_float (Expr.int_to_float y) (Expr.float_lit 2.0))
+         [ Expr.array_set
+             a
+             y
+             (Expr.div_float
+                (Expr.int_to_float y)
+                (Expr.float_lit 2.0))
          ]
          y)
   in
   let%bind () =
     test f (fun f ->
-        let bigarray = Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 10 in
+        let bigarray =
+          Bigarray.Array1.create
+            Bigarray.float32
+            Bigarray.C_layout
+            10
+        in
         Bigarray.Array1.fill bigarray 0.0;
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 1 in
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 2 in
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 3 in
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 4 in
         let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 5 in
-        let list = bigarray_to_list bigarray |> Fn.flip List.take 6 in
+        let list =
+          bigarray_to_list bigarray |> Fn.flip List.take 6
+        in
         [ [%message (list : float list)] ])
   in
   [%expect

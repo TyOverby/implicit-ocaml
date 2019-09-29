@@ -11,7 +11,9 @@ type 'a param =
 
 let with_parameter { typ; id } ~f =
   let ( @-> ) = Ctypes.( @-> ) in
-  let { expression; typ = expr_typ; param_map } = f (Expr_type.Var (typ, id)) in
+  let { expression; typ = expr_typ; param_map } =
+    f (Expr_type.Var (typ, id))
+  in
   let param_map = (id, Type.to_string typ) :: param_map in
   { expression; typ = typ.ctype @-> expr_typ; param_map }
 ;;

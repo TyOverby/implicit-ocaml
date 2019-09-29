@@ -1,39 +1,58 @@
 open! Core_kernel
 
-type t = (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t
+type t =
+  { x : int32
+  ; y : int32
+  ; array :
+      ( int32
+      , Bigarray.int32_elt
+      , Bigarray.c_layout )
+      Bigarray.Array1.t
+  }
 
 let size = 88 * 88
 
-let create () =
-  let array = Bigarray.Array1.create Bigarray.int32 Bigarray.c_layout size in
+let create ~x ~y =
+  let array =
+    Bigarray.Array1.create Bigarray.int32 Bigarray.c_layout size
+  in
   Bigarray.Array1.fill array Int32.zero;
-  array
+  { x; y; array }
 ;;
 
 let apply t ~f =
-  let arr = Ctypes.array_of_bigarray Ctypes.array1 t in
+  let arr = Ctypes.array_of_bigarray Ctypes.array1 t.array in
   let ptr : int32 Ctypes.ptr = Ctypes.CArray.start arr in
   let length = Ctypes.CArray.length arr in
-  f ptr length
+  f ~x:t.x ~y:t.y ptr length
 ;;
 
-let debug t =
-  List.iter (List.range ~stride:2 0 88) ~f:(fun y ->
-      List.iter (List.range ~stride:2 0 88) ~f:(fun x ->
-          let idx = (y * 88) + x in
-          let v = t.{idx} in
-          let c =
-            match Int32.sign v with
-            | Sign.Neg -> '_'
-            | Sign.Zero -> '-'
-            | Sign.Pos -> '#'
-          in
-          Out_channel.(output_char stdout c));
-      print_endline "")
-;;
+module Debug = struct
+  let debug t ~f =
+    List.iter (List.range ~stride:2 0 88) ~f:(fun y ->
+        List.iter (List.range ~stride:2 0 88) ~f:(fun x ->
+            let idx = (y * 88) + x in
+            let v = t.array.{idx} in
+            let s = f v in
+            Out_channel.(output_string stdout s));
+        print_endline "")
+  ;;
+
+  let borders =
+    debug ~f:(fun v ->
+        (match Int32.sign v with
+        | Sign.Neg -> '_'
+        | Sign.Zero -> '-'
+        | Sign.Pos -> '#')
+        |> Char.to_string)
+  ;;
+
+  let values = debug ~f:(fun v -> Int32.to_string_hum v ^ " ")
+end
 
 let%expect_test "empty chunk" =
-  debug (create ());
+  Debug.borders
+    (create ~x:(Int32.of_int_exn 0) ~y:(Int32.of_int_exn 0));
   [%expect
     {|
       --------------------------------------------

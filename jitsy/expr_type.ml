@@ -15,6 +15,7 @@ type 'a t =
   | Sub_int : int t * int t -> int t
   | Mul_int : int t * int t -> int t
   | Div_int : int t * int t -> int t
+  | Neg_int32 : int32 t -> int32 t
   | Add_int32 : int32 t * int32 t -> int32 t
   | Sub_int32 : int32 t * int32 t -> int32 t
   | Mul_int32 : int32 t * int32 t -> int32 t
