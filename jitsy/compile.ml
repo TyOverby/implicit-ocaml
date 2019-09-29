@@ -5,7 +5,7 @@ let rec compile_expression
     : type a. Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
   =
  fun buffer ~idgen expr ->
-  let open Expr in
+  let open Expr_type in
   match expr with
   | Var (_, id) -> idgen id
   | Array_set (a, b, c) ->
@@ -13,6 +13,37 @@ let rec compile_expression
     let temp_b = compile_expression buffer ~idgen b in
     let temp_c = compile_expression buffer ~idgen c in
     bprintf buffer "%s[%s] = %s;\n" temp_a temp_b temp_c;
+    ""
+  | Range2 { width; height; f } ->
+    let x, y = Id.create (), Id.create () in
+    let xs, ys = idgen x, idgen y in
+    let pos = Id.create () in
+    let pos_s = idgen pos in
+    let width = compile_expression buffer ~idgen width in
+    let height = compile_expression buffer ~idgen height in
+    bprintf
+      buffer
+      {|
+      int %s = 0;
+      for (int %s = 0; %s < %s; %s++) {
+          for (int %s = 0; %s < %s; %s++) {
+    |}
+      pos_s
+      ys
+      ys
+      height
+      ys
+      xs
+      xs
+      width
+      xs;
+    let x, y, pos = Var (Type.int, x), Var (Type.int, y), Var (Type.int, pos) in
+    let _ = compile_expression buffer ~idgen (f ~x ~y ~pos) in
+    bprintf buffer {|
+              %s++;
+          }
+      }
+    |} pos_s;
     ""
   | Progn (_t, l, a) ->
     List.iter l ~f:(fun expr ->
@@ -28,9 +59,47 @@ let rec compile_expression
     in
     (match expr with
     | Int_lit i -> rprint "%d" i
+    | Int32_lit i -> rprint "%s" (Int32.to_string i)
     | Float_lit f -> rprint "%f" f
     | Bool_lit true -> rprint "1"
     | Bool_lit false -> rprint "0"
+    | Sqrt_float a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "sqrt(%s)" temp_a
+    | Square_int32 a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "%s * %s" temp_a temp_a
+    | Sqrt_int32 a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = idgen (Id.create ()) in
+      bprintf
+        buffer
+        {|
+        int32_t %s;
+        {
+            int32_t v = %s;
+            if (v > 0) {
+               uint32_t t, q, b, r;
+               r = v;
+               b = 0x40000000;
+               q = 0;
+               while (b > 0) {
+                   t = q + b;
+                   q >>= 1;
+                   if (r >= t) {
+                       r -= t;
+                       q += b;
+                   }
+                   b >>= 2;
+               }
+               %s = q;
+            }
+        }
+      |}
+        temp_b
+        temp_a
+        temp_b;
+      rprint "%s" temp_b
     | Add_float (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
@@ -47,6 +116,30 @@ let rec compile_expression
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s / %s" temp_a temp_b
+    | Add_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s + %s" temp_a temp_b
+    | Sub_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s - %s" temp_a temp_b
+    | Div_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s / %s" temp_a temp_b
+    | Mul_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "%s * %s" temp_a temp_b
+    | Min_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "(%s < %s ? %s : %s)" temp_a temp_b temp_a temp_b
+    | Max_int32 (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "(%s > %s ? %s : %s)" temp_a temp_b temp_a temp_b
     | Add_int (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
@@ -66,14 +159,23 @@ let rec compile_expression
     | Int_to_float a ->
       let temp_a = compile_expression buffer ~idgen a in
       rprint "(float) %s" temp_a
+    | Int_to_int32 a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "(int32_t) %s" temp_a
+    | Int32_to_float a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "(float) %s" temp_a
     | Float_to_int a ->
       let temp_a = compile_expression buffer ~idgen a in
       rprint "(int) %s" temp_a
+    | Float_to_int32 a ->
+      let temp_a = compile_expression buffer ~idgen a in
+      rprint "(int32_t) %s" temp_a
     | Eq_int (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in
       rprint "%s == %s" temp_a temp_b
-    | Array_set _ | Var _ | Progn _ -> failwith "unreachable"
+    | Range2 _ | Array_set _ | Var _ | Progn _ -> failwith "unreachable"
     | Cond (_, c, a, b) ->
       let temp_c = compile_expression buffer ~idgen c in
       let temp_a = compile_expression buffer ~idgen a in
@@ -84,6 +186,7 @@ let rec compile_expression
 
 let compile ~name ~idgen { Function.expression; typ = _; param_map } =
   let buffer = Buffer.create 32 in
+  bprintf buffer "#include \"stdint.h\"\n";
   bprintf buffer "extern %s %s(" (Type.to_string (Expr.typeof expression)) name;
   param_map
   |> List.map ~f:(fun (id, typ) -> sprintf "%s %s" typ (idgen id))
