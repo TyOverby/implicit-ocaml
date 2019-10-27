@@ -1,6 +1,6 @@
 (library
  (name shape_eval)
- (libraries core_kernel ctypes ctypes.foreign jitsy)
+ (libraries core_kernel ctypes ctypes.foreign jitsy shared_types)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

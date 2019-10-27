@@ -1,0 +1,6 @@
+(library
+ (name shared_types)
+ (libraries core_kernel ctypes ctypes.foreign)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane)))

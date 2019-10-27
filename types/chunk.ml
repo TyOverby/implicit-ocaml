@@ -3,27 +3,20 @@ open! Core_kernel
 type t =
   { x : int
   ; y : int
-  ; array :
-      ( float
-      , Bigarray.float32_elt
-      , Bigarray.c_layout )
-      Bigarray.Array1.t
+  ; array : Float_bigarray.t
   }
+[@@deriving sexp]
 
 let size = 88 * 88
 
 let create ~x ~y =
-  let array =
-    Bigarray.Array1.create Bigarray.float32 Bigarray.c_layout size
-  in
-  Bigarray.Array1.fill array 0.0;
+  let array = Float_bigarray.create size in
   { x; y; array }
 ;;
 
 let apply t ~f =
-  let arr = Ctypes.array_of_bigarray Ctypes.array1 t.array in
-  let ptr : float Ctypes.ptr = Ctypes.CArray.start arr in
-  let length = Ctypes.CArray.length arr in
+  let ptr = Float_bigarray.address_of t.array in
+  let length = Float_bigarray.length t.array in
   f ~x:t.x ~y:t.y ptr length
 ;;
 
@@ -32,7 +25,7 @@ module Debug = struct
     List.iter (List.range ~stride:2 0 88) ~f:(fun y ->
         List.iter (List.range ~stride:2 0 88) ~f:(fun x ->
             let idx = (y * 88) + x in
-            let v = t.array.{idx} in
+            let v = Float_bigarray.get t.array idx in
             let s = f v in
             Out_channel.(output_string stdout s));
         print_endline "")

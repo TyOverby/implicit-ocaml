@@ -1,4 +1,5 @@
 open! Async
+open Shared_types
 
 type debug =
   { c_source : unit -> string
