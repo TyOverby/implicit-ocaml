@@ -1,4 +1,4 @@
-type t
+type t [@@deriving sexp]
 
 val circle : x:float -> y:float -> r:float -> t
 val intersection : t list -> t

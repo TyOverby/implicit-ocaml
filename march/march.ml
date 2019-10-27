@@ -1,4 +1,4 @@
-open Ctypes 
+open Ctypes
 open Shared_types
 
 (* Marching Squares
@@ -22,16 +22,15 @@ let marching_squares =
     @-> returning void
   in
   let fn = Foreign.foreign "run_marching_squares" typ in
-  fun ~input_block ~width ~height ->
-    let intpos = (Ctypes.allocate int) 0 in 
-    let out_size = 88 * 88 * 2 in 
+  fun ~chunk ~width ~height ->
+    let intpos = (Ctypes.allocate int) 0 in
+    let out_size = 88 * 88 * 2 in
     let out = Float_bigarray.create out_size in
     fn
-      (Float_bigarray.address_of input_block)
-      width
-      height
+      (chunk |> Chunk.to_underlying |> Float_bigarray.address_of)
+      (Unsigned.UInt.of_int width)
+      (Unsigned.UInt.of_int height)
       intpos
       (Float_bigarray.address_of out);
-    print_int !@intpos;
-    out, !@intpos
+    Float_bigarray.sub out 0 (!@intpos * 4)
 ;;

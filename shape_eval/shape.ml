@@ -9,6 +9,7 @@ type t =
   | Union of t list
   | Intersection of t list
   | Invert of t
+[@@deriving sexp]
 
 let circle ~x ~y ~r = Circle { x; y; r }
 let union l = Union l

@@ -1,14 +1,14 @@
 open! Core_kernel
 
-type t = { buffer : Float_bigarray.t }
+type t = Float_bigarray.t
+
+let rec windows_4 = function
+  | a :: b :: c :: d :: rest -> (a, b, c, d) :: windows_4 rest
+  | _ -> []
+;;
 
 let sexp_of_t t =
-  let rec windows_4 = function
-    | a :: b :: c :: d :: rest -> (a, b, c, d) :: windows_4 rest
-    | _ -> []
-  in
   t
-  |> (fun { buffer } -> buffer)
   |> Float_bigarray.to_array
   |> Array.to_list
   |> windows_4
@@ -24,5 +24,14 @@ let t_of_sexp s =
   |> co_windows_4
   |> Array.of_list
   |> Float_bigarray.of_array
-  |> fun buffer -> { buffer }
+;;
+
+let create ~line_capacity = Float_bigarray.create (line_capacity * 4)
+
+let iter t ~f =
+  t
+  |> Float_bigarray.to_array
+  |> Array.to_list
+  |> windows_4
+  |> List.iter ~f:(fun (x1, y1, x2, y2) -> f ~x1 ~y1 ~x2 ~y2)
 ;;

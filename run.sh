@@ -5,4 +5,8 @@ dune build \
  @@shape_eval/runtest \
  @@pipeline/runtest \
  @@types/runtest \
+ @@examples/default \
+ @@examples/runtest \
+ utilities/shape_to_linebuf/shape_to_linebuf.exe \
+ utilities/linebuf_to_svg/linebuf_to_svg.exe \
  -w

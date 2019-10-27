@@ -8,7 +8,10 @@ let eval_chunk shape =
   return chunk
 ;;
 
-let _eval_lines shape =
+let eval_lines shape =
   let%bind chunk = eval_chunk shape in
-  return chunk
+  let line_buffer =
+    March.marching_squares ~chunk ~width:88 ~height:88
+  in
+  return line_buffer
 ;;

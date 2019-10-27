@@ -33,3 +33,4 @@ let create size =
 ;;
 
 let get t i = t.{i}
+let sub t start end_ = Bigarray.Array1.sub t start end_

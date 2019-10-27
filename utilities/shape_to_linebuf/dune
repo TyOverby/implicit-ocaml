@@ -1,0 +1,5 @@
+(executable
+ (name shape_to_linebuf)
+ (libraries core pipeline)
+ (preprocess
+  (pps ppx_jane)))

@@ -7,6 +7,8 @@ val apply
   -> f:(x:int -> y:int -> float Ctypes.ptr -> int -> 'c)
   -> 'c
 
+val to_underlying : t -> Float_bigarray.t
+
 module Debug : sig
   val borders : t -> unit
   val values : t -> unit

@@ -14,6 +14,8 @@ let create ~x ~y =
   { x; y; array }
 ;;
 
+let to_underlying t = t.array
+
 let apply t ~f =
   let ptr = Float_bigarray.address_of t.array in
   let length = Float_bigarray.length t.array in

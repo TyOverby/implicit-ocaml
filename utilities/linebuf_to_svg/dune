@@ -1,0 +1,5 @@
+(executable
+ (name linebuf_to_svg)
+ (libraries core pipeline)
+ (preprocess
+  (pps ppx_jane)))

@@ -8,3 +8,4 @@ val create : int -> t
 val get : t -> int -> float
 val to_array : t -> float array
 val of_array : float array -> t
+val sub : t -> int -> int -> t
