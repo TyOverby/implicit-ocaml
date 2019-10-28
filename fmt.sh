@@ -6,6 +6,8 @@ dune build \
  @@march/fmt \
  @@types/fmt \
  @@pipeline/fmt \
+ @@examples/fmt \
  @@utilities/shape_to_linebuf/fmt \
  @@utilities/linebuf_to_svg/fmt \
+ @@utilities/linebuf_validate/fmt \
  --auto-promote

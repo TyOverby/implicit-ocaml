@@ -1,28 +1,48 @@
-(rule 
- (deps circle.shape.sexp )
+(executable
+ (name gen_dune)
+ (libraries core shared_types)
+ (preprocess
+  (pps ppx_jane)))
+
+(rule
+ (deps circle.shape.sexp)
  (targets actual_circle.svg)
- (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+ (action
+  (bash
+    "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
 
- (rule 
-  (deps intersection.shape.sexp )
-  (targets actual_intersection.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+(rule
+ (deps intersection.shape.sexp)
+ (targets actual_intersection.svg)
+ (action
+  (bash
+    "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
 
- (rule 
-  (deps union.shape.sexp )
-  (targets actual_union.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+(rule
+ (deps union.shape.sexp)
+ (targets actual_union.svg)
+ (action
+  (bash
+    "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
 
- (alias 
-  (name default) 
-  (deps 
-   actual_circle.svg
-   actual_union.svg
-   actual_intersection.svg))
+(alias
+ (name default)
+ (deps actual_circle.svg actual_union.svg actual_intersection.svg))
 
- (alias 
-  (name runtest)
-  (action (progn 
-           (diff circle.svg actual_circle.svg)
-           (diff union.svg actual_union.svg)
-           (diff intersection.svg actual_intersection.svg))))
+(alias
+ (name runtest)
+ (action
+  (progn
+   (diff circle.svg actual_circle.svg)
+   (diff union.svg actual_union.svg)
+   (diff intersection.svg actual_intersection.svg))))
+
+(rule
+ (with-stdout-to
+  dune.inc.gen
+  (run ./gen_dune.exe)))
+
+(alias
+ (name runtest)
+ (action
+  (diff dune.inc dune.inc.gen)))

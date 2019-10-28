@@ -64,8 +64,18 @@ float2 w(float distance, float2 point, float how_much)
     return result;
 }
 
-void write_line(float2 o1, float2 o2, float *out, unsigned int out_pos)
+void write_line(float2 o1, float2 o2, float *out, int* atomic)
 {
+    if (o1.x == o2.x && o1.y == o2.y) {
+        return;
+    }
+
+    if (isnan(o1.x)) {
+        return;
+    }
+
+    int p = (*atomic)++;
+    int out_pos = p * 4;
     out[out_pos + 0] = o1.x;
     out[out_pos + 1] = o1.y;
     out[out_pos + 2] = o2.x;
@@ -235,18 +245,8 @@ void march(
         break;
     }
 
-    if (!isnan(o1.x))
-    {
-        int p = *atomic;
-        *atomic += 1;
-        write_line(o1, o2, out, p * 4);
-    }
-    if (!isnan(o4.x))
-    {
-        int p = *atomic;
-        *atomic += 1;
-        write_line(o3, o4, out, p * 4);
-    }
+    write_line(o1, o2, out, atomic);
+    write_line(o3, o4, out, atomic);
 }
 
 void apply(

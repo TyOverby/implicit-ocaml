@@ -3,8 +3,13 @@ open! Core_kernel
 type t = Float_bigarray.t
 
 let rec windows_4 = function
-  | a :: b :: c :: d :: rest -> (a, b, c, d) :: windows_4 rest
+  | x1 :: y1 :: x2 :: y2 :: rest ->
+    { Line.x1; y1; x2; y2 } :: windows_4 rest
   | _ -> []
+;;
+
+let to_list t =
+  t |> Float_bigarray.to_array |> Array.to_list |> windows_4
 ;;
 
 let sexp_of_t t =
@@ -12,15 +17,15 @@ let sexp_of_t t =
   |> Float_bigarray.to_array
   |> Array.to_list
   |> windows_4
-  |> [%sexp_of: (float * float * float * float) list]
+  |> [%sexp_of: Line.t list]
 ;;
 
 let t_of_sexp s =
   let co_windows_4 =
-    List.bind ~f:(fun (a, b, c, d) -> [ a; b; c; d ])
+    List.bind ~f:(fun { Line.x1; y1; x2; y2 } -> [ x1; y1; x2; y2 ])
   in
   s
-  |> [%of_sexp: (float * float * float * float) list]
+  |> [%of_sexp: Line.t list]
   |> co_windows_4
   |> Array.of_list
   |> Float_bigarray.of_array
@@ -28,10 +33,12 @@ let t_of_sexp s =
 
 let create ~line_capacity = Float_bigarray.create (line_capacity * 4)
 
-let iter t ~f =
+let iteri t =
   t
   |> Float_bigarray.to_array
   |> Array.to_list
   |> windows_4
-  |> List.iter ~f:(fun (x1, y1, x2, y2) -> f ~x1 ~y1 ~x2 ~y2)
+  |> List.iteri
 ;;
+
+let iter t ~f = iteri t ~f:(fun _ -> f)
