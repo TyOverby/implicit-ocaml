@@ -2,13 +2,6 @@ open! Core_kernel
 open! Shared_types
 module Id = Int
 
-module Connected = struct
-  type t =
-    | Joined of Point.t list
-    | Disjoint of Point.t list
-  [@@deriving sexp]
-end
-
 module Bi_map = struct
   type t =
     { dict : Line.t Id.Table.t

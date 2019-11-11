@@ -35,6 +35,17 @@ let parts_svg_rule name =
     name
 ;;
 
+let connected_svg_rule name =
+  sprintf
+    {|(rule
+  (deps %s.connected.sexp)
+  (targets %s_actual.connected.svg)
+  (action (bash "cat %%{deps} | %%{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %%{targets}")))
+|}
+    name
+    name
+;;
+
 let validate_test name =
   sprintf
     {|(alias
@@ -54,7 +65,16 @@ let diff_against_actual_connected name =
     name
 ;;
 
-let diff_against_actual_svg name =
+let diff_against_actual_connected_svg name =
+  sprintf
+    {|(alias
+ (name runtest)
+ (action (diff %s.connected.svg %s_actual.connected.svg)))|}
+    name
+    name
+;;
+
+let diff_against_actual_parts_svg name =
   sprintf
     {|(alias
  (name runtest)
@@ -69,10 +89,12 @@ tests
        [ sprintf "; %s" name
        ; linebuf_rule name
        ; parts_svg_rule name
+       ; connected_svg_rule name
        ; connected_rule name
        ; validate_test name
        ; diff_against_actual_connected name
-       ; diff_against_actual_svg name
+       ; diff_against_actual_parts_svg name
+       ; diff_against_actual_connected_svg name
        ])
 |> List.map ~f:String.strip
 |> List.bind ~f:(fun s ->

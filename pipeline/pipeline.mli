@@ -7,4 +7,4 @@ val eval_lines : Shape_eval.Shape.t -> Line_buffer.t Deferred.t
 
 val eval_connect
   :  Shape_eval.Shape.t
-  -> Line_join.Connected.t sexp_list Deferred.t
+  -> Connected.t sexp_list Deferred.t

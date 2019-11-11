@@ -10,7 +10,7 @@ let main () =
     |> Line_buffer.t_of_sexp
   in
   Line_join.f linebuf
-  |> [%sexp_of: Line_join.Connected.t list]
+  |> [%sexp_of: Connected.t list]
   |> print_s;
   Deferred.unit
 ;;

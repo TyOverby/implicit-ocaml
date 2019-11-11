@@ -10,6 +10,7 @@ dune build \
  @@examples/fmt \
  @@utilities/shape_to_linebuf/fmt \
  @@utilities/linebuf_to_svg/fmt \
+ @@utilities/connected_to_svg/fmt \
  @@utilities/linebuf_to_connected/fmt \
  @@utilities/linebuf_validate/fmt \
  --auto-promote
