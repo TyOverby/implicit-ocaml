@@ -9,9 +9,7 @@ let main () =
     |> Sexp.of_string
     |> Line_buffer.t_of_sexp
   in
-  Line_join.f linebuf
-  |> [%sexp_of: Connected.t list]
-  |> print_s;
+  Line_join.f linebuf |> [%sexp_of: Connected.t list] |> print_s;
   Deferred.unit
 ;;
 

@@ -3,7 +3,7 @@ open! Async
 open Shared_types
 
 let eval_chunk shape =
-  let chunk = Chunk.create ~x:0 ~y:0 in
+  let chunk = Chunk.create ~width:88 ~height:88 ~x:0 ~y:0 in
   let%bind _ = Shape_eval.Eval.eval shape chunk in
   return chunk
 ;;

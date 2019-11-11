@@ -17,16 +17,26 @@ let eval shape chunk =
     let%bind array = Type.float_array in
     let%bind a = Type.int in
     let open Expr in
-    let i88 = int_lit 88 in
+    let iwidth = int_lit (Chunk.width chunk) in
+    let iheight = int_lit (Chunk.height chunk) in
     return
       (Expr.progn
-         [ Expr.range2 ~width:i88 ~height:i88 ~f:(fun ~x ~y ~pos ->
+         [ Expr.range2
+             ~width:iwidth
+             ~height:iheight
+             ~f:(fun ~x ~y ~pos ->
                let x, y = int_to_float x, int_to_float y in
                let x =
-                 add_float x (int_to_float (mul_int x_offset i88))
+                 x_offset
+                 |> mul_int iwidth
+                 |> int_to_float
+                 |> add_float x
                in
                let y =
-                 add_float y (int_to_float (mul_int y_offset i88))
+                 y_offset
+                 |> mul_int iheight
+                 |> int_to_float
+                 |> add_float y
                in
                array_set array pos (compiled ~x ~y))
          ]
@@ -48,7 +58,7 @@ let eval shape chunk =
 
 let test ?(print_source = false) ?(pos = 0, 0) shape =
   let x, y = pos in
-  let chunk = Chunk.create ~x ~y in
+  let chunk = Chunk.create ~width:88 ~height:88 ~x ~y in
   let%bind debug = eval shape chunk in
   let debug_c = debug.c_source () in
   let%bind _debug_asm = debug.asm_source () in
@@ -355,7 +365,7 @@ let%expect_test "subtraction circle (different position)" =
           float var_16 = 0.000000;
       float var_18 = (float) var_6;
       int var_21 = 88;
-      int var_20 = var_1 * var_21;
+      int var_20 = var_21 * var_1;
       float var_19 = (float) var_20;
       float var_17 = var_18 + var_19;
       float var_15 = var_16 - var_17;
@@ -363,7 +373,7 @@ let%expect_test "subtraction circle (different position)" =
       float var_24 = 0.000000;
       float var_26 = (float) var_5;
       int var_29 = 88;
-      int var_28 = var_2 * var_29;
+      int var_28 = var_29 * var_2;
       float var_27 = (float) var_28;
       float var_25 = var_26 + var_27;
       float var_23 = var_24 - var_25;
@@ -375,7 +385,7 @@ let%expect_test "subtraction circle (different position)" =
       float var_37 = 0.000000;
       float var_39 = (float) var_6;
       int var_42 = 88;
-      int var_41 = var_1 * var_42;
+      int var_41 = var_42 * var_1;
       float var_40 = (float) var_41;
       float var_38 = var_39 + var_40;
       float var_36 = var_37 - var_38;
@@ -383,7 +393,7 @@ let%expect_test "subtraction circle (different position)" =
       float var_45 = 0.000000;
       float var_47 = (float) var_5;
       int var_50 = 88;
-      int var_49 = var_2 * var_50;
+      int var_49 = var_50 * var_2;
       float var_48 = (float) var_49;
       float var_46 = var_47 + var_48;
       float var_44 = var_45 - var_46;
