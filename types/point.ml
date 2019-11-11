@@ -10,4 +10,4 @@ end
 
 include T
 include Hashable.Make (T)
-include Comparable.Make(T)
+include Comparable.Make (T)

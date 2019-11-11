@@ -18,10 +18,6 @@
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
- (deps circle.linebuf.sexp)
- (action (bash "cat circle.linebuf.sexp | %{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))
-(alias
- (name runtest)
  (action (diff circle.connected.sexp circle_actual.connected.sexp)))
 (alias
  (name runtest)
@@ -47,10 +43,6 @@
   (deps intersection.linebuf.sexp)
   (targets intersection_actual.connected.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
-(alias
- (name runtest)
- (deps intersection.linebuf.sexp)
- (action (bash "cat intersection.linebuf.sexp | %{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))
 (alias
  (name runtest)
  (action (diff intersection.connected.sexp intersection_actual.connected.sexp)))
@@ -80,10 +72,6 @@
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
- (deps union.linebuf.sexp)
- (action (bash "cat union.linebuf.sexp | %{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))
-(alias
- (name runtest)
  (action (diff union.connected.sexp union_actual.connected.sexp)))
 (alias
  (name runtest)
@@ -109,10 +97,6 @@
   (deps kissing-circles.linebuf.sexp)
   (targets kissing-circles_actual.connected.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
-(alias
- (name runtest)
- (deps kissing-circles.linebuf.sexp)
- (action (bash "cat kissing-circles.linebuf.sexp | %{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))
 (alias
  (name runtest)
  (action (diff kissing-circles.connected.sexp kissing-circles_actual.connected.sexp)))

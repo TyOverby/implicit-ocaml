@@ -36,16 +36,12 @@ let main () =
     linebuf_list
     |> List.fold
          ~init:(Point.Set.empty, Point.Set.empty)
-         ~f:(fun (starts, ends)
-                 { Line.p1 
-                 ; p2 
-                 }
-                 -> 
-           if Point.Set.mem starts p1 
+         ~f:(fun (starts, ends) { Line.p1; p2 } ->
+           if Point.Set.mem starts p1
            then
              print_s
                [%message (p1 : Point.t) "already included in starts"]
-           else if Point.Set.mem ends p2 
+           else if Point.Set.mem ends p2
            then
              print_s
                [%message (p2 : Point.t) "already included in ends"];

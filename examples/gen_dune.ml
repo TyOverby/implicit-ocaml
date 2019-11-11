@@ -90,8 +90,7 @@ tests
        ; linebuf_rule name
        ; parts_svg_rule name
        ; connected_svg_rule name
-       ; connected_rule name
-       ; validate_test name
+       ; connected_rule name (* ; validate_test name*)
        ; diff_against_actual_connected name
        ; diff_against_actual_parts_svg name
        ; diff_against_actual_connected_svg name
