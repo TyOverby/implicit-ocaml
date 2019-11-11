@@ -1,6 +1,6 @@
 open! Core_kernel
 
-let tests = [ "circle"; "intersection"; "union" ]
+let tests = [ "circle"; "intersection"; "union"; "kissing-circles" ]
 
 let linebuf_rule name =
   sprintf

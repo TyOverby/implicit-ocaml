@@ -91,3 +91,34 @@
 (alias
  (name runtest)
  (action (diff union.connected.svg union_actual.connected.svg)))
+
+; kissing-circles
+(rule
+  (deps kissing-circles.shape.sexp)
+  (targets kissing-circles.linebuf.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+(rule
+  (deps kissing-circles.linebuf.sexp)
+  (targets kissing-circles_actual.parts.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+(rule
+  (deps kissing-circles.connected.sexp)
+  (targets kissing-circles_actual.connected.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+(rule
+  (deps kissing-circles.linebuf.sexp)
+  (targets kissing-circles_actual.connected.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+(alias
+ (name runtest)
+ (deps kissing-circles.linebuf.sexp)
+ (action (bash "cat kissing-circles.linebuf.sexp | %{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))
+(alias
+ (name runtest)
+ (action (diff kissing-circles.connected.sexp kissing-circles_actual.connected.sexp)))
+(alias
+ (name runtest)
+ (action (diff kissing-circles.parts.svg kissing-circles_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff kissing-circles.connected.svg kissing-circles_actual.connected.svg)))
