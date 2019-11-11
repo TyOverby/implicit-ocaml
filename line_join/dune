@@ -1,0 +1,6 @@
+(library
+ (name line_join)
+ (libraries core_kernel shared_types)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane)))

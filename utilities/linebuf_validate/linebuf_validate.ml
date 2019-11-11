@@ -18,7 +18,11 @@ let main () =
     |> Sexp.of_string
     |> Line_buffer.t_of_sexp
   in
-  Line_buffer.iteri linebuf ~f:(fun i { Line.x1; y1; x2; y2 } ->
+  Line_buffer.iteri
+    linebuf
+    ~f:(fun i
+            { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } }
+            ->
       if Float.is_nan x1
          || Float.is_nan y1
          || Float.is_nan x2
@@ -30,7 +34,11 @@ let main () =
     linebuf_list
     |> List.fold
          ~init:(Point.Set.empty, Point.Set.empty)
-         ~f:(fun (starts, ends) { Line.x1; y1; x2; y2 } ->
+         ~f:(fun (starts, ends)
+                 { Line.p1 = { x = x1; y = y1 }
+                 ; p2 = { x = x2; y = y2 }
+                 }
+                 ->
            Point.Set.add starts (x1, y1), Point.Set.add ends (x2, y2))
   in
   let length_tripple =

@@ -4,7 +4,8 @@ type t = Float_bigarray.t
 
 let rec windows_4 = function
   | x1 :: y1 :: x2 :: y2 :: rest ->
-    { Line.x1; y1; x2; y2 } :: windows_4 rest
+    { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } }
+    :: windows_4 rest
   | _ -> []
 ;;
 
@@ -22,7 +23,11 @@ let sexp_of_t t =
 
 let t_of_sexp s =
   let co_windows_4 =
-    List.bind ~f:(fun { Line.x1; y1; x2; y2 } -> [ x1; y1; x2; y2 ])
+    List.bind
+      ~f:(fun { Line.p1 = { x = x1; y = y1 }
+              ; p2 = { x = x2; y = y2 }
+              }
+              -> [ x1; y1; x2; y2 ])
   in
   s
   |> [%of_sexp: Line.t list]

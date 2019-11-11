@@ -1,15 +1,6 @@
 open Ctypes
 open Shared_types
 
-(* Marching Squares
-  extern void run_marching_squares(
-    float* buffer,
-    unsigned int width,
-    unsigned int height,
-    int* atomic
-    float* out)
- *)
-
 external _marching_squares : unit -> unit = "run_marching_squares"
 
 let marching_squares =

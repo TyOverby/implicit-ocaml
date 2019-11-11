@@ -8,7 +8,7 @@ type debug =
   }
 
 let eval shape chunk =
-  let compiled = Shape.compile shape in
+  let compiled = Compile.compile shape in
   let f =
     let open Jitsy in
     let open Function.Let_syntax in

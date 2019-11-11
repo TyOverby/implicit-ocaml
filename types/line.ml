@@ -1,9 +1,7 @@
 open! Core_kernel
 
 type t =
-  { x1 : float
-  ; y1 : float
-  ; x2 : float
-  ; y2 : float
+  { p1 : Point.t
+  ; p2 : Point.t
   }
 [@@deriving sexp]

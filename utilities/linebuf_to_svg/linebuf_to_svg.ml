@@ -12,7 +12,10 @@ let main () =
   printf
     {|<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
   |};
-  Line_buffer.iter linebuf ~f:(fun { Line.x1; y1; x2; y2 } ->
+  Line_buffer.iter
+    linebuf
+    ~f:(fun { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } }
+            ->
       printf
         {| <line x1="%f" y1="%f" x2="%f" y2="%f" style="%s" />
         |}

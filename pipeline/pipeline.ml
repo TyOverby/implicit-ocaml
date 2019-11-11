@@ -15,3 +15,9 @@ let eval_lines shape =
   in
   return line_buffer
 ;;
+
+let eval_connect shape =
+  let%bind linebuf = eval_lines shape in
+  let connected = Line_join.f linebuf in
+  return connected
+;;
