@@ -39,8 +39,18 @@ let main () =
                  ; p2 = { x = x2; y = y2 }
                  }
                  ->
-                  if Point.Set.mem starts (x1, y1) then raise_s [%message (x1: float ) (y1: float) "already included in" (starts: Point.Set.t)] 
-                  else
+           if Point.Set.mem starts (x1, y1)
+           then
+             print_s
+               [%message
+                 (x1 : float)
+                   (y1 : float)
+                   "already included in starts"]
+           else if Point.Set.mem ends (x2, y2)
+           then
+             print_s
+               [%message
+                 (x2 : float) (y2 : float) "already included in ends"];
            Point.Set.add starts (x1, y1), Point.Set.add ends (x2, y2))
   in
   let length_tripple =
