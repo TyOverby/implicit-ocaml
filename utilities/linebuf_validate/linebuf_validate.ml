@@ -2,6 +2,7 @@ open! Core
 open! Async
 open Shared_types
 
+(*
 module Point = struct
   module T = struct
     type t = float * float [@@deriving compare, sexp]
@@ -10,6 +11,7 @@ module Point = struct
   include T
   include Comparable.Make (T)
 end
+*)
 
 let main () =
   let linebuf =
@@ -35,23 +37,19 @@ let main () =
     |> List.fold
          ~init:(Point.Set.empty, Point.Set.empty)
          ~f:(fun (starts, ends)
-                 { Line.p1 = { x = x1; y = y1 }
-                 ; p2 = { x = x2; y = y2 }
+                 { Line.p1 
+                 ; p2 
                  }
-                 ->
-           if Point.Set.mem starts (x1, y1)
+                 -> 
+           if Point.Set.mem starts p1 
            then
              print_s
-               [%message
-                 (x1 : float)
-                   (y1 : float)
-                   "already included in starts"]
-           else if Point.Set.mem ends (x2, y2)
+               [%message (p1 : Point.t) "already included in starts"]
+           else if Point.Set.mem ends p2 
            then
              print_s
-               [%message
-                 (x2 : float) (y2 : float) "already included in ends"];
-           Point.Set.add starts (x1, y1), Point.Set.add ends (x2, y2))
+               [%message (p2 : Point.t) "already included in ends"];
+           Point.Set.add starts p1, Point.Set.add ends p2)
   in
   let length_tripple =
     List.length linebuf_list, Set.length starts, Set.length ends
@@ -70,7 +68,7 @@ let main () =
     raise_s
       [%message
         "symmetric diff starts -> ends"
-          (diff : (Point.T.t, Point.T.t) Either.t list)]
+          (diff : (Point.t, Point.t) Either.t list)]
   else ();
   Deferred.unit
 ;;
