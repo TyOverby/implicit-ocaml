@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-  <path d="M36.000000 30.835978
+  <path fill-rule="evenodd" d="M36.000000 30.835978
  L36.000000 30.835978
  L37.000000 30.461792
  L38.000000 30.202391
@@ -67,4 +67,4 @@
  L33.000000 32.862446
  L34.000000 32.000000
  L35.000000 31.343098
-  Z" style="fill:black; stroke:none; stroke-width:0"></path>\n</svg>
+  Z " style="fill:black; stroke:none; stroke-width:0"></path>\n</svg>
