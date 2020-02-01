@@ -2,17 +2,6 @@ open! Core
 open! Async
 open Shared_types
 
-(*
-module Point = struct
-  module T = struct
-    type t = float * float [@@deriving compare, sexp]
-  end
-
-  include T
-  include Comparable.Make (T)
-end
-*)
-
 let main () =
   let linebuf =
     In_channel.stdin
