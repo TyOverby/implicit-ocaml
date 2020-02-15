@@ -33,7 +33,7 @@ module Type_safe : sig
   type exact = [ `Exact ]
 
   type inexact =
-    [ exact
+    [ `Exact
     | `Inexact
     ]
 
