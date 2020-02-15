@@ -33,4 +33,7 @@ let rec compile t ~x ~y =
     let dx2_plus_dy2 = add_float dx2 dy2 in
     let sqrt = sqrt_float dx2_plus_dy2 in
     sub_float sqrt (float_lit r)
+  | Modulate { shape; by } ->
+    let open Jitsy.Expr in
+    add_float (compile ~x ~y shape) (float_lit by)
 ;;

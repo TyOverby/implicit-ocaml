@@ -2,6 +2,7 @@
 dune build \
  @@jitsy/runtest \
  @@line_join/runtest \
+ @@bounding_box/runtest \
  @@march/default \
  @@line_join/default \
  @@shape_eval/runtest \

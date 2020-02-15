@@ -6,10 +6,11 @@ implement implicit shapes.
 
 ## TODO
 
+- [ ] Bounding-box math
 - [ ] Arbitrarily-sized chunks
 - [ ] Stitching of multiple chunks
 - [ ] Programmatic Shape generation
-
+- [ ] Shape transformations
 
 
 

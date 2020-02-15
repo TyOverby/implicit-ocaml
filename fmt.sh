@@ -3,6 +3,7 @@
 dune build \
  @@shape_eval/fmt \
  @@jitsy/fmt \
+ @@bounding_box/fmt \
  @@march/fmt \
  @@line_join/fmt \
  @@types/fmt \
