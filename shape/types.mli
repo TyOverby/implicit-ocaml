@@ -17,6 +17,11 @@ type t =
       { shape : t
       ; matrix : Shared_types.Matrix.t
       }
+  | Mix of
+      { a : t
+      ; b : t
+      ; f : float
+      }
 [@@deriving sexp]
 
 val circle : x:float -> y:float -> r:float -> t
@@ -28,6 +33,7 @@ val modulate : t -> by:float -> t
 val scale : t -> dx:float -> dy:float -> t
 val translate : t -> dx:float -> dy:float -> t
 val rotate : t -> r:float -> t
+val mix : t -> t -> f:float -> t
 
 module Type_safe : sig
   type exact = [ `Exact ]
@@ -48,6 +54,7 @@ module Type_safe : sig
   val scale : _ t -> dx:float -> dy:float -> inexact t
   val translate : 'a t -> dx:float -> dy:float -> 'a t
   val rotate : 'a t -> r:float -> 'a t
+  val mix : exact t -> exact t -> f:float -> exact t
 end
 
 val of_type_safe : _ Type_safe.t -> t

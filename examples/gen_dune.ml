@@ -1,7 +1,13 @@
 open! Core_kernel
 
 let tests =
-  [ "circle"; "intersection"; "union"; "kissing_circles"; "scale" ]
+  [ "circle"
+  ; "intersection"
+  ; "union"
+  ; "kissing_circles"
+  ; "scale"
+  ; "mix"
+  ]
 ;;
 
 let executable_rule name =

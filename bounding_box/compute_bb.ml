@@ -16,6 +16,8 @@ let rec compute_bounding_box = function
     { positive = Something bb; negative = Hole bb }
   | Union targets ->
     targets |> compute_all_bounding_box |> Box.union_all
+  | Mix { a; b; _ } ->
+    [ a; b ] |> compute_all_bounding_box |> Box.union_all
   | Intersection targets ->
     targets |> compute_all_bounding_box |> Box.intersection_all
   | Modulate { shape; by } ->

@@ -188,3 +188,41 @@
 (alias
  (name runtest)
  (action (diff scale.connected.svg scale_actual.connected.svg)))
+
+; mix
+(executable
+   (name mix)
+   (modules mix)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape example_runner))
+(rule
+     (with-stdout-to mix_actual.shape.sexp
+      (run ./mix.exe)))
+(rule
+  (deps mix_actual.shape.sexp)
+  (targets mix.linebuf.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+(rule
+  (deps mix.linebuf.sexp)
+  (targets mix_actual.parts.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+(rule
+  (deps mix.connected.sexp)
+  (targets mix_actual.connected.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+(rule
+  (deps mix.linebuf.sexp)
+  (targets mix_actual.connected.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff mix.shape.sexp mix_actual.shape.sexp)))
+(alias
+ (name runtest)
+ (action (diff mix.connected.sexp mix_actual.connected.sexp)))
+(alias
+ (name runtest)
+ (action (diff mix.parts.svg mix_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff mix.connected.svg mix_actual.connected.svg)))

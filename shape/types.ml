@@ -19,6 +19,11 @@ module T = struct
         { shape : t
         ; matrix : Matrix.t
         }
+    | Mix of
+        { a : t
+        ; b : t
+        ; f : float
+        }
   [@@deriving sexp]
 
   let circle ~x ~y ~r = Circle { x; y; r }
@@ -27,6 +32,7 @@ module T = struct
   let invert t = Invert t
   let subtract a b = intersection [ a; invert b ]
   let modulate shape ~by = Modulate { shape; by }
+  let mix a b ~f = Mix { a; b; f }
 
   let scale shape ~dx ~dy =
     Transform

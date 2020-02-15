@@ -30,6 +30,13 @@ let rec compile t ~x ~y =
     let sqrt = sqrt dx2_plus_dy2 in
     sqrt - const r
   | Modulate { shape; by } -> compile ~x ~y shape + const by
+  | Mix { a; b; f } ->
+    let f = Float.clamp_exn ~min:0.0 ~max:1.0 f in
+    let f = const f in
+    let a = compile ~x ~y a in
+    let b = compile ~x ~y b in
+    let one = const 1.0 in
+    (a * (one / f)) + (b * (one / (one - f)))
   | Transform { shape; matrix = { m11; m12; m21; m22; m31; m32 } } ->
     let m11 = const m11
     and m12 = const m12
