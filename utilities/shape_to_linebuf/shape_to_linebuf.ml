@@ -6,7 +6,7 @@ let main () =
     In_channel.stdin
     |> In_channel.input_all
     |> Sexp.of_string
-    |> Shape_eval.Shape.t_of_sexp
+    |> Shape.t_of_sexp
   in
   let%bind lines = Pipeline.eval_lines shape in
   lines

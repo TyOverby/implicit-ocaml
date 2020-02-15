@@ -1,5 +1,8 @@
+open! Core_kernel
+open Types
+
 val compile
-  :  Shape.t
+  :  t
   -> x:float Jitsy.Expr.t
   -> y:float Jitsy.Expr.t
   -> float Jitsy.Expr.t

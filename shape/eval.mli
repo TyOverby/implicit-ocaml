@@ -7,4 +7,4 @@ type debug =
   ; asm_source : unit -> string Deferred.t
   }
 
-val eval : Shape.t -> Chunk.t -> debug Deferred.t
+val eval : Types.t -> Chunk.t -> debug Deferred.t

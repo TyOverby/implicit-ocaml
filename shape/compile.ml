@@ -1,5 +1,5 @@
 open! Core_kernel
-open Shape
+open Types
 
 let rec compile t ~x ~y =
   let open Jitsy.Ops.Float in

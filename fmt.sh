@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dune build \
- @@shape_eval/fmt \
+ @@shape/fmt \
  @@jitsy/fmt \
  @@bounding_box/fmt \
  @@march/fmt \

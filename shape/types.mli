@@ -28,3 +28,26 @@ val modulate : t -> by:float -> t
 val scale : t -> dx:float -> dy:float -> t
 val translate : t -> dx:float -> dy:float -> t
 val rotate : t -> r:float -> t
+
+module Type_safe : sig
+  type exact = [ `Exact ]
+
+  type inexact =
+    [ exact
+    | `Inexact
+    ]
+
+  type -'p t
+
+  val circle : x:float -> y:float -> r:float -> [> exact ] t
+  val intersection : 'a t list -> 'a t
+  val union : 'a t list -> 'a t
+  val invert : 'a t -> 'a t
+  val subtract : 'a t -> 'a t -> 'a t
+  val modulate : exact t -> by:float -> [> exact ] t
+  val scale : _ t -> dx:float -> dy:float -> inexact t
+  val translate : 'a t -> dx:float -> dy:float -> 'a t
+  val rotate : 'a t -> r:float -> 'a t
+end
+
+val of_type_safe : _ Type_safe.t -> t

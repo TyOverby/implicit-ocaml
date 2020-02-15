@@ -1,6 +1,7 @@
 open! Core_kernel
 open! Async
 open Shared_types
+open Types
 
 type debug =
   { c_source : unit -> string
@@ -71,7 +72,7 @@ let test ?(print_source = false) ?(pos = 0, 0) shape =
 ;;
 
 let%expect_test "circle" =
-  let%bind () = test (Shape.circle ~x:0.0 ~y:0.0 ~r:44.0) in
+  let%bind () = test (circle ~x:0.0 ~y:0.0 ~r:44.0) in
   [%expect
     {|
       ===== shape ======
@@ -122,7 +123,7 @@ let%expect_test "circle" =
 ;;
 
 let%expect_test "bigger circle" =
-  let%bind () = test (Shape.circle ~x:0.0 ~y:0.0 ~r:88.0) in
+  let%bind () = test (circle ~x:0.0 ~y:0.0 ~r:88.0) in
   [%expect
     {|
       ===== shape ======
@@ -175,9 +176,9 @@ let%expect_test "bigger circle" =
 let%expect_test "union circle" =
   let%bind () =
     test
-      (Shape.union
-         [ Shape.circle ~x:0.0 ~y:0.0 ~r:44.0
-         ; Shape.circle ~x:88.0 ~y:88.0 ~r:44.0
+      (union
+         [ circle ~x:0.0 ~y:0.0 ~r:44.0
+         ; circle ~x:88.0 ~y:88.0 ~r:44.0
          ])
   in
   [%expect
@@ -232,9 +233,9 @@ let%expect_test "union circle" =
 let%expect_test "subtraction circle" =
   let%bind () =
     test
-      (Shape.subtract
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:88.0)
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:44.0))
+      (subtract
+         (circle ~x:0.0 ~y:0.0 ~r:88.0)
+         (circle ~x:0.0 ~y:0.0 ~r:44.0))
   in
   [%expect
     {|
@@ -289,9 +290,9 @@ let%expect_test "subtraction circle (different position)" =
   let%bind () =
     test
       ~pos:(-1, -1)
-      (Shape.subtract
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:88.0)
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:44.0))
+      (subtract
+         (circle ~x:0.0 ~y:0.0 ~r:88.0)
+         (circle ~x:0.0 ~y:0.0 ~r:44.0))
   in
   [%expect
     {|
@@ -347,9 +348,9 @@ let%expect_test "subtraction circle (different position)" =
     test
       ~print_source:true
       ~pos:(0, -1)
-      (Shape.subtract
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:88.0)
-         (Shape.circle ~x:0.0 ~y:0.0 ~r:44.0))
+      (subtract
+         (circle ~x:0.0 ~y:0.0 ~r:88.0)
+         (circle ~x:0.0 ~y:0.0 ~r:44.0))
   in
   [%expect
     {|

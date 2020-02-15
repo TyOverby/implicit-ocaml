@@ -4,7 +4,7 @@
    (name circle)
    (modules circle)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
 (rule
      (with-stdout-to circle_actual.shape.sexp
       (run ./circle.exe)))
@@ -42,7 +42,7 @@
    (name intersection)
    (modules intersection)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
 (rule
      (with-stdout-to intersection_actual.shape.sexp
       (run ./intersection.exe)))
@@ -80,7 +80,7 @@
    (name union)
    (modules union)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
 (rule
      (with-stdout-to union_actual.shape.sexp
       (run ./union.exe)))
@@ -118,7 +118,7 @@
    (name kissing_circles)
    (modules kissing_circles)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
 (rule
      (with-stdout-to kissing_circles_actual.shape.sexp
       (run ./kissing_circles.exe)))
@@ -156,7 +156,7 @@
    (name scale)
    (modules scale)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
 (rule
      (with-stdout-to scale_actual.shape.sexp
       (run ./scale.exe)))

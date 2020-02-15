@@ -11,7 +11,7 @@ let executable_rule name =
    (name %s)
    (modules %s)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape_eval example_runner))
+   (libraries core_kernel shape example_runner))
  |}
     name
     name
