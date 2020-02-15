@@ -33,7 +33,8 @@ let scale shape ~dx ~dy =
 ;;
 
 let translate shape ~dx ~dy =
-  Transform { shape; matrix = Matrix.create_translation dx dy }
+  Transform
+    { shape; matrix = Matrix.create_translation (-.dx) (-.dy) }
 ;;
 
 let rotate shape ~r =

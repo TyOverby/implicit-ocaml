@@ -30,14 +30,15 @@ let rec compile t ~x ~y =
     let sqrt = sqrt dx2_plus_dy2 in
     sqrt - const r
   | Modulate { shape; by } -> compile ~x ~y shape + const by
-  | Transform
-      { shape; matrix = { m11; m12; m21; m22; m31 = _; m32 = _ } } ->
+  | Transform { shape; matrix = { m11; m12; m21; m22; m31; m32 } } ->
     let m11 = const m11
     and m12 = const m12
     and m21 = const m21
-    and m22 = const m22 in
-    let x = (x * m11) + (y * m21) (* + z * m31 *)
-    and y = (x * m12) + (y * m22) (* + z * m32 *) in
+    and m22 = const m22
+    and m31 = const m31
+    and m32 = const m32 in
+    let x = (x * m11) + (y * m21) + m31
+    and y = (x * m12) + (y * m22) + m32 in
     (* and z = x * m13 + y * m23 + z * m33 + m43 in *)
     (* and w = x * m14 + y * m24 + z * m34 + m44 in *)
     compile ~x ~y shape
