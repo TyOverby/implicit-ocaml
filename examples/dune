@@ -1,6 +1,14 @@
 (executable
  (name gen_dune)
+ (modules gen_dune)
  (libraries core shared_types)
+ (preprocess
+  (pps ppx_jane)))
+
+(library
+ (name example_runner)
+ (modules example_runner)
+ (libraries core shape_eval)
  (preprocess
   (pps ppx_jane)))
 

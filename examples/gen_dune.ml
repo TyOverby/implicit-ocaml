@@ -1,11 +1,35 @@
 open! Core_kernel
 
-let tests = [ "circle"; "intersection"; "union"; "kissing-circles" ]
+let tests = [ "circle"; "intersection"; "union"; "kissing_circles" ]
+
+let executable_rule name =
+  sprintf
+    {|
+ (executable
+   (name %s)
+   (modules %s)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
+ |}
+    name
+    name
+;;
+
+let shape_sexp_rule name =
+  sprintf
+    {|
+   (rule
+     (with-stdout-to %s_actual.shape.sexp
+      (run ./%s.exe)))
+ |}
+    name
+    name
+;;
 
 let linebuf_rule name =
   sprintf
     {|(rule
-  (deps %s.shape.sexp)
+  (deps %s_actual.shape.sexp)
   (targets %s.linebuf.sexp)
   (action (bash "cat %%{deps} | %%{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %%{targets}")))
 |}
@@ -56,6 +80,15 @@ let validate_test name =
     name
 ;;
 
+let diff_against_actual_shape name =
+  sprintf
+    {|(alias
+ (name runtest)
+ (action (diff %s.shape.sexp %s_actual.shape.sexp)))|}
+    name
+    name
+;;
+
 let diff_against_actual_connected name =
   sprintf
     {|(alias
@@ -87,10 +120,13 @@ let diff_against_actual_parts_svg name =
 tests
 |> List.bind ~f:(fun name ->
        [ sprintf "; %s" name
+       ; executable_rule name
+       ; shape_sexp_rule name
        ; linebuf_rule name
        ; parts_svg_rule name
        ; connected_svg_rule name
        ; connected_rule name (* ; validate_test name*)
+       ; diff_against_actual_shape name
        ; diff_against_actual_connected name
        ; diff_against_actual_parts_svg name
        ; diff_against_actual_connected_svg name

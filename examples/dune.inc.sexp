@@ -1,7 +1,15 @@
 
 ; circle
+(executable
+   (name circle)
+   (modules circle)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
 (rule
-  (deps circle.shape.sexp)
+     (with-stdout-to circle_actual.shape.sexp
+      (run ./circle.exe)))
+(rule
+  (deps circle_actual.shape.sexp)
   (targets circle.linebuf.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
 (rule
@@ -18,6 +26,9 @@
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
+ (action (diff circle.shape.sexp circle_actual.shape.sexp)))
+(alias
+ (name runtest)
  (action (diff circle.connected.sexp circle_actual.connected.sexp)))
 (alias
  (name runtest)
@@ -27,8 +38,16 @@
  (action (diff circle.connected.svg circle_actual.connected.svg)))
 
 ; intersection
+(executable
+   (name intersection)
+   (modules intersection)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
 (rule
-  (deps intersection.shape.sexp)
+     (with-stdout-to intersection_actual.shape.sexp
+      (run ./intersection.exe)))
+(rule
+  (deps intersection_actual.shape.sexp)
   (targets intersection.linebuf.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
 (rule
@@ -45,6 +64,9 @@
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
+ (action (diff intersection.shape.sexp intersection_actual.shape.sexp)))
+(alias
+ (name runtest)
  (action (diff intersection.connected.sexp intersection_actual.connected.sexp)))
 (alias
  (name runtest)
@@ -54,8 +76,16 @@
  (action (diff intersection.connected.svg intersection_actual.connected.svg)))
 
 ; union
+(executable
+   (name union)
+   (modules union)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
 (rule
-  (deps union.shape.sexp)
+     (with-stdout-to union_actual.shape.sexp
+      (run ./union.exe)))
+(rule
+  (deps union_actual.shape.sexp)
   (targets union.linebuf.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
 (rule
@@ -72,6 +102,9 @@
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
+ (action (diff union.shape.sexp union_actual.shape.sexp)))
+(alias
+ (name runtest)
  (action (diff union.connected.sexp union_actual.connected.sexp)))
 (alias
  (name runtest)
@@ -80,29 +113,40 @@
  (name runtest)
  (action (diff union.connected.svg union_actual.connected.svg)))
 
-; kissing-circles
+; kissing_circles
+(executable
+   (name kissing_circles)
+   (modules kissing_circles)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
 (rule
-  (deps kissing-circles.shape.sexp)
-  (targets kissing-circles.linebuf.sexp)
+     (with-stdout-to kissing_circles_actual.shape.sexp
+      (run ./kissing_circles.exe)))
+(rule
+  (deps kissing_circles_actual.shape.sexp)
+  (targets kissing_circles.linebuf.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
 (rule
-  (deps kissing-circles.linebuf.sexp)
-  (targets kissing-circles_actual.parts.svg)
+  (deps kissing_circles.linebuf.sexp)
+  (targets kissing_circles_actual.parts.svg)
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
 (rule
-  (deps kissing-circles.connected.sexp)
-  (targets kissing-circles_actual.connected.svg)
+  (deps kissing_circles.connected.sexp)
+  (targets kissing_circles_actual.connected.svg)
   (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
 (rule
-  (deps kissing-circles.linebuf.sexp)
-  (targets kissing-circles_actual.connected.sexp)
+  (deps kissing_circles.linebuf.sexp)
+  (targets kissing_circles_actual.connected.sexp)
   (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
 (alias
  (name runtest)
- (action (diff kissing-circles.connected.sexp kissing-circles_actual.connected.sexp)))
+ (action (diff kissing_circles.shape.sexp kissing_circles_actual.shape.sexp)))
 (alias
  (name runtest)
- (action (diff kissing-circles.parts.svg kissing-circles_actual.parts.svg)))
+ (action (diff kissing_circles.connected.sexp kissing_circles_actual.connected.sexp)))
 (alias
  (name runtest)
- (action (diff kissing-circles.connected.svg kissing-circles_actual.connected.svg)))
+ (action (diff kissing_circles.parts.svg kissing_circles_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff kissing_circles.connected.svg kissing_circles_actual.connected.svg)))
