@@ -1,4 +1,5 @@
 open! Core_kernel
+open Shared_types
 
 type t =
   | Circle of
@@ -13,6 +14,10 @@ type t =
       { shape : t
       ; by : float
       }
+  | Transform of
+      { shape : t
+      ; matrix : Matrix.t
+      }
 [@@deriving sexp]
 
 let circle ~x ~y ~r = Circle { x; y; r }
@@ -21,3 +26,15 @@ let intersection l = Intersection l
 let invert t = Invert t
 let subtract a b = intersection [ a; invert b ]
 let modulate shape ~by = Modulate { shape; by }
+
+let scale shape ~dx ~dy =
+  Transform { shape; matrix = Matrix.create_scale dx dy }
+;;
+
+let translate shape ~dx ~dy =
+  Transform { shape; matrix = Matrix.create_translation dx dy }
+;;
+
+let rotate shape ~r =
+  Transform { shape; matrix = Matrix.create_rotation r }
+;;

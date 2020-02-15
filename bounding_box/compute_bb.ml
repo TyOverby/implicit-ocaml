@@ -21,6 +21,23 @@ let rec compute_bounding_box = function
   | Modulate { shape; by } ->
     compute_bounding_box shape |> (Fn.flip Box.grow) by
   | Invert target -> target |> compute_bounding_box |> Box.inverse
+  | Transform { shape = target; matrix } ->
+    let bb = compute_bounding_box target in
+    let positive =
+      match bb.positive with
+      | Something b -> Something (Matrix.apply_to_rect matrix b)
+      | Hole b -> Hole (Matrix.apply_to_rect matrix b)
+      | Everything -> Everything
+      | Nothing -> Nothing
+    in
+    let negative =
+      match bb.negative with
+      | Something b -> Something (Matrix.apply_to_rect matrix b)
+      | Hole b -> Hole (Matrix.apply_to_rect matrix b)
+      | Everything -> Everything
+      | Nothing -> Nothing
+    in
+    { positive; negative }
 
 and compute_all_bounding_box list =
   list |> List.map ~f:compute_bounding_box
@@ -121,6 +138,7 @@ module ComputeBB_Test = struct
   ;;
 
 
+  *)
   let%expect_test _ =
     circle ~x:0.0 ~y:0.0 ~r:10.0
     |> scale ~dx:3.0 ~dy:3.0
@@ -131,6 +149,7 @@ module ComputeBB_Test = struct
         (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
   ;;
 
+  (*
   let%expect_test _ =
     rect ~x:(-10.0) ~y:(-10.0) ~w:20.0 ~h:20.0
     |> scale ~dx:3.0 ~dy:3.0
@@ -140,6 +159,7 @@ module ComputeBB_Test = struct
        ((positive (Something ((x -30) (y -30) (w 60) (h 60))))
         (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
   ;;
+  *)
 
   let%expect_test _ =
     let outer = circle ~x:0.0 ~y:0.0 ~r:10.0 in
@@ -155,7 +175,7 @@ module ComputeBB_Test = struct
   let%expect_test _ =
     let outer = circle ~x:0.0 ~y:0.0 ~r:10.0 in
     let inner = circle ~x:0.0 ~y:0.0 ~r:5.0 in
-    let ring = intersection [ outer; not inner ] in
+    let ring = intersection [ outer; invert inner ] in
     ring
     |> scale ~dy:3.0 ~dx:3.0
     |> translate ~dy:30.0 ~dx:30.0
@@ -169,20 +189,18 @@ module ComputeBB_Test = struct
   let%expect_test _ =
     let outer = circle ~x:0.0 ~y:0.0 ~r:10.0 in
     let inner = circle ~x:0.0 ~y:0.0 ~r:5.0 in
-    let ring = intersection [ outer; not inner ] in
+    let ring = intersection [ outer; invert inner ] in
     ring
     |> scale ~dy:3.0 ~dx:3.0
     |> translate ~dy:30.0 ~dx:30.0
-    |> not
+    |> invert
     |> run_bb_test;
     [%expect
       {|
        ((positive (Hole ((x 0) (y 0) (w 60) (h 60))))
         (negative (Something ((x 0) (y 0) (w 60) (h 60)))))|}]
   ;;
-  *)
 
-  (*_
   let%expect_test _ =
     circle ~x:0.0 ~y:0.0 ~r:10.0
     |> scale ~dy:3.0 ~dx:3.0
@@ -192,7 +210,6 @@ module ComputeBB_Test = struct
        ((positive (Something ((x -30) (y -30) (w 60) (h 60))))
         (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
   ;;
-  *)
 
   let%expect_test _ =
     circle ~x:0.0 ~y:0.0 ~r:10.0 |> modulate ~by:10.0 |> run_bb_test;

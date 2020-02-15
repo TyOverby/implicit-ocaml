@@ -36,4 +36,5 @@ let rec compile t ~x ~y =
   | Modulate { shape; by } ->
     let open Jitsy.Expr in
     add_float (compile ~x ~y shape) (float_lit by)
+  | Transform { shape = _; matrix = _ } -> failwith "unimplemented"
 ;;
