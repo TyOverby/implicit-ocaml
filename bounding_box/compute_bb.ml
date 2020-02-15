@@ -145,8 +145,14 @@ module ComputeBB_Test = struct
     |> run_bb_test;
     [%expect
       {|
-       ((positive (Something ((x -30) (y -30) (w 60) (h 60))))
-        (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
+       ((positive
+         (Something
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661))))
+        (negative
+         (Hole
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661)))))|}]
   ;;
 
   (*
@@ -168,8 +174,14 @@ module ComputeBB_Test = struct
     ring |> scale ~dy:3.0 ~dx:3.0 |> run_bb_test;
     [%expect
       {|
-       ((positive (Something ((x -30) (y -30) (w 60) (h 60))))
-        (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
+       ((positive
+         (Something
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661))))
+        (negative
+         (Hole
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661)))))|}]
   ;;
 
   let%expect_test _ =
@@ -182,8 +194,14 @@ module ComputeBB_Test = struct
     |> run_bb_test;
     [%expect
       {|
-       ((positive (Something ((x 0) (y 0) (w 60) (h 60))))
-        (negative (Hole ((x 0) (y 0) (w 60) (h 60)))))|}]
+       ((positive
+         (Something
+          ((x 26.666666666666668) (y 26.666666666666668) (w 6.6666666666666679)
+           (h 6.6666666666666679))))
+        (negative
+         (Hole
+          ((x 26.666666666666668) (y 26.666666666666668) (w 6.6666666666666679)
+           (h 6.6666666666666679)))))|}]
   ;;
 
   let%expect_test _ =
@@ -197,8 +215,14 @@ module ComputeBB_Test = struct
     |> run_bb_test;
     [%expect
       {|
-       ((positive (Hole ((x 0) (y 0) (w 60) (h 60))))
-        (negative (Something ((x 0) (y 0) (w 60) (h 60)))))|}]
+       ((positive
+         (Hole
+          ((x 26.666666666666668) (y 26.666666666666668) (w 6.6666666666666679)
+           (h 6.6666666666666679))))
+        (negative
+         (Something
+          ((x 26.666666666666668) (y 26.666666666666668) (w 6.6666666666666679)
+           (h 6.6666666666666679)))))|}]
   ;;
 
   let%expect_test _ =
@@ -207,8 +231,14 @@ module ComputeBB_Test = struct
     |> run_bb_test;
     [%expect
       {|
-       ((positive (Something ((x -30) (y -30) (w 60) (h 60))))
-        (negative (Hole ((x -30) (y -30) (w 60) (h 60)))))|}]
+       ((positive
+         (Something
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661))))
+        (negative
+         (Hole
+          ((x -3.333333333333333) (y -3.333333333333333) (w 6.6666666666666661)
+           (h 6.6666666666666661)))))|}]
   ;;
 
   let%expect_test _ =

@@ -28,7 +28,8 @@ let subtract a b = intersection [ a; invert b ]
 let modulate shape ~by = Modulate { shape; by }
 
 let scale shape ~dx ~dy =
-  Transform { shape; matrix = Matrix.create_scale dx dy }
+  Transform
+    { shape; matrix = Matrix.create_scale (1.0 /. dx) (1.0 /. dy) }
 ;;
 
 let translate shape ~dx ~dy =

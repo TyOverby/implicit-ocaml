@@ -150,3 +150,41 @@
 (alias
  (name runtest)
  (action (diff kissing_circles.connected.svg kissing_circles_actual.connected.svg)))
+
+; scale
+(executable
+   (name scale)
+   (modules scale)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel shape_eval example_runner))
+(rule
+     (with-stdout-to scale_actual.shape.sexp
+      (run ./scale.exe)))
+(rule
+  (deps scale_actual.shape.sexp)
+  (targets scale.linebuf.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+(rule
+  (deps scale.linebuf.sexp)
+  (targets scale_actual.parts.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+(rule
+  (deps scale.connected.sexp)
+  (targets scale_actual.connected.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+(rule
+  (deps scale.linebuf.sexp)
+  (targets scale_actual.connected.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff scale.shape.sexp scale_actual.shape.sexp)))
+(alias
+ (name runtest)
+ (action (diff scale.connected.sexp scale_actual.connected.sexp)))
+(alias
+ (name runtest)
+ (action (diff scale.parts.svg scale_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff scale.connected.svg scale_actual.connected.svg)))

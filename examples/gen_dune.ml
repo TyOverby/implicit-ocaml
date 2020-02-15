@@ -1,6 +1,8 @@
 open! Core_kernel
 
-let tests = [ "circle"; "intersection"; "union"; "kissing_circles" ]
+let tests =
+  [ "circle"; "intersection"; "union"; "kissing_circles"; "scale" ]
+;;
 
 let executable_rule name =
   sprintf
