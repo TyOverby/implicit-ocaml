@@ -1241,7 +1241,7 @@ let%expect_test "range2" =
         in
         Bigarray.Array1.fill bigarray 0.0;
         let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
-        let _: int = f (Obj.magic ptr) 0 in
+        let (_ : int) = f (Obj.magic ptr) 0 in
         let list = bigarray_to_list bigarray in
         [ [%message (list : float list)] ])
   in
@@ -1308,11 +1308,11 @@ let%expect_test "big-array" =
         Bigarray.Array1.fill bigarray 0.0;
         let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
         let ptr2 = Obj.magic ptr in
-        let _:int = f ptr2 1 in
-        let _:int = f ptr2 2 in
-        let _:int = f ptr2 3 in
-        let _:int = f ptr2 4 in
-        let _:int = f ptr2 5 in
+        let (_ : int) = f ptr2 1 in
+        let (_ : int) = f ptr2 2 in
+        let (_ : int) = f ptr2 3 in
+        let (_ : int) = f ptr2 4 in
+        let (_ : int) = f ptr2 5 in
         let list = bigarray_to_list bigarray |> Fn.flip List.take 6 in
         [ [%message (list : float list)] ])
   in
