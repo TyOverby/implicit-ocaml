@@ -62,5 +62,6 @@ module Type_safe = struct
 end
 
 let of_type_safe = Fn.id
+let to_type_safe = Fn.id
 
 include T

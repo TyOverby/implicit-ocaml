@@ -58,3 +58,4 @@ module Type_safe : sig
 end
 
 val of_type_safe : _ Type_safe.t -> t
+val to_type_safe : t -> Type_safe.inexact Type_safe.t

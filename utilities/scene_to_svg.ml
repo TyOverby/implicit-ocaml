@@ -35,6 +35,7 @@ let main () =
            in
            { layer with shape })
   in
+  (*let () = layers |> [%sexp_of: Layer.t list] |> raise_s in *)
   let%bind all_connected =
     layers
     |> List.map ~f:(fun { shape; color } ->

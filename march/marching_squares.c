@@ -49,14 +49,14 @@ float2 n(float distance, float2 point, float how_much)
 
 float2 s(float distance, float2 point, float how_much)
 {
-    float2 result = float2_scale_add(S , distance , point);
+    float2 result = float2_scale_add(S, distance , point);
     result.x += how_much;
     return result;
 }
 
 float2 e(float distance, float2 point, float how_much)
 {
-    float2 result = float2_scale_add(E , distance , point);
+    float2 result = float2_scale_add(E, distance , point);
     result.y += how_much;
     return result;
 }
