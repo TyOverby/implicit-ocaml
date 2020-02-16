@@ -33,5 +33,3 @@ let command =
     ~summary:"convert a shape file to a linebuf file"
     (Command.Param.return main)
 ;;
-
-let () = Command.run command

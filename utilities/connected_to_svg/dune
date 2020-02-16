@@ -1,5 +1,0 @@
-(executable
- (name connected_to_svg)
- (libraries core async pipeline line_join)
- (preprocess
-  (pps ppx_jane)))

@@ -19,7 +19,7 @@ type bounding =
   { positive : b
   ; negative : b
   }
-[@@deriving sexp]
+[@@deriving sexp, fields]
 
 val union_all : bounding list -> bounding
 val intersection_all : bounding list -> bounding

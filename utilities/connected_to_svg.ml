@@ -14,7 +14,7 @@ let main () =
   |};
   printf {|<path fill-rule="evenodd" d="|};
   List.iter connected ~f:(function
-      | Disjoint _ -> failwith "umimplemented"
+      | Disjoint _ -> failwith "svg of disjoint is umimplemented"
       | Joined points ->
         (points
         |> List.hd_exn
@@ -33,5 +33,3 @@ let command =
     ~summary:"convert a connected.sexp to a svg file"
     (Command.Param.return main)
 ;;
-
-let () = Command.run command

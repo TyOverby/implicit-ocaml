@@ -1,5 +1,5 @@
 open! Core_kernel
-open Types
+open Shared_types.Shape
 
 val compile
   :  t

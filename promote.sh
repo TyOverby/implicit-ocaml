@@ -5,7 +5,7 @@ dune build \
  @@bounding_box/runtest \
  @@line_join/runtest \
  @@tests/shape_native/runtest \
- @@shape/runtest \
+ @@eval/runtest \
  @@pipeline/runtest \
  @@types/runtest \
  @@examples/runtest \

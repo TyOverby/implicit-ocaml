@@ -3,14 +3,18 @@ open! Async
 open Shared_types
 
 let main () =
-  let linebuf =
+  let shape =
     In_channel.stdin
     |> In_channel.input_all
     |> Sexp.of_string
-    |> Line_buffer.t_of_sexp
+    |> Shape.t_of_sexp
   in
-  Line_join.f linebuf |> [%sexp_of: Connected.t list] |> print_s;
-  Deferred.unit
+  let%bind lines = Pipeline.eval_lines (module Jitsy_native) shape in
+  lines
+  |> Shared_types.Line_buffer.sexp_of_t
+  |> Sexp.to_string_hum
+  |> print_endline;
+  return ()
 ;;
 
 let command =
@@ -18,5 +22,3 @@ let command =
     ~summary:"convert a shape file to a linebuf file"
     (Command.Param.return main)
 ;;
-
-let () = Command.run command

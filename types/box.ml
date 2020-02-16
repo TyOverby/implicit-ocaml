@@ -19,7 +19,7 @@ type bounding =
   { positive : b
   ; negative : b
   }
-[@@deriving sexp]
+[@@deriving sexp, fields]
 
 let from_extrema ~min_x ~min_y ~max_x ~max_y =
   { x = min_x; y = min_y; w = max_x -. min_x; h = max_y -. min_y }

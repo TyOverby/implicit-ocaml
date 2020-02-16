@@ -15,7 +15,7 @@ type t =
       }
   | Transform of
       { shape : t
-      ; matrix : Shared_types.Matrix.t
+      ; matrix : Matrix.t
       }
   | Mix of
       { a : t

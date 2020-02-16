@@ -4,26 +4,26 @@
    (name circle)
    (modules circle)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to circle_actual.shape.sexp
       (run ./circle.exe)))
 (rule
   (deps circle_actual.shape.sexp)
   (targets circle.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps circle.linebuf.sexp)
   (targets circle_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps circle.connected.sexp)
   (targets circle_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps circle.linebuf.sexp)
   (targets circle_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff circle.shape.sexp circle_actual.shape.sexp)))
@@ -42,26 +42,26 @@
    (name intersection)
    (modules intersection)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to intersection_actual.shape.sexp
       (run ./intersection.exe)))
 (rule
   (deps intersection_actual.shape.sexp)
   (targets intersection.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps intersection.linebuf.sexp)
   (targets intersection_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps intersection.connected.sexp)
   (targets intersection_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps intersection.linebuf.sexp)
   (targets intersection_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff intersection.shape.sexp intersection_actual.shape.sexp)))
@@ -80,26 +80,26 @@
    (name union)
    (modules union)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to union_actual.shape.sexp
       (run ./union.exe)))
 (rule
   (deps union_actual.shape.sexp)
   (targets union.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps union.linebuf.sexp)
   (targets union_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps union.connected.sexp)
   (targets union_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps union.linebuf.sexp)
   (targets union_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff union.shape.sexp union_actual.shape.sexp)))
@@ -118,26 +118,26 @@
    (name kissing_circles)
    (modules kissing_circles)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to kissing_circles_actual.shape.sexp
       (run ./kissing_circles.exe)))
 (rule
   (deps kissing_circles_actual.shape.sexp)
   (targets kissing_circles.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps kissing_circles.linebuf.sexp)
   (targets kissing_circles_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps kissing_circles.connected.sexp)
   (targets kissing_circles_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps kissing_circles.linebuf.sexp)
   (targets kissing_circles_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff kissing_circles.shape.sexp kissing_circles_actual.shape.sexp)))
@@ -156,26 +156,26 @@
    (name scale)
    (modules scale)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to scale_actual.shape.sexp
       (run ./scale.exe)))
 (rule
   (deps scale_actual.shape.sexp)
   (targets scale.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps scale.linebuf.sexp)
   (targets scale_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps scale.connected.sexp)
   (targets scale_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps scale.linebuf.sexp)
   (targets scale_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff scale.shape.sexp scale_actual.shape.sexp)))
@@ -194,26 +194,26 @@
    (name mix)
    (modules mix)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
 (rule
      (with-stdout-to mix_actual.shape.sexp
       (run ./mix.exe)))
 (rule
   (deps mix_actual.shape.sexp)
   (targets mix.linebuf.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
 (rule
   (deps mix.linebuf.sexp)
   (targets mix_actual.parts.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
 (rule
   (deps mix.connected.sexp)
   (targets mix_actual.connected.svg)
-  (action (bash "cat %{deps} | %{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
 (rule
   (deps mix.linebuf.sexp)
   (targets mix_actual.connected.sexp)
-  (action (bash "cat %{deps} | %{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %{targets}")))
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
 (alias
  (name runtest)
  (action (diff mix.shape.sexp mix_actual.shape.sexp)))

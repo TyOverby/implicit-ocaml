@@ -1,6 +1,6 @@
 (library
  (name shape_test_native)
- (libraries core_kernel shape ctypes ctypes.foreign jitsy jitsy_native
+ (libraries eval core_kernel ctypes ctypes.foreign jitsy jitsy_native
    shared_types)
  (inline_tests)
  (preprocess

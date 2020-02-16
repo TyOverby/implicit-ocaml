@@ -1,5 +1,5 @@
 (executable
- (name shape_to_linebuf)
+ (name utilities)
  (libraries core pipeline jitsy_native)
  (preprocess
   (pps ppx_jane)))

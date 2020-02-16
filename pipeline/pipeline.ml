@@ -4,7 +4,7 @@ open Shared_types
 
 let eval_chunk backend shape =
   let chunk = Chunk.create ~width:88 ~height:88 ~x:0 ~y:0 in
-  let%bind _ = Shape.Eval.eval backend shape chunk in
+  let%bind _ = Eval.eval backend shape chunk in
   return chunk
 ;;
 

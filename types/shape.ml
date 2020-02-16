@@ -1,5 +1,4 @@
 open! Core_kernel
-open Shared_types
 
 module T = struct
   type t =

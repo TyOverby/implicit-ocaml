@@ -1,6 +1,6 @@
 (library
  (name bounding_box)
- (libraries core_kernel shared_types shape)
+ (libraries core_kernel shared_types)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

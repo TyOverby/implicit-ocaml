@@ -4,6 +4,6 @@ open Shared_types
 
 val eval
   :  (module Jitsy.Backend.S with type Debug.t = 'd)
-  -> Types.t
+  -> Shape.t
   -> Chunk.t
   -> 'd Deferred.t

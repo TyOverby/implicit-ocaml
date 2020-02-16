@@ -17,7 +17,7 @@ let executable_rule name =
    (name %s)
    (modules %s)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel shape example_runner))
+   (libraries core_kernel eval example_runner))
  |}
     name
     name
@@ -39,7 +39,7 @@ let linebuf_rule name =
     {|(rule
   (deps %s_actual.shape.sexp)
   (targets %s.linebuf.sexp)
-  (action (bash "cat %%{deps} | %%{exe:../utilities/shape_to_linebuf/shape_to_linebuf.exe} > %%{targets}")))
+  (action (bash "cat %%{deps} | %%{exe:../utilities/utilities.exe} shape-to-linebuf > %%{targets}")))
 |}
     name
     name
@@ -50,7 +50,7 @@ let connected_rule name =
     {|(rule
   (deps %s.linebuf.sexp)
   (targets %s_actual.connected.sexp)
-  (action (bash "cat %%{deps} | %%{exe:../utilities/linebuf_to_connected/linebuf_to_connected.exe} > %%{targets}")))
+  (action (bash "cat %%{deps} | %%{exe:../utilities/utilities.exe} linebuf-to-connected > %%{targets}")))
 |}
     name
     name
@@ -61,7 +61,7 @@ let parts_svg_rule name =
     {|(rule
   (deps %s.linebuf.sexp)
   (targets %s_actual.parts.svg)
-  (action (bash "cat %%{deps} | %%{exe:../utilities/linebuf_to_svg/linebuf_to_svg.exe} > %%{targets}")))
+  (action (bash "cat %%{deps} | %%{exe:../utilities/utilities.exe} linebuf-to-svg > %%{targets}")))
 |}
     name
     name
@@ -72,7 +72,7 @@ let connected_svg_rule name =
     {|(rule
   (deps %s.connected.sexp)
   (targets %s_actual.connected.svg)
-  (action (bash "cat %%{deps} | %%{exe:../utilities/connected_to_svg/connected_to_svg.exe} > %%{targets}")))
+  (action (bash "cat %%{deps} | %%{exe:../utilities/utilities.exe} connected-to-svg > %%{targets}")))
 |}
     name
     name
@@ -83,7 +83,7 @@ let validate_test name =
     {|(alias
  (name runtest)
  (deps %s.linebuf.sexp)
- (action (bash "cat %s.linebuf.sexp | %%{exe:../utilities/linebuf_validate/linebuf_validate.exe}")))|}
+ (action (bash "cat %s.linebuf.sexp | %%{exe:../utilities/utilities.exe} linebuf-validate")))|}
     name
     name
 ;;
