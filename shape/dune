@@ -1,6 +1,7 @@
 (library
  (name shape)
- (libraries core_kernel async_kernel ctypes ctypes.foreign jitsy shared_types)
+ (libraries core_kernel async_kernel jitsy shared_types)
  (inline_tests)
+ (js_of_ocaml)
  (preprocess
   (pps ppx_jane)))

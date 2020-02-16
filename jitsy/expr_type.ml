@@ -32,7 +32,7 @@ type 'a t =
   | Float_to_int : float t -> int t
   | Float_to_int32 : float t -> int32 t
   | Eq_int : int t * int t -> bool t
-  | Array_set : 'a Ctypes.ptr t * int t * 'a t -> unit t
+  | Array_set : 'a Type.my_array t * int t * 'a t -> unit t
   | Range2 :
       { width : int t
       ; height : int t

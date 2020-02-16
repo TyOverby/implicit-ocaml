@@ -47,7 +47,7 @@ module Type_safe : sig
 
   val circle : x:float -> y:float -> r:float -> [> exact ] t
   val intersection : 'a t list -> 'a t
-  val union : 'a t list -> 'a t
+  val union : 'a t list -> inexact t
   val invert : 'a t -> 'a t
   val subtract : 'a t -> 'a t -> 'a t
   val modulate : exact t -> by:float -> [> exact ] t

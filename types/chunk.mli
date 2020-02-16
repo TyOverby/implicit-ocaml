@@ -3,12 +3,8 @@ type t [@@deriving sexp]
 val create : width:int -> height:int -> x:int -> y:int -> t
 val width : t -> int
 val height : t -> int
-
-val apply
-  :  t
-  -> f:(x:int -> y:int -> float Ctypes.ptr -> int -> 'c)
-  -> 'c
-
+val x : t -> int
+val y : t -> int
 val to_underlying : t -> Float_bigarray.t
 
 module Debug : sig

@@ -84,11 +84,7 @@ let box_intersection a b =
     let max_x = Float.min_inan (left_side a) (left_side b) in
     let max_y = Float.min_inan (bottom_side a) (bottom_side b) in
     Some
-      { x = min_x
-      ; y = min_y
-      ; w = max_x -. min_x
-      ; h = max_y -. min_y
-      })
+      { x = min_x; y = min_y; w = max_x -. min_x; h = max_y -. min_y })
 ;;
 
 let inverse = function

@@ -17,12 +17,6 @@ let create ~width ~height ~x ~y =
 
 let to_underlying t = t.array
 
-let apply t ~f =
-  let ptr = Float_bigarray.address_of t.array in
-  let length = Float_bigarray.length t.array in
-  f ~x:t.x ~y:t.y ptr length
-;;
-
 module Debug = struct
   let debug t ~f =
     List.iter (List.range ~stride:2 0 t.height) ~f:(fun y ->

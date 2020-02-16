@@ -10,8 +10,7 @@ module Debug = struct
 end
 
 let rec compile_expression
-    : type a.
-      Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
+    : type a. Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
   =
  fun buffer ~idgen expr ->
   let open Expr_type in

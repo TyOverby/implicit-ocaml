@@ -1,8 +1,10 @@
 open! Core_kernel
 
-type t [@@deriving sexp]
+type t =
+  (float, Bigarray.float32_elt, Bigarray.c_layout) Bigarray.Array1.t
 
-val address_of : t -> float Ctypes.ptr
+val t_of_sexp : Sexp.t -> t
+val sexp_of_t : t -> Sexp.t
 val length : t -> int
 val create : int -> t
 val get : t -> int -> float

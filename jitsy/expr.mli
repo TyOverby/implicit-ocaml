@@ -27,7 +27,7 @@ val sqrt_float : float t -> float t
 val sqrt_int32 : int32 t -> int32 t
 val square_int32 : int32 t -> int32 t
 val square_float : float t -> float t
-val array_set : 'a Ctypes.ptr t -> int t -> 'a t -> unit t
+val array_set : 'a Type.my_array t -> int t -> 'a t -> unit t
 
 val range2
   :  width:int t
