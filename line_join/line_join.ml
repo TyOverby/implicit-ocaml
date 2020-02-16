@@ -3,33 +3,57 @@ open! Shared_types
 module Id = Unique_id.Int ()
 
 module Bi_map : sig
-  type t =
-    { dict : Line.t Id.Table.t
-    ; ends : Id.t list Point.Table.t
-    }
+  type t
 
   val parse : Line_buffer.t -> t
   val remove_id : t -> Id.t -> unit
   val lookup_line : t -> Id.t -> Line.t
   val first : t -> Id.t
   val find_and_remove_end : t -> Point.t -> acc:Point.t list -> Id.t
+  val is_empty : t -> bool
 end = struct
+  module Dpoint = struct
+    type t =
+      { id : Id.t
+      ; x : float
+      ; y : float
+      ; mutable picked : bool
+      }
+
+    let create ~id { Point.x; y } = { id; x; y; picked = false }
+
+    let query { Point.x; y } =
+      { id = Id.create (); x; y; picked = true }
+    ;;
+
+    let dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
+      let dx = x1 -. x2 in
+      let dy = y1 -. y2 in
+      Float.sqrt ((dx *. dx) +. (dy *. dy))
+    ;;
+
+    let is_picked { picked; _ } = picked
+  end
+
+  module Tree = Vpt.Vp_tree.Make (Dpoint)
+
   type t =
     { dict : Line.t Id.Table.t
-    ; ends : Id.t list Point.Table.t
+    ; mutable ends : Tree.t
     }
-  [@@deriving sexp]
 
   let parse (linebuf : Line_buffer.t) =
     let dict = Id.Table.create () in
-    let ends = Point.Table.create () in
+    let ends = ref [] in
     Line_buffer.iter linebuf ~f:(fun ({ p1 = _; p2 } as line) ->
-        let i = Id.create () in
-        Hashtbl.add_exn dict ~key:i ~data:line;
-        Hashtbl.add_multi ends ~key:p2 ~data:i);
+        let id = Id.create () in
+        Hashtbl.add_exn dict ~key:id ~data:line;
+        ends := Dpoint.create ~id p2 :: !ends);
+    let ends = Tree.create (Tree.Good 25) !ends in
     { dict; ends }
   ;;
 
+  let is_empty { dict; _ } = Hashtbl.is_empty dict
   let remove_id { dict; _ } id = Hashtbl.remove dict id
   let lookup_line { dict; _ } id = Hashtbl.find_exn dict id
 
@@ -45,22 +69,20 @@ end = struct
     Option.value_exn !least
   ;;
 
-  let find_and_remove_end { ends; _ } current ~acc =
-    let next_id =
-      match Hashtbl.find_multi ends current with
-      | p :: _ -> p
-      | [] ->
-        raise_s
-          [%message
-            "couldn't find"
-              (current : Point.t)
-              "in"
-              (ends : Id.t list Point.Table.t)
-              "with"
-              (acc : Point.t list)]
+  let rec find_and_remove_end bi_tree current ~acc =
+    let _, dpoint =
+      Tree.nearest_neighbor (Dpoint.query current) bi_tree.ends
     in
-    Hashtbl.remove_multi ends current;
-    next_id
+    if Dpoint.is_picked dpoint
+    then (
+      bi_tree.ends
+        <- Tree.to_list bi_tree.ends
+           |> List.filter ~f:(Fn.non Dpoint.is_picked)
+           |> Tree.create (Tree.Good 25);
+      find_and_remove_end bi_tree current ~acc)
+    else (
+      dpoint.picked <- true;
+      dpoint.id)
   ;;
 end
 
@@ -83,10 +105,6 @@ let process_single bi_map =
       Bi_map.lookup_line bi_map first
     in
     Bi_map.remove_id bi_map first;
-    (*
-    Hashtbl.remove starts start_pt;
-    Hashtbl.remove ends end_pt;
-    *)
     start_pt, end_pt
   in
   run_with ~end_pt ~current:start_pt ~acc:[]
@@ -95,7 +113,7 @@ let process_single bi_map =
 let f linebuf =
   let bi_map = Bi_map.parse linebuf in
   let rec parse_all acc =
-    if Hashtbl.is_empty bi_map.Bi_map.dict
+    if Bi_map.is_empty bi_map
     then acc
     else parse_all (process_single bi_map :: acc)
   in

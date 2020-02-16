@@ -1,7 +1,7 @@
 open! Core_kernel
 open! Example_runner
 
-let _s =
+let s =
   {|
 (Transform
      (shape
@@ -23,6 +23,4 @@ let _s =
   |> Shared_types.Shape.to_type_safe
 ;;
 
-(* let () = run s *)
-
-let () = run (circle ~x:5.0 ~y:5.0 ~r:2.0)
+let () = run s

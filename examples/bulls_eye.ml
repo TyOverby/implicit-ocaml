@@ -12,7 +12,7 @@ let () =
              ~shape:
                (subtract
                   (circle ~r:10.0 ~x:40.0 ~y:40.0)
-                  (circle ~r:7.0 ~x:40.0 ~y:40.0))
+                  (circle ~r:7.5 ~x:40.0 ~y:40.0))
              ~color:"red"
          ; Layer.create
              ~shape:(circle ~r:5.0 ~x:40.0 ~y:40.0)
