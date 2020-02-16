@@ -10,8 +10,7 @@ module Debug = struct
 end
 
 let rec compile_expression
-    : type a.
-      Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
+    : type a. Buffer.t -> idgen:(Id.t -> string) -> a Expr.t -> string
   =
  fun buffer ~idgen expr ->
   let open Expr_type in
@@ -49,7 +48,9 @@ let rec compile_expression
     let x, y, pos =
       Var (Type.int, x), Var (Type.int, y), Var (Type.int, pos)
     in
-    let _ = compile_expression buffer ~idgen (f ~x ~y ~pos) in
+    let (_ : string) =
+      compile_expression buffer ~idgen (f ~x ~y ~pos)
+    in
     bprintf
       buffer
       {|
@@ -61,7 +62,7 @@ let rec compile_expression
     ""
   | Progn (_t, l, a) ->
     List.iter l ~f:(fun expr ->
-        let _ = compile_expression buffer ~idgen expr in
+        let (_ : string) = compile_expression buffer ~idgen expr in
         ());
     compile_expression buffer ~idgen a
   | _other ->

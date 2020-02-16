@@ -10,9 +10,7 @@ let rec compute_bounding_box = function
   | Shape.Intersection [] | Union [] | Circle { r = 0.0; _ } ->
     { positive = Nothing; negative = Everything }
   | Circle { x; y; r } ->
-    let bb =
-      { x = x -. r; y = y -. r; h = 2.0 *. r; w = 2.0 *. r }
-    in
+    let bb = { x = x -. r; y = y -. r; h = 2.0 *. r; w = 2.0 *. r } in
     { positive = Something bb; negative = Hole bb }
   | Union targets ->
     targets |> compute_all_bounding_box |> Box.union_all
@@ -110,36 +108,34 @@ module ComputeBB_Test = struct
   ;;
 
   (*_
-  let%expect_test _ =
-    rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:20.0 |> run_bb_test;
-    [%expect
-      {|
-       ((positive (Something ((x 0) (y 0) (w 10) (h 20))))
-        (negative (Hole ((x 0) (y 0) (w 10) (h 20)))))|}]
-  ;;
+    let%expect_test _ =
+      rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:20.0 |> run_bb_test;
+      [%expect
+        {|
+         ((positive (Something ((x 0) (y 0) (w 10) (h 20))))
+          (negative (Hole ((x 0) (y 0) (w 10) (h 20)))))|}]
+    ;;
 
-  let%expect_test _ =
-    rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:10.0
-    |> scale ~dx:3.0 ~dy:5.0
-    |> run_bb_test;
-    [%expect
-      {|
-       ((positive (Something ((x 0) (y 0) (w 30) (h 50))))
-        (negative (Hole ((x 0) (y 0) (w 30) (h 50)))))|}]
-  ;;
+    let%expect_test _ =
+      rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:10.0
+      |> scale ~dx:3.0 ~dy:5.0
+      |> run_bb_test;
+      [%expect
+        {|
+         ((positive (Something ((x 0) (y 0) (w 30) (h 50))))
+          (negative (Hole ((x 0) (y 0) (w 30) (h 50)))))|}]
+    ;;
 
-  let%expect_test _ =
-    rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:10.0
-    |> scale ~dx:3.0 ~dy:3.0
-    |> translate ~dx:5.0 ~dy:5.0
-    |> run_bb_test;
-    [%expect
-      {|
-       ((positive (Something ((x 5) (y 5) (w 30) (h 30))))
-        (negative (Hole ((x 5) (y 5) (w 30) (h 30)))))|}]
-  ;;
-
-
+    let%expect_test _ =
+      rect ~x:0.0 ~y:0.0 ~w:10.0 ~h:10.0
+      |> scale ~dx:3.0 ~dy:3.0
+      |> translate ~dx:5.0 ~dy:5.0
+      |> run_bb_test;
+      [%expect
+        {|
+         ((positive (Something ((x 5) (y 5) (w 30) (h 30))))
+          (negative (Hole ((x 5) (y 5) (w 30) (h 30)))))|}]
+    ;;
   *)
   let%expect_test _ =
     circle ~x:0.0 ~y:0.0 ~r:10.0

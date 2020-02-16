@@ -44,8 +44,7 @@ let main () =
    then
      raise_s
        [%message
-         "line lengths are unequal"
-           (length_tripple : int * int * int)]
+         "line lengths are unequal" (length_tripple : int * int * int)]
    else ());
   let diff = Set.symmetric_diff starts ends |> Sequence.to_list in
   if not (List.is_empty diff)

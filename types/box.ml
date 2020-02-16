@@ -54,10 +54,11 @@ let bbox_of_points = function
 ;;
 
 let intersects (a : t) (b : t) =
-  a.x < b.x +. b.w
-  && b.x < a.x +. a.w
-  && a.y < b.y +. b.h
-  && b.y < a.y +. a.h
+  let open Float in
+  a.x < b.x + b.w
+  && b.x < a.x + a.w
+  && a.y < b.y + b.h
+  && b.y < a.y + a.h
 ;;
 
 let left_side { x; w; _ } = x +. w
@@ -84,11 +85,7 @@ let box_intersection a b =
     let max_x = Float.min_inan (left_side a) (left_side b) in
     let max_y = Float.min_inan (bottom_side a) (bottom_side b) in
     Some
-      { x = min_x
-      ; y = min_y
-      ; w = max_x -. min_x
-      ; h = max_y -. min_y
-      })
+      { x = min_x; y = min_y; w = max_x -. min_x; h = max_y -. min_y })
 ;;
 
 let inverse = function
@@ -168,6 +165,7 @@ let grow { positive; negative } how_much =
 
 module BboxExpectTests = struct
   let box_test_stub f a b =
+    let open Poly in
     let decode a = a |> Sexp.of_string |> t_of_sexp in
     let a = decode a in
     let b = decode b in
@@ -178,6 +176,7 @@ module BboxExpectTests = struct
   ;;
 
   let bounding_test_stub f a b =
+    let open Poly in
     let ab = f a b in
     let ba = f b a in
     assert (ab = ba);

@@ -427,8 +427,7 @@ let%expect_test "sqrt sqrt int32" =
     return (Expr.sqrt_int32 (Expr.sqrt_int32 x))
   in
   let%bind () =
-    test f (fun f ->
-        [ [%message (f (Int32.of_int_exn 16) : int32)] ])
+    test f (fun f -> [ [%message (f (Int32.of_int_exn 16) : int32)] ])
   in
   [%expect
     {|
@@ -1238,13 +1237,12 @@ let%expect_test "range2" =
   let%bind () =
     test f (fun f ->
         let bigarray =
-          Bigarray.Array1.create
-            Bigarray.float32
-            Bigarray.C_layout
-            25
+          Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 25
         in
         Bigarray.Array1.fill bigarray 0.0;
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 0 in
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 0
+        in
         let list = bigarray_to_list bigarray in
         [ [%message (list : float list)] ])
   in
@@ -1306,20 +1304,25 @@ let%expect_test "big-array" =
   let%bind () =
     test f (fun f ->
         let bigarray =
-          Bigarray.Array1.create
-            Bigarray.float32
-            Bigarray.C_layout
-            10
+          Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 10
         in
         Bigarray.Array1.fill bigarray 0.0;
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 1 in
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 2 in
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 3 in
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 4 in
-        let _ = f (Ctypes.bigarray_start Ctypes.array1 bigarray) 5 in
-        let list =
-          bigarray_to_list bigarray |> Fn.flip List.take 6
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 1
         in
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 2
+        in
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 3
+        in
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 4
+        in
+        let (_ : int) =
+          f (Ctypes.bigarray_start Ctypes.array1 bigarray) 5
+        in
+        let list = bigarray_to_list bigarray |> Fn.flip List.take 6 in
         [ [%message (list : float list)] ])
   in
   [%expect

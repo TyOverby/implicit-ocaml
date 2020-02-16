@@ -37,13 +37,9 @@ let create_scale dx dy = row_major dx 0.0 0.0 dy 0.0 0.0
 
 let apply_to_point matrix (point : Point.t) : Point.t =
   { x =
-      (point.x *. matrix.m11)
-      +. (point.y *. matrix.m21)
-      +. matrix.m31
+      (point.x *. matrix.m11) +. (point.y *. matrix.m21) +. matrix.m31
   ; y =
-      (point.x *. matrix.m12)
-      +. (point.y *. matrix.m22)
-      +. matrix.m32
+      (point.x *. matrix.m12) +. (point.y *. matrix.m22) +. matrix.m32
   }
 ;;
 
