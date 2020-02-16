@@ -6,7 +6,7 @@ let process_single bi_map =
     if Point.equal end_pt current
     then Connected.Joined acc
     else (
-      let next_id = Bi_map.find_and_remove_end bi_map current ~acc in
+      let next_id = Bi_map.find_and_remove_end bi_map current in
       let { Line.p1 = current; _ } =
         Bi_map.lookup_line bi_map next_id
       in

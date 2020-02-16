@@ -65,7 +65,7 @@ let first { dict; _ } =
   Option.value_exn !least
 ;;
 
-let rec find_and_remove_end bi_tree current ~acc =
+let rec find_and_remove_end bi_tree current =
   let _, dpoint =
     Tree.nearest_neighbor (Dpoint.query current) bi_tree.ends
   in
@@ -75,7 +75,7 @@ let rec find_and_remove_end bi_tree current ~acc =
       <- Tree.to_list bi_tree.ends
          |> List.filter ~f:(Fn.non Dpoint.is_picked)
          |> Tree.create (Tree.Good 25);
-    find_and_remove_end bi_tree current ~acc)
+    find_and_remove_end bi_tree current)
   else (
     dpoint.picked <- true;
     dpoint.id)
