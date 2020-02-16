@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-  <path fill-rule="evenodd" d="M24.000000 10.921379
+<path fill-rule="evenodd" d="
+ M24.000000 10.921379
  L24.000000 10.921379
  L25.000000 10.635452
  L26.000000 10.404331
@@ -183,4 +184,6 @@
  L21.291901 12.000000
  L22.000000 11.670647
  L23.000000 11.265658
-  Z " style="fill:black; stroke:none; stroke-width:0"></path>\n</svg>
+ Z"
+ style="fill:black; stroke:none; stroke-width:0"></path>
+</svg>

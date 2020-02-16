@@ -1,6 +1,9 @@
 open! Core
 open! Async
 open Shared_types
+open Svg
+
+let style = Style.[ Fill None; Stroke (Some "black"); Stroke_width 1 ]
 
 let main () =
   let linebuf =
@@ -9,22 +12,11 @@ let main () =
     |> Sexp.of_string
     |> Line_buffer.t_of_sexp
   in
-  printf
-    {|<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-  |};
-  Line_buffer.iter
-    linebuf
-    ~f:(fun { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } }
-            ->
-      printf
-        {| <line x1="%f" y1="%f" x2="%f" y2="%f" style="%s" />
-        |}
-        x1
-        y1
-        x2
-        y2
-        {|fill:none; stroke:black; stroke-width:1|});
-  printf {|</svg>|};
+  linebuf
+  |> Line_buffer.to_list
+  |> List.map ~f:(Element.line ~style)
+  |> to_svg
+  |> print_endline;
   Deferred.unit
 ;;
 

@@ -1,68 +1,68 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-   <line x1="14.242476" y1="12.000000" x2="15.000000" y2="11.667977" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="15.000000" y1="11.667977" x2="16.000000" y2="11.427510" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="16.000000" y1="11.427510" x2="17.000000" y2="11.345531" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="17.000000" y1="11.345531" x2="18.000000" y2="11.396639" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="18.000000" y1="11.396639" x2="19.000000" y2="11.565652" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="19.000000" y1="11.565652" x2="20.000000" y2="11.840607" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="20.000000" y1="11.840607" x2="20.437298" y2="12.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.865847" y1="13.000000" x2="13.000000" y2="12.865847" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="13.000000" y1="12.865847" x2="14.000000" y2="12.114305" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="14.000000" y1="12.114305" x2="14.242476" y2="12.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="20.437298" y1="12.000000" x2="21.000000" y2="12.231791" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="21.000000" y1="12.231791" x2="22.000000" y2="12.731980" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="22.000000" y1="12.731980" x2="22.459883" y2="13.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.114305" y1="14.000000" x2="12.865847" y2="13.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="22.459883" y1="13.000000" x2="23.000000" y2="13.352171" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="23.000000" y1="13.352171" x2="23.882601" y2="14.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.667977" y1="15.000000" x2="12.000000" y2="14.242476" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.000000" y1="14.242476" x2="12.114305" y2="14.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="23.882601" y1="14.000000" x2="24.000000" y2="14.095869" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="24.000000" y1="14.095869" x2="25.000000" y2="15.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.427510" y1="16.000000" x2="11.667977" y2="15.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="25.000000" y1="15.000000" x2="25.904131" y2="16.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.345531" y1="17.000000" x2="11.427510" y2="16.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="25.904131" y1="16.000000" x2="26.000000" y2="16.117399" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="26.000000" y1="16.117399" x2="26.647829" y2="17.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.396639" y1="18.000000" x2="11.345531" y2="17.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="26.647829" y1="17.000000" x2="27.000000" y2="17.540117" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.000000" y1="17.540117" x2="27.268021" y2="18.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.565652" y1="19.000000" x2="11.396639" y2="18.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.268021" y1="18.000000" x2="27.768209" y2="19.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="11.840607" y1="20.000000" x2="11.565652" y2="19.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.768209" y1="19.000000" x2="28.000000" y2="19.562702" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.000000" y1="19.562702" x2="28.159393" y2="20.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.000000" y1="20.437298" x2="11.840607" y2="20.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.231791" y1="21.000000" x2="12.000000" y2="20.437298" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.159393" y1="20.000000" x2="28.434349" y2="21.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="12.731980" y1="22.000000" x2="12.231791" y2="21.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.434349" y1="21.000000" x2="28.603361" y2="22.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="13.000000" y1="22.459883" x2="12.731980" y2="22.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="13.352171" y1="23.000000" x2="13.000000" y2="22.459883" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.603361" y1="22.000000" x2="28.654469" y2="23.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="14.000000" y1="23.882601" x2="13.352171" y2="23.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="14.095869" y1="24.000000" x2="14.000000" y2="23.882601" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.654469" y1="23.000000" x2="28.572489" y2="24.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="15.000000" y1="25.000000" x2="14.095869" y2="24.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.572489" y1="24.000000" x2="28.332022" y2="25.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="16.000000" y1="25.904131" x2="15.000000" y2="25.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="16.117399" y1="26.000000" x2="16.000000" y2="25.904131" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.000000" y1="25.757523" x2="27.885695" y2="26.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="28.332022" y1="25.000000" x2="28.000000" y2="25.757523" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="17.000000" y1="26.647829" x2="16.117399" y2="26.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="17.540117" y1="27.000000" x2="17.000000" y2="26.647829" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.885695" y1="26.000000" x2="27.134153" y2="27.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="18.000000" y1="27.268021" x2="17.540117" y2="27.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="19.000000" y1="27.768209" x2="18.000000" y2="27.268021" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="19.562702" y1="28.000000" x2="19.000000" y2="27.768209" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="26.000000" y1="27.885695" x2="25.757523" y2="28.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.000000" y1="27.134153" x2="26.000000" y2="27.885695" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="27.134153" y1="27.000000" x2="27.000000" y2="27.134153" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="20.000000" y1="28.159393" x2="19.562702" y2="28.000000" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="21.000000" y1="28.434349" x2="20.000000" y2="28.159393" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="22.000000" y1="28.603361" x2="21.000000" y2="28.434349" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="23.000000" y1="28.654469" x2="22.000000" y2="28.603361" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="24.000000" y1="28.572489" x2="23.000000" y2="28.654469" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="25.000000" y1="28.332022" x2="24.000000" y2="28.572489" style="fill:none; stroke:black; stroke-width:1" />
-         <line x1="25.757523" y1="28.000000" x2="25.000000" y2="28.332022" style="fill:none; stroke:black; stroke-width:1" />
-        </svg>
+<line x1="14.242476" y1="12.000000" x2="15.000000" y2="11.667977" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="15.000000" y1="11.667977" x2="16.000000" y2="11.427510" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="16.000000" y1="11.427510" x2="17.000000" y2="11.345531" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="17.000000" y1="11.345531" x2="18.000000" y2="11.396639" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="18.000000" y1="11.396639" x2="19.000000" y2="11.565652" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="19.000000" y1="11.565652" x2="20.000000" y2="11.840607" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="20.000000" y1="11.840607" x2="20.437298" y2="12.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.865847" y1="13.000000" x2="13.000000" y2="12.865847" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="13.000000" y1="12.865847" x2="14.000000" y2="12.114305" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="14.000000" y1="12.114305" x2="14.242476" y2="12.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="20.437298" y1="12.000000" x2="21.000000" y2="12.231791" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="21.000000" y1="12.231791" x2="22.000000" y2="12.731980" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="22.000000" y1="12.731980" x2="22.459883" y2="13.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.114305" y1="14.000000" x2="12.865847" y2="13.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="22.459883" y1="13.000000" x2="23.000000" y2="13.352171" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="23.000000" y1="13.352171" x2="23.882601" y2="14.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.667977" y1="15.000000" x2="12.000000" y2="14.242476" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.000000" y1="14.242476" x2="12.114305" y2="14.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="23.882601" y1="14.000000" x2="24.000000" y2="14.095869" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="24.000000" y1="14.095869" x2="25.000000" y2="15.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.427510" y1="16.000000" x2="11.667977" y2="15.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="25.000000" y1="15.000000" x2="25.904131" y2="16.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.345531" y1="17.000000" x2="11.427510" y2="16.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="25.904131" y1="16.000000" x2="26.000000" y2="16.117399" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="26.000000" y1="16.117399" x2="26.647829" y2="17.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.396639" y1="18.000000" x2="11.345531" y2="17.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="26.647829" y1="17.000000" x2="27.000000" y2="17.540117" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.000000" y1="17.540117" x2="27.268021" y2="18.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.565652" y1="19.000000" x2="11.396639" y2="18.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.268021" y1="18.000000" x2="27.768209" y2="19.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="11.840607" y1="20.000000" x2="11.565652" y2="19.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.768209" y1="19.000000" x2="28.000000" y2="19.562702" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.000000" y1="19.562702" x2="28.159393" y2="20.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.000000" y1="20.437298" x2="11.840607" y2="20.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.231791" y1="21.000000" x2="12.000000" y2="20.437298" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.159393" y1="20.000000" x2="28.434349" y2="21.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="12.731980" y1="22.000000" x2="12.231791" y2="21.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.434349" y1="21.000000" x2="28.603361" y2="22.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="13.000000" y1="22.459883" x2="12.731980" y2="22.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="13.352171" y1="23.000000" x2="13.000000" y2="22.459883" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.603361" y1="22.000000" x2="28.654469" y2="23.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="14.000000" y1="23.882601" x2="13.352171" y2="23.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="14.095869" y1="24.000000" x2="14.000000" y2="23.882601" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.654469" y1="23.000000" x2="28.572489" y2="24.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="15.000000" y1="25.000000" x2="14.095869" y2="24.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.572489" y1="24.000000" x2="28.332022" y2="25.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="16.000000" y1="25.904131" x2="15.000000" y2="25.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="16.117399" y1="26.000000" x2="16.000000" y2="25.904131" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.000000" y1="25.757523" x2="27.885695" y2="26.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="28.332022" y1="25.000000" x2="28.000000" y2="25.757523" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="17.000000" y1="26.647829" x2="16.117399" y2="26.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="17.540117" y1="27.000000" x2="17.000000" y2="26.647829" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.885695" y1="26.000000" x2="27.134153" y2="27.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="18.000000" y1="27.268021" x2="17.540117" y2="27.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="19.000000" y1="27.768209" x2="18.000000" y2="27.268021" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="19.562702" y1="28.000000" x2="19.000000" y2="27.768209" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="26.000000" y1="27.885695" x2="25.757523" y2="28.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.000000" y1="27.134153" x2="26.000000" y2="27.885695" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="27.134153" y1="27.000000" x2="27.000000" y2="27.134153" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="20.000000" y1="28.159393" x2="19.562702" y2="28.000000" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="21.000000" y1="28.434349" x2="20.000000" y2="28.159393" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="22.000000" y1="28.603361" x2="21.000000" y2="28.434349" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="23.000000" y1="28.654469" x2="22.000000" y2="28.603361" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="24.000000" y1="28.572489" x2="23.000000" y2="28.654469" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="25.000000" y1="28.332022" x2="24.000000" y2="28.572489" style="fill:none; stroke:black; stroke-width:1" />
+<line x1="25.757523" y1="28.000000" x2="25.000000" y2="28.332022" style="fill:none; stroke:black; stroke-width:1" />
+</svg>

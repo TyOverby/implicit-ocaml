@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-  <path fill-rule="evenodd" d="M42.000000 51.000000
+<path fill-rule="evenodd" d="
+ M42.000000 51.000000
  L42.000000 51.000000
  L42.686108 52.000000
  L43.000000 52.529190
@@ -29,7 +30,10 @@
  L45.000000 51.213200
  L44.000000 51.131981
  L43.460541 51.000000
-  Z M37.470810 43.000000
+ Z"
+ style="fill:black; stroke:none; stroke-width:0"></path>
+<path fill-rule="evenodd" d="
+ M37.470810 43.000000
  L37.470810 43.000000
  L37.000000 43.264942
  L36.000000 43.746590
@@ -59,7 +63,10 @@
  L39.000000 43.460541
  L39.118542 43.000000
  L39.000000 42.000000
-  Z M25.000000 15.858322
+ Z"
+ style="fill:black; stroke:none; stroke-width:0"></path>
+<path fill-rule="evenodd" d="
+ M25.000000 15.858322
  L25.000000 15.858322
  L26.000000 15.543776
  L27.000000 15.303357
@@ -443,4 +450,6 @@
  L22.529188 17.000000
  L23.000000 16.735058
  L24.000000 16.253408
-  Z " style="fill:black; stroke:none; stroke-width:0"></path>\n</svg>
+ Z"
+ style="fill:black; stroke:none; stroke-width:0"></path>
+</svg>

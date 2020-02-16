@@ -1,6 +1,9 @@
 open! Core
 open! Async
+open Svg
 open Shared_types
+
+let style = Style.[ Fill (Some "black"); Stroke None; Stroke_width 0 ]
 
 let main () =
   let connected =
@@ -9,22 +12,12 @@ let main () =
     |> Sexp.of_string
     |> [%of_sexp: Connected.t list]
   in
-  printf
-    {|<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">
-  |};
-  printf {|<path fill-rule="evenodd" d="|};
-  List.iter connected ~f:(function
-      | Disjoint _ -> failwith "svg of disjoint is umimplemented"
-      | Joined points ->
-        (points
-        |> List.hd_exn
-        |> fun { Point.x; y } -> printf "M%f %f\n " x y);
-        List.iter points ~f:(fun { Point.x; y } ->
-            printf "L%f %f\n " x y);
-        printf " Z ");
-  printf
-    {|" style="fill:black; stroke:none; stroke-width:0"></path>\n|};
-  printf {|</svg>|};
+  connected
+  |> List.map ~f:(function
+         | Disjoint _ -> failwith "svg of disjoint is not implemented"
+         | Joined points -> Element.path points ~style)
+  |> to_svg
+  |> print_endline;
   Deferred.unit
 ;;
 
