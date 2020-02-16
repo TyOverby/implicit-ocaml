@@ -39,7 +39,7 @@ module Tree = Vpt.Vp_tree.Make (Dpoint)
 
 type t =
   { dict : Line.t Id.Table.t
-  ; mutable ends : Tree.t
+  ; ends : Tree.t
   }
 
 let parse (linebuf : Line_buffer.t) =
