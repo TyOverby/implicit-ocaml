@@ -12,6 +12,7 @@ module Bi_map : sig
   val remove_id : t -> Id.t -> unit
   val lookup_line : t -> Id.t -> Line.t
   val first : t -> Id.t
+  val find_and_remove_end : t -> Point.t -> acc:Point.t list -> Id.t
 end = struct
   type t =
     { dict : Line.t Id.Table.t
@@ -33,32 +34,42 @@ end = struct
   let lookup_line { dict; _ } id = Hashtbl.find_exn dict id
 
   let first { dict; _ } =
-    with_return (fun { return } ->
-        Hashtbl.iter_keys dict ~f:return;
-        raise_s [%message "empty map to iterate over?"])
+    (* PERF: you could keep a set of keys next to the 
+     * dict and remove them when necessary *)
+    let least = ref None in
+    Hashtbl.iter_keys dict ~f:(fun id ->
+        match !least with
+        | None -> least := Some id
+        | Some a when Id.( < ) id a -> least := Some id
+        | _ -> ());
+    Option.value_exn !least
+  ;;
+
+  let find_and_remove_end { ends; _ } current ~acc =
+    let next_id =
+      match Hashtbl.find_multi ends current with
+      | p :: _ -> p
+      | [] ->
+        raise_s
+          [%message
+            "couldn't find"
+              (current : Point.t)
+              "in"
+              (ends : Id.t list Point.Table.t)
+              "with"
+              (acc : Point.t list)]
+    in
+    Hashtbl.remove_multi ends current;
+    next_id
   ;;
 end
 
 let process_single bi_map =
-  let { Bi_map.ends; _ } = bi_map in
   let rec run_with ~end_pt ~current ~acc =
     if Point.equal end_pt current
     then Connected.Joined acc
     else (
-      let next_id =
-        match Hashtbl.find_multi ends current with
-        | p :: _ -> p
-        | [] ->
-          raise_s
-            [%message
-              "couldn't find"
-                (current : Point.t)
-                "in"
-                (ends : Id.t list Point.Table.t)
-                "with"
-                (acc : Point.t list)]
-      in
-      Hashtbl.remove_multi ends current;
+      let next_id = Bi_map.find_and_remove_end bi_map current ~acc in
       let { Line.p1 = current; _ } =
         Bi_map.lookup_line bi_map next_id
       in
