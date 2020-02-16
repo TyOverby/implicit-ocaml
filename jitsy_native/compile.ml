@@ -1,5 +1,13 @@
 open Core_kernel
 open Async
+open Jitsy
+
+module Debug = struct
+  type t =
+    { c_source : string
+    ; asm_source : unit -> string Deferred.t
+    }
+end
 
 let rec compile_expression
     : type a.
@@ -265,7 +273,7 @@ let jit f =
   let%bind compiled_filename =
     compile_c c_source |> Deferred.Or_error.ok_exn
   in
-  let disas () =
+  let asm_source () =
     let dump =
       {|
 #!/bin/bash
@@ -289,5 +297,6 @@ gdb -batch "$1" -ex 'disassemble var_0' \
     |> Deferred.Or_error.ok_exn
   in
   let library = load compiled_filename in
-  return (Foreign.foreign ~from:library name f.typ, disas)
+  let debug = { Debug.c_source; asm_source } in
+  return (Foreign.foreign ~from:library name f.typ, debug)
 ;;

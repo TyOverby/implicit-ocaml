@@ -1,6 +1,7 @@
 (library
  (name march)
  (modules march)
+ (js_of_ocaml)
  (c_names marching_squares)
  (c_flags :standard -O3)
  (libraries ctypes ctypes.foreign shared_types))

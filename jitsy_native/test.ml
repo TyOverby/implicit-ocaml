@@ -1,5 +1,6 @@
 open Core_kernel
 open Async
+open Jitsy
 
 module Exploration = struct
   let%expect_test "" =
@@ -10,12 +11,13 @@ module Exploration = struct
 end
 
 let test f g =
-  let source, _name = Compile.compile f in
+  let%bind f, { Compile.Debug.c_source; asm_source } =
+    Compile.jit f
+  in
   print_endline "===== source =====";
-  print_endline source;
-  let%bind f, disas = Compile.jit f in
+  print_endline c_source;
   print_endline "====== asm =======";
-  let%bind disas = disas () in
+  let%bind disas = asm_source () in
   print_string disas;
   print_endline "====== out =======";
   List.iter (g f) ~f:print_s;

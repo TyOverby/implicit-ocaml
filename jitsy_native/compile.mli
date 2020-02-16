@@ -1,5 +1,13 @@
-open Core_kernel
-open Async
+open! Core_kernel
+open! Async
+open Jitsy
+
+module Debug : sig
+  type t =
+    { c_source : string
+    ; asm_source : unit -> string Deferred.t
+    }
+end
 
 val compile_expression
   :  Buffer.t
@@ -13,4 +21,4 @@ val load : string -> Dl.library
 
 val jit
   :  ('a, 'b -> 'c) Function.t
-  -> (('b -> 'c) * (unit -> string Deferred.t)) Deferred.t
+  -> (('b -> 'c) * Debug.t) Deferred.t

@@ -1,6 +1,6 @@
 (library
  (name shape)
- (libraries core_kernel ctypes ctypes.foreign jitsy shared_types)
+ (libraries core_kernel async_kernel ctypes ctypes.foreign jitsy shared_types)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

@@ -1,6 +1,6 @@
 (library
  (name pipeline)
- (libraries async core_kernel shape march shared_types line_join)
+ (libraries async_kernel core_kernel shape march shared_types line_join)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

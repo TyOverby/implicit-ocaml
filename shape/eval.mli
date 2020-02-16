@@ -1,10 +1,9 @@
 open! Core_kernel
-open! Async
+open! Async_kernel
 open Shared_types
 
-type debug =
-  { c_source : unit -> string
-  ; asm_source : unit -> string Deferred.t
-  }
-
-val eval : Types.t -> Chunk.t -> debug Deferred.t
+val eval
+  :  (module Jitsy.Backend.S with type Debug.t = 'd)
+  -> Types.t
+  -> Chunk.t
+  -> 'd Deferred.t

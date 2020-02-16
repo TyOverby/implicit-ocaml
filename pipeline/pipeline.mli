@@ -1,7 +1,18 @@
 open! Core_kernel
-open! Async
+open! Async_kernel
 open Shared_types
 
-val eval_chunk : Shape.t -> Chunk.t Deferred.t
-val eval_lines : Shape.t -> Line_buffer.t Deferred.t
-val eval_connect : Shape.t -> Connected.t sexp_list Deferred.t
+val eval_chunk
+  :  (module Jitsy.Backend.S with type Debug.t = 'a)
+  -> Shape.t
+  -> Chunk.t Deferred.t
+
+val eval_lines
+  :  (module Jitsy.Backend.S with type Debug.t = 'a)
+  -> Shape.t
+  -> Line_buffer.t Deferred.t
+
+val eval_connect
+  :  (module Jitsy.Backend.S with type Debug.t = 'a)
+  -> Shape.t
+  -> Connected.t sexp_list Deferred.t

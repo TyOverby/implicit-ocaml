@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifdef EMSCRIPTEN 
+#include <emscripten.h>
+#endif
+
 typedef struct float2 {
   float x;
   float y;
@@ -279,6 +283,9 @@ void apply(
     march(sra, srb, src, srd, p, 1.0f, out, atomic);
 }
 
+#ifdef EMSCRIPTEN
+EMSCRIPTEN_KEEPALIVE 
+#endif
 extern void run_marching_squares(
     float* restrict buffer,
     unsigned int width,

@@ -1,5 +1,5 @@
 (executable
  (name linebuf_validate)
- (libraries core pipeline)
+ (libraries core async pipeline)
  (preprocess
   (pps ppx_jane)))
