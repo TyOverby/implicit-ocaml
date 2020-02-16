@@ -4,17 +4,13 @@ module Id = Unique_id.Int ()
 
 module Dpoint = struct
   type t =
-    { id : Id.t
-    ; x : float
+    { x : float
     ; y : float
-    ; mutable picked : bool
+    ; mutable ids : Id.t list
     }
 
-  let create ~id { Point.x; y } = { id; x; y; picked = false }
-
-  let query { Point.x; y } =
-    { id = Id.create (); x; y; picked = true }
-  ;;
+  let create ~id { Point.x; y } = { ids = [ id ]; x; y }
+  let query { Point.x; y } = { ids = []; x; y }
 
   let _dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
     let dx = x1 -. x2 in
@@ -28,7 +24,15 @@ module Dpoint = struct
     Float.(abs dx + abs dy)
   ;;
 
-  let is_picked { picked; _ } = picked
+  let add dpoint ~id = dpoint.ids <- id :: dpoint.ids
+
+  let take dpoint =
+    match dpoint.ids with
+    | x :: xs ->
+      dpoint.ids <- xs;
+      Some x
+    | [] -> None
+  ;;
 end
 
 module Tree = Vpt.Vp_tree.Make (Dpoint)
@@ -40,12 +44,16 @@ type t =
 
 let parse (linebuf : Line_buffer.t) =
   let dict = Id.Table.create () in
-  let ends = ref [] in
+  let ends = Point.Table.create () in
   Line_buffer.iter linebuf ~f:(fun ({ p1 = _; p2 } as line) ->
       let id = Id.create () in
       Hashtbl.add_exn dict ~key:id ~data:line;
-      ends := Dpoint.create ~id p2 :: !ends);
-  let ends = Tree.create (Tree.Good 25) !ends in
+      Hashtbl.update ends p2 ~f:(function
+          | Some dpoint ->
+            Dpoint.add dpoint ~id;
+            dpoint
+          | None -> Dpoint.create ~id p2));
+  let ends = Point.Table.data ends |> Tree.create (Tree.Good 25) in
   { dict; ends }
 ;;
 
@@ -65,18 +73,11 @@ let first { dict; _ } =
   Option.value_exn !least
 ;;
 
-let rec find_and_remove_end bi_tree current =
+let find_and_remove_end bi_tree current =
   let _, dpoint =
     Tree.nearest_neighbor (Dpoint.query current) bi_tree.ends
   in
-  if Dpoint.is_picked dpoint
-  then (
-    bi_tree.ends
-      <- Tree.to_list bi_tree.ends
-         |> List.filter ~f:(Fn.non Dpoint.is_picked)
-         |> Tree.create (Tree.Good 25);
-    find_and_remove_end bi_tree current)
-  else (
-    dpoint.picked <- true;
-    dpoint.id)
+  match Dpoint.take dpoint with
+  | Some id -> id
+  | None -> assert false
 ;;
