@@ -17,4 +17,5 @@ dune build \
  utilities/connected_to_svg/connected_to_svg.exe \
  utilities/linebuf_to_connected/linebuf_to_connected.exe \
  utilities/linebuf_validate/linebuf_validate.exe \
- -w
+ -w \
+ --terminal-persistence=clear-on-rebuild
