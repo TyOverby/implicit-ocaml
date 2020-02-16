@@ -226,3 +226,20 @@
 (alias
  (name runtest)
  (action (diff mix.connected.svg mix_actual.connected.svg)))
+
+; bulls_eye name
+(executable
+   (name bulls_eye)
+   (modules bulls_eye)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel eval example_runner))
+(rule
+     (with-stdout-to bulls_eye_actual.scene.sexp
+      (run ./bulls_eye.exe)))
+(rule
+  (deps bulls_eye_actual.scene.sexp)
+  (targets bulls_eye_actual.scene.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} scene-to-svg > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff bulls_eye.svg bulls_eye_actual.scene.svg)))

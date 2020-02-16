@@ -1,12 +1,11 @@
 open! Core_kernel
 open Shared_types
-open Bounding_box
 open Box
 
-let reshape shape ~target_width ~target_height ~padding =
-  let bb, shape =
-    match (compute_bounding_box shape).positive with
-    | Something b -> b, shape
+let reshape bb shape ~target_width ~target_height ~padding =
+  let bb =
+    match bb.positive with
+    | Something bb -> bb
     | _ -> failwith "non-normal shapes can't be reshaped yet"
   in
   let target_width = Float.of_int (target_width - (padding * 2)) in

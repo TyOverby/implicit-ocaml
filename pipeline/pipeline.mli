@@ -1,6 +1,7 @@
 open! Core_kernel
 open! Async_kernel
 open Shared_types
+module Reshape = Reshape
 
 val eval_chunk
   :  (module Jitsy.Backend.S with type Debug.t = 'a)

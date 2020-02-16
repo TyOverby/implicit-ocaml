@@ -4,5 +4,8 @@ type t =
   { layers : Layer.t list
   ; target_width : int
   ; target_height : int
+  ; padding : int
   }
-[@@deriving fields]
+[@@deriving fields, sexp]
+
+let create = Fields.create

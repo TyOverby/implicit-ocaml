@@ -27,7 +27,7 @@ module Element = struct
         ; style : Style.t list
         }
     | Path of
-        { points : Point.t list
+        { points : Point.t list list
         ; style : Style.t list
         }
 
@@ -50,15 +50,18 @@ module Element = struct
       let buffer = Buffer.create 10 in
       bprintf buffer {|<path fill-rule="evenodd" d="|};
       bprintf buffer "\n ";
-      (points
-      |> List.hd_exn
-      |> fun { Point.x; y } -> bprintf buffer "M%f %f\n " x y);
-      List.iter points ~f:(fun { Point.x; y } ->
-          bprintf buffer "L%f %f\n " x y);
-      bprintf buffer "Z\"\n ";
+      points
+      |> List.iter ~f:(fun points ->
+             points
+             |> List.hd_exn
+             |> fun { Point.x; y } ->
+             bprintf buffer "M%f %f\n " x y;
+             List.iter points ~f:(fun { Point.x; y } ->
+                 bprintf buffer "L%f %f\n " x y);
+             bprintf buffer "Z\n ");
       bprintf
         buffer
-        {|style="%s"></path>|}
+        {|" style="%s"></path>|}
         (Style.to_attributes style);
       Buffer.contents buffer
   ;;

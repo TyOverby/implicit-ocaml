@@ -22,6 +22,6 @@ let main () =
 
 let command =
   Command.async
-    ~summary:"convert a shape file to a linebuf file"
+    ~summary:"convert a linebuf file to an svg file"
     (Command.Param.return main)
 ;;

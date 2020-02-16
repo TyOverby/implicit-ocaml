@@ -1,6 +1,6 @@
 open! Core_kernel
 
-let tests =
+let shape_tests =
   [ "circle"
   ; "intersection"
   ; "union"
@@ -9,6 +9,8 @@ let tests =
   ; "mix"
   ]
 ;;
+
+let scene_tests = [ "bulls_eye" ]
 
 let executable_rule name =
   sprintf
@@ -19,6 +21,28 @@ let executable_rule name =
    (preprocess (pps ppx_jane))
    (libraries core_kernel eval example_runner))
  |}
+    name
+    name
+;;
+
+let scene_sexp_rule name =
+  sprintf
+    {|
+   (rule
+     (with-stdout-to %s_actual.scene.sexp
+      (run ./%s.exe)))
+ |}
+    name
+    name
+;;
+
+let scene_svg_rule name =
+  sprintf
+    {|(rule
+  (deps %s_actual.scene.sexp)
+  (targets %s_actual.scene.svg)
+  (action (bash "cat %%{deps} | %%{exe:../utilities/utilities.exe} scene-to-svg > %%{targets}")))
+|}
     name
     name
 ;;
@@ -115,6 +139,15 @@ let diff_against_actual_connected_svg name =
     name
 ;;
 
+let diff_against_actual_scene_svg name =
+  sprintf
+    {|(alias
+ (name runtest)
+ (action (diff %s.svg %s_actual.scene.svg)))|}
+    name
+    name
+;;
+
 let diff_against_actual_parts_svg name =
   sprintf
     {|(alias
@@ -125,7 +158,7 @@ let diff_against_actual_parts_svg name =
 ;;
 
 let () =
-  tests
+  shape_tests
   |> List.bind ~f:(fun name ->
          [ sprintf "; %s" name
          ; executable_rule name
@@ -138,6 +171,21 @@ let () =
          ; diff_against_actual_connected name
          ; diff_against_actual_parts_svg name
          ; diff_against_actual_connected_svg name
+         ])
+  |> List.map ~f:String.strip
+  |> List.bind ~f:(fun s ->
+         if String.is_prefix s ~prefix:";" then [ ""; s ] else [ s ])
+  |> List.iter ~f:print_endline
+;;
+
+let () =
+  scene_tests
+  |> List.bind ~f:(fun name ->
+         [ sprintf "; %s name" name
+         ; executable_rule name
+         ; scene_sexp_rule name
+         ; scene_svg_rule name
+         ; diff_against_actual_scene_svg name
          ])
   |> List.map ~f:String.strip
   |> List.bind ~f:(fun s ->

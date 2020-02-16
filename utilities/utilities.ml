@@ -9,6 +9,7 @@ let command =
     ; "shape-to-linebuf", Shape_to_linebuf.command
     ; "connected-to-svg", Connected_to_svg.command
     ; "linebuf-validate", Linebuf_validate.command
+    ; "scene-to-svg", Scene_to_svg.command
     ]
 ;;
 

@@ -1,6 +1,7 @@
 open! Core_kernel
 open! Async_kernel
 open Shared_types
+module Reshape = Reshape
 
 let eval_chunk backend shape =
   let chunk = Chunk.create ~width:88 ~height:88 ~x:0 ~y:0 in
