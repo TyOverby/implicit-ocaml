@@ -44,6 +44,6 @@ let eval
   in
   let%map fn, debug = B.run f in
   let fn ~x ~y = fn x y in
-  let _ = B.apply chunk ~f:fn in
+  let _:_ = B.apply chunk ~f:fn in
   debug
 ;;

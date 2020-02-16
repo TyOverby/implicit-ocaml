@@ -124,22 +124,23 @@ let diff_against_actual_parts_svg name =
     name
 ;;
 
+let () =
+  tests
+  |> List.bind ~f:(fun name ->
+         [ sprintf "; %s" name
+         ; executable_rule name
+         ; shape_sexp_rule name
+         ; linebuf_rule name
+         ; parts_svg_rule name
+         ; connected_svg_rule name
+         ; connected_rule name (* ; validate_test name*)
+         ; diff_against_actual_shape name
+         ; diff_against_actual_connected name
+         ; diff_against_actual_parts_svg name
+         ; diff_against_actual_connected_svg name
+         ])
+  |> List.map ~f:String.strip
+  |> List.bind ~f:(fun s ->
+         if String.is_prefix s ~prefix:";" then [ ""; s ] else [ s ])
+  |> List.iter ~f:print_endline
 ;;
-tests
-|> List.bind ~f:(fun name ->
-       [ sprintf "; %s" name
-       ; executable_rule name
-       ; shape_sexp_rule name
-       ; linebuf_rule name
-       ; parts_svg_rule name
-       ; connected_svg_rule name
-       ; connected_rule name (* ; validate_test name*)
-       ; diff_against_actual_shape name
-       ; diff_against_actual_connected name
-       ; diff_against_actual_parts_svg name
-       ; diff_against_actual_connected_svg name
-       ])
-|> List.map ~f:String.strip
-|> List.bind ~f:(fun s ->
-       if String.is_prefix s ~prefix:";" then [ ""; s ] else [ s ])
-|> List.iter ~f:print_endline

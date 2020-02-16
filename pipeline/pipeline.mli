@@ -15,4 +15,4 @@ val eval_lines
 val eval_connect
   :  (module Jitsy.Backend.S with type Debug.t = 'a)
   -> Shape.t
-  -> Connected.t sexp_list Deferred.t
+  -> Connected.t list Deferred.t
