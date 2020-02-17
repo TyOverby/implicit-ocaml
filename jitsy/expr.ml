@@ -19,6 +19,7 @@ let rec typeof (type a) : a t -> a Type.t = function
   | Min_float _ -> Type.float
   | Max_float _ -> Type.float
   | Square_float _ -> Type.float
+  | Mod_float _ -> Type.float
   | Add_float _ -> Type.float
   | Sub_float _ -> Type.float
   | Mul_float _ -> Type.float
@@ -55,6 +56,7 @@ and div_int32 a b = Div_int32 (a, b)
 and mul_int32 a b = Mul_int32 (a, b)
 and min_int32 a b = Min_int32 (a, b)
 and max_int32 a b = Max_int32 (a, b)
+and mod_float a b = Mod_float (a, b)
 and add_float a b = Add_float (a, b)
 and sub_float a b = Sub_float (a, b)
 and mul_float a b = Mul_float (a, b)

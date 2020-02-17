@@ -23,6 +23,14 @@ module T = struct
         ; b : t
         ; f : float
         }
+    | Repeat_x of
+        { shape : t
+        ; every : float
+        }
+    | Repeat_y of
+        { shape : t
+        ; every : float
+        }
   [@@deriving sexp]
 
   let circle ~x ~y ~r = Circle { x; y; r }
@@ -32,6 +40,8 @@ module T = struct
   let subtract a b = intersection [ a; invert b ]
   let modulate shape ~by = Modulate { shape; by }
   let mix a b ~f = Mix { a; b; f }
+  let repeat_x shape ~every = Repeat_x { shape; every }
+  let repeat_y shape ~every = Repeat_y { shape; every }
 
   let scale shape ~dx ~dy =
     Transform

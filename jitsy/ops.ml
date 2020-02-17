@@ -5,6 +5,7 @@ module Float = struct
   let ( - ) = Expr.sub_float
   let ( * ) = Expr.mul_float
   let ( / ) = Expr.div_float
+  let ( % ) = Expr.mod_float
   let min = Expr.min_float
   let max = Expr.max_float
   let sqrt = Expr.sqrt_float

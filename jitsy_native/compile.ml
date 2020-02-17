@@ -118,6 +118,10 @@ let rec compile_expression
         temp_a
         temp_b;
       rprint "%s" temp_b
+    | Mod_float (a, b) ->
+      let temp_a = compile_expression buffer ~idgen a in
+      let temp_b = compile_expression buffer ~idgen b in
+      rprint "fmodf(%s, %s)" temp_a temp_b
     | Add_float (a, b) ->
       let temp_a = compile_expression buffer ~idgen a in
       let temp_b = compile_expression buffer ~idgen b in

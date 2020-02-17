@@ -49,4 +49,10 @@ let rec compile t ~x ~y =
     (* and z = x * m13 + y * m23 + z * m33 + m43 in *)
     (* and w = x * m14 + y * m24 + z * m34 + m44 in *)
     compile ~x ~y shape
+  | Repeat_x { shape; every } ->
+    let x = x % const every in
+    compile ~x ~y shape
+  | Repeat_y { shape; every } ->
+    let y = y % const every in
+    compile ~x ~y shape
 ;;

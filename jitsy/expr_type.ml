@@ -4,6 +4,7 @@ type 'a t =
   | Int32_lit : int32 -> int32 t
   | Bool_lit : bool -> bool t
   | Float_lit : float -> float t
+  | Mod_float : float t * float t -> float t
   | Add_float : float t * float t -> float t
   | Sub_float : float t * float t -> float t
   | Mul_float : float t * float t -> float t

@@ -75,6 +75,44 @@
  (name runtest)
  (action (diff circle_sub.connected.svg circle_sub_actual.connected.svg)))
 
+; circle_dup
+(executable
+   (name circle_dup)
+   (modules circle_dup)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel eval example_runner))
+(rule
+     (with-stdout-to circle_dup_actual.shape.sexp
+      (run ./circle_dup.exe)))
+(rule
+  (deps circle_dup_actual.shape.sexp)
+  (targets circle_dup.linebuf.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
+(rule
+  (deps circle_dup.linebuf.sexp)
+  (targets circle_dup_actual.parts.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
+(rule
+  (deps circle_dup.connected.sexp)
+  (targets circle_dup_actual.connected.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
+(rule
+  (deps circle_dup.linebuf.sexp)
+  (targets circle_dup_actual.connected.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff circle_dup.shape.sexp circle_dup_actual.shape.sexp)))
+(alias
+ (name runtest)
+ (action (diff circle_dup.connected.sexp circle_dup_actual.connected.sexp)))
+(alias
+ (name runtest)
+ (action (diff circle_dup.parts.svg circle_dup_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff circle_dup.connected.svg circle_dup_actual.connected.svg)))
+
 ; intersection
 (executable
    (name intersection)

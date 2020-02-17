@@ -3,6 +3,7 @@ open! Core_kernel
 let shape_tests =
   [ "circle"
   ; "circle_sub"
+  ; "circle_dup"
   ; "intersection"
   ; "union"
   ; "kissing_circles"

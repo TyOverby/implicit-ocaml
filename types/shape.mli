@@ -22,6 +22,14 @@ type t =
       ; b : t
       ; f : float
       }
+  | Repeat_x of
+      { shape : t
+      ; every : float
+      }
+  | Repeat_y of
+      { shape : t
+      ; every : float
+      }
 [@@deriving sexp]
 
 val circle : x:float -> y:float -> r:float -> t
@@ -34,6 +42,8 @@ val scale : t -> dx:float -> dy:float -> t
 val translate : t -> dx:float -> dy:float -> t
 val rotate : t -> r:float -> t
 val mix : t -> t -> f:float -> t
+val repeat_x : t -> every:float -> t
+val repeat_y : t -> every:float -> t
 
 module Type_safe : sig
   type exact = [ `Exact ]
@@ -55,6 +65,8 @@ module Type_safe : sig
   val translate : 'a t -> dx:float -> dy:float -> 'a t
   val rotate : 'a t -> r:float -> 'a t
   val mix : exact t -> exact t -> f:float -> exact t
+  val repeat_x : 'a t -> every:float -> 'a t
+  val repeat_y : 'a t -> every:float -> 'a t
 end
 
 val of_type_safe : _ Type_safe.t -> t

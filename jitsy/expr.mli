@@ -17,6 +17,7 @@ val add_int : int t -> int t -> int t
 val sub_int : int t -> int t -> int t
 val mul_int : int t -> int t -> int t
 val div_int : int t -> int t -> int t
+val mod_float : float t -> float t -> float t
 val add_float : float t -> float t -> float t
 val sub_float : float t -> float t -> float t
 val mul_float : float t -> float t -> float t

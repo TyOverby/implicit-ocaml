@@ -2,7 +2,7 @@ open! Core_kernel
 open Shared_types
 open Box
 
-let _both_everything =
+let both_everything =
   { Box.positive = Everything; negative = Everything }
 ;;
 
@@ -21,6 +21,7 @@ let rec compute_bounding_box = function
   | Modulate { shape; by } ->
     compute_bounding_box shape |> (Fn.flip Box.grow) by
   | Invert target -> target |> compute_bounding_box |> Box.inverse
+  | Repeat_x _ | Repeat_y _ -> both_everything
   | Transform { shape = target; matrix } ->
     let bb = compute_bounding_box target in
     let positive =

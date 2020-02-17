@@ -3,6 +3,11 @@ open! Core_kernel
 module Float : sig
   val const : float -> float Expr_type.t
 
+  val ( % )
+    :  float Expr_type.t
+    -> float Expr_type.t
+    -> float Expr_type.t
+
   val ( + )
     :  float Expr_type.t
     -> float Expr_type.t
