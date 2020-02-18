@@ -3,20 +3,20 @@ open! Async_kernel
 open Shared_types
 module Reshape = Reshape
 
-let eval_chunk backend shape =
-  let chunk = Chunk.create ~width:88 ~height:88 ~x:0 ~y:0 in
+let eval_chunk backend shape ~width ~height =
+  let chunk = Chunk.create ~width ~height ~x:0 ~y:0 in
   let%bind _ = Eval.eval backend shape chunk in
   return chunk
 ;;
 
-let eval_lines backend shape =
-  let%bind chunk = eval_chunk backend shape in
+let eval_lines backend shape ~width ~height =
+  let%bind chunk = eval_chunk backend shape ~width ~height in
   let line_buffer = March.marching_squares ~chunk in
   return line_buffer
 ;;
 
-let eval_connect backend shape =
-  let%bind linebuf = eval_lines backend shape in
+let eval_connect backend shape ~width ~height =
+  let%bind linebuf = eval_lines backend shape ~width ~height in
   let connected = Line_join.f linebuf in
   return connected
 ;;

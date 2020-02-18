@@ -374,9 +374,26 @@
 (alias
  (name runtest)
  (action (diff motion_blur.svg motion_blur_actual.scene.svg)))
+
+; nested_circles name
+(executable
+   (name nested_circles)
+   (modules nested_circles)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel eval example_runner))
+(rule
+     (with-stdout-to nested_circles_actual.scene.sexp
+      (run ./nested_circles.exe)))
+(rule
+  (deps nested_circles_actual.scene.sexp)
+  (targets nested_circles_actual.scene.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} scene-to-svg > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff nested_circles.svg nested_circles_actual.scene.svg)))
 (rule
   (targets display.html)
-  (action (bash "echo \"\n<html>\n<head>\n</head>\n<body>\n<h1> Scenes </h1> \n\n    <h2>bulls_eye</h2>\n    <img src=\"./bulls_eye.svg\"></img>\n\n    <h2>motion_blur</h2>\n    <img src=\"./motion_blur.svg\"></img>\n<h1> Tests </h1> \n\n    <h2>circle</h2>\n    <img src=\"./circle.connected.svg\"></img>\n\n    <h2>circle_sub</h2>\n    <img src=\"./circle_sub.connected.svg\"></img>\n\n    <h2>circle_dup</h2>\n    <img src=\"./circle_dup.connected.svg\"></img>\n\n    <h2>intersection</h2>\n    <img src=\"./intersection.connected.svg\"></img>\n\n    <h2>union</h2>\n    <img src=\"./union.connected.svg\"></img>\n\n    <h2>kissing_circles</h2>\n    <img src=\"./kissing_circles.connected.svg\"></img>\n\n    <h2>scale</h2>\n    <img src=\"./scale.connected.svg\"></img>\n\n    <h2>mix</h2>\n    <img src=\"./mix.connected.svg\"></img>\n\n    <h2>motion_blur_test</h2>\n    <img src=\"./motion_blur_test.connected.svg\"></img>\n</body>\n</html>\n\" > display.html")))
+  (action (bash "echo \"\n<html>\n<head>\n</head>\n<body>\n<h1> Scenes </h1> \n\n    <h2>bulls_eye</h2>\n    <img src=\"./bulls_eye.svg\"></img>\n\n    <h2>motion_blur</h2>\n    <img src=\"./motion_blur.svg\"></img>\n\n    <h2>nested_circles</h2>\n    <img src=\"./nested_circles.svg\"></img>\n<h1> Tests </h1> \n\n    <h2>circle</h2>\n    <img src=\"./circle.connected.svg\"></img>\n\n    <h2>circle_sub</h2>\n    <img src=\"./circle_sub.connected.svg\"></img>\n\n    <h2>circle_dup</h2>\n    <img src=\"./circle_dup.connected.svg\"></img>\n\n    <h2>intersection</h2>\n    <img src=\"./intersection.connected.svg\"></img>\n\n    <h2>union</h2>\n    <img src=\"./union.connected.svg\"></img>\n\n    <h2>kissing_circles</h2>\n    <img src=\"./kissing_circles.connected.svg\"></img>\n\n    <h2>scale</h2>\n    <img src=\"./scale.connected.svg\"></img>\n\n    <h2>mix</h2>\n    <img src=\"./mix.connected.svg\"></img>\n\n    <h2>motion_blur_test</h2>\n    <img src=\"./motion_blur_test.connected.svg\"></img>\n</body>\n</html>\n\" > display.html")))
 (alias
  (name runtest) (deps display.html))
  

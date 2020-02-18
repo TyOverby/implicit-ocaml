@@ -40,7 +40,11 @@ let main () =
     layers
     |> List.map ~f:(fun { shape; color } ->
            let%map connected =
-             Pipeline.eval_connect (module Jitsy_native) shape
+             Pipeline.eval_connect
+               (module Jitsy_native)
+               shape
+               ~width:target_width
+               ~height:target_height
            in
            connected, color)
     |> Deferred.all

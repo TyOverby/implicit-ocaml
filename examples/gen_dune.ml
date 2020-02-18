@@ -13,7 +13,7 @@ let shape_tests =
   ]
 ;;
 
-let scene_tests = [ "bulls_eye"; "motion_blur" ]
+let scene_tests = [ "bulls_eye"; "motion_blur"; "nested_circles" ]
 
 let executable_rule name =
   sprintf

@@ -24,7 +24,9 @@ module Dpoint = struct
     Float.(abs dx + abs dy)
   ;;
 
-  let add dpoint ~id = dpoint.ids <- id :: dpoint.ids
+  let add dpoint ~id =
+    dpoint.ids <- List.sort (id :: dpoint.ids) ~compare:Id.compare
+  ;;
 
   let take dpoint =
     match dpoint.ids with

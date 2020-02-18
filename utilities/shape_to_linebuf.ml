@@ -9,7 +9,13 @@ let main () =
     |> Sexp.of_string
     |> Shape.t_of_sexp
   in
-  let%bind lines = Pipeline.eval_lines (module Jitsy_native) shape in
+  let%bind lines =
+    Pipeline.eval_lines
+      (module Jitsy_native)
+      shape
+      ~width:88
+      ~height:88
+  in
   lines
   |> Shared_types.Line_buffer.sexp_of_t
   |> Sexp.to_string_hum
