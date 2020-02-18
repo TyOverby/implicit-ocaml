@@ -6,15 +6,12 @@ module Reshape = Reshape
 let eval_chunk backend shape =
   let chunk = Chunk.create ~width:88 ~height:88 ~x:0 ~y:0 in
   let%bind _ = Eval.eval backend shape chunk in
-  (* Chunk.Debug.borders chunk; *)
   return chunk
 ;;
 
 let eval_lines backend shape =
   let%bind chunk = eval_chunk backend shape in
-  let line_buffer =
-    March.marching_squares ~chunk ~width:88 ~height:88
-  in
+  let line_buffer = March.marching_squares ~chunk in
   return line_buffer
 ;;
 

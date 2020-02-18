@@ -4,7 +4,7 @@ open Example_runner
 let boilerplate shape =
   run_scene
     (Scene.create
-       ~padding:6
+       ~padding:2
        ~target_width:88
        ~target_height:88
        ~layers:[ Layer.create ~shape ~color:"black" ])

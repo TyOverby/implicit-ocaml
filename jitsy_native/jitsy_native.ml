@@ -10,5 +10,6 @@ let apply t ~f =
   let array = Chunk.to_underlying t in
   let ptr = address_of array in
   let length = Float_bigarray.length array in
-  f ~x:(Chunk.x t) ~y:(Chunk.y t) ptr length
+  let r = f ~x:(Chunk.x t) ~y:(Chunk.y t) ptr length in
+  r
 ;;
