@@ -10,13 +10,17 @@ let boilerplate shape =
        ~layers:[ Layer.create ~shape ~color:"black" ])
 ;;
 
+let smooth_many ~k = function
+  | [] -> failwith "smooth_many on empty_list"
+  | hd :: xs -> List.fold xs ~init:hd ~f:(smooth_union ~k)
+;;
+
 let () =
   boilerplate
-    (mix
-       ~f:0.5
-       (circle ~r:10.0 ~x:15.0 ~y:0.0)
-       (mix
-          ~f:1.0
-          (circle ~r:10.0 ~x:0.0 ~y:0.0)
-          (circle ~r:10.0 ~x:0.0 ~y:15.0)))
+    (smooth_many
+       ~k:10.0
+       [ circle ~r:10.0 ~x:35.0 ~y:20.0
+       ; circle ~r:7.0 ~x:20.0 ~y:20.0
+       ; circle ~r:4.0 ~x:20.0 ~y:35.0
+       ])
 ;;
