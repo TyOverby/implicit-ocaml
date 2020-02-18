@@ -18,6 +18,11 @@ module T = struct
         { shape : t
         ; matrix : Matrix.t
         }
+    | Smooth_union of
+        { a : t
+        ; b : t
+        ; k : float
+        }
     | Mix of
         { a : t
         ; b : t
@@ -40,6 +45,7 @@ module T = struct
   let subtract a b = intersection [ a; invert b ]
   let modulate shape ~by = Modulate { shape; by }
   let mix a b ~f = Mix { a; b; f }
+  let smooth_union a b ~k = Smooth_union { a; b; k }
   let repeat_x shape ~every = Repeat_x { shape; every }
   let repeat_y shape ~every = Repeat_y { shape; every }
 

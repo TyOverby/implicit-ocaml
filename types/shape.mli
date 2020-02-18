@@ -17,6 +17,11 @@ type t =
       { shape : t
       ; matrix : Matrix.t
       }
+  | Smooth_union of
+      { a : t
+      ; b : t
+      ; k : float
+      }
   | Mix of
       { a : t
       ; b : t
@@ -42,6 +47,7 @@ val scale : t -> dx:float -> dy:float -> t
 val translate : t -> dx:float -> dy:float -> t
 val rotate : t -> r:float -> t
 val mix : t -> t -> f:float -> t
+val smooth_union : t -> t -> k:float -> t
 val repeat_x : t -> every:float -> t
 val repeat_y : t -> every:float -> t
 
@@ -64,7 +70,8 @@ module Type_safe : sig
   val scale : _ t -> dx:float -> dy:float -> inexact t
   val translate : 'a t -> dx:float -> dy:float -> 'a t
   val rotate : 'a t -> r:float -> 'a t
-  val mix : exact t -> exact t -> f:float -> exact t
+  val mix : exact t -> exact t -> f:float -> [> exact ] t
+  val smooth_union : 'a t -> 'a t -> k:float -> 'a t
   val repeat_x : 'a t -> every:float -> 'a t
   val repeat_y : 'a t -> every:float -> 'a t
 end

@@ -30,13 +30,28 @@ let rec compile t ~x ~y =
     let sqrt = sqrt dx2_plus_dy2 in
     sqrt - const r
   | Modulate { shape; by } -> compile ~x ~y shape + const by
+  | Smooth_union { a; b; k } ->
+    let d1 = compile ~x ~y a in
+    let d2 = compile ~x ~y b in
+    let k = const k
+    and one = const 1.0
+    and _05 = const 0.5 in
+    let clamp a ~small ~large = min large (max small a) in
+    let mix a b f = ((one - f) * b) + (f * a) in
+    let h =
+      clamp
+        (_05 + (_05 * (d1 - d2) / k))
+        ~small:(const 0.0)
+        ~large:(const 1.0)
+    in
+    mix d2 d1 h - (k * h * (one - h))
   | Mix { a; b; f } ->
     let f = Float.clamp_exn ~min:0.0 ~max:1.0 f in
     let f = const f in
     let a = compile ~x ~y a in
     let b = compile ~x ~y b in
     let one = const 1.0 in
-    (a * (one / f)) + (b * (one / (one - f)))
+    ((one - f) * b) + (f * a)
   | Transform { shape; matrix = { m11; m12; m21; m22; m31; m32 } } ->
     let m11 = const m11
     and m12 = const m12

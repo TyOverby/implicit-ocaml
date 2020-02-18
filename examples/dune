@@ -1,6 +1,6 @@
 (executable
  (name gen_dune)
- (modules gen_dune)
+ (modules gen_dune display)
  (libraries core shared_types)
  (preprocess
   (pps ppx_jane)))

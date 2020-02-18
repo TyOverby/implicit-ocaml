@@ -303,6 +303,44 @@
  (name runtest)
  (action (diff mix.connected.svg mix_actual.connected.svg)))
 
+; motion_blur_test
+(executable
+   (name motion_blur_test)
+   (modules motion_blur_test)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel eval example_runner))
+(rule
+     (with-stdout-to motion_blur_test_actual.shape.sexp
+      (run ./motion_blur_test.exe)))
+(rule
+  (deps motion_blur_test_actual.shape.sexp)
+  (targets motion_blur_test.linebuf.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} shape-to-linebuf > %{targets}")))
+(rule
+  (deps motion_blur_test.linebuf.sexp)
+  (targets motion_blur_test_actual.parts.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-svg > %{targets}")))
+(rule
+  (deps motion_blur_test.connected.sexp)
+  (targets motion_blur_test_actual.connected.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} connected-to-svg > %{targets}")))
+(rule
+  (deps motion_blur_test.linebuf.sexp)
+  (targets motion_blur_test_actual.connected.sexp)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} linebuf-to-connected > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff motion_blur_test.shape.sexp motion_blur_test_actual.shape.sexp)))
+(alias
+ (name runtest)
+ (action (diff motion_blur_test.connected.sexp motion_blur_test_actual.connected.sexp)))
+(alias
+ (name runtest)
+ (action (diff motion_blur_test.parts.svg motion_blur_test_actual.parts.svg)))
+(alias
+ (name runtest)
+ (action (diff motion_blur_test.connected.svg motion_blur_test_actual.connected.svg)))
+
 ; bulls_eye name
 (executable
    (name bulls_eye)
@@ -319,3 +357,26 @@
 (alias
  (name runtest)
  (action (diff bulls_eye.svg bulls_eye_actual.scene.svg)))
+
+; motion_blur name
+(executable
+   (name motion_blur)
+   (modules motion_blur)
+   (preprocess (pps ppx_jane))
+   (libraries core_kernel eval example_runner))
+(rule
+     (with-stdout-to motion_blur_actual.scene.sexp
+      (run ./motion_blur.exe)))
+(rule
+  (deps motion_blur_actual.scene.sexp)
+  (targets motion_blur_actual.scene.svg)
+  (action (bash "cat %{deps} | %{exe:../utilities/utilities.exe} scene-to-svg > %{targets}")))
+(alias
+ (name runtest)
+ (action (diff motion_blur.svg motion_blur_actual.scene.svg)))
+(rule
+  (targets display.html)
+  (action (bash "echo \"\n<html>\n<head>\n</head>\n<body>\n<h1> Scenes </h1> \n\n    <h2>bulls_eye</h2>\n    <img src=\"./bulls_eye.svg\"></img>\n\n    <h2>motion_blur</h2>\n    <img src=\"./motion_blur.svg\"></img>\n<h1> Tests </h1> \n\n    <h2>circle</h2>\n    <img src=\"./circle.connected.svg\"></img>\n\n    <h2>circle_sub</h2>\n    <img src=\"./circle_sub.connected.svg\"></img>\n\n    <h2>circle_dup</h2>\n    <img src=\"./circle_dup.connected.svg\"></img>\n\n    <h2>intersection</h2>\n    <img src=\"./intersection.connected.svg\"></img>\n\n    <h2>union</h2>\n    <img src=\"./union.connected.svg\"></img>\n\n    <h2>kissing_circles</h2>\n    <img src=\"./kissing_circles.connected.svg\"></img>\n\n    <h2>scale</h2>\n    <img src=\"./scale.connected.svg\"></img>\n\n    <h2>mix</h2>\n    <img src=\"./mix.connected.svg\"></img>\n\n    <h2>motion_blur_test</h2>\n    <img src=\"./motion_blur_test.connected.svg\"></img>\n</body>\n</html>\n\" > display.html")))
+(alias
+ (name runtest) (deps display.html))
+ 

@@ -9,10 +9,11 @@ let shape_tests =
   ; "kissing_circles"
   ; "scale"
   ; "mix"
+  ; "motion_blur_test"
   ]
 ;;
 
-let scene_tests = [ "bulls_eye" ]
+let scene_tests = [ "bulls_eye"; "motion_blur" ]
 
 let executable_rule name =
   sprintf
@@ -193,4 +194,17 @@ let () =
   |> List.bind ~f:(fun s ->
          if String.is_prefix s ~prefix:";" then [ ""; s ] else [ s ])
   |> List.iter ~f:print_endline
+;;
+
+let () =
+  printf
+    {|(rule
+  (targets display.html)
+  (action (bash "echo \"%s\" > display.html")))
+|}
+    (Display.display ~tests:shape_tests ~scenes:scene_tests
+    |> String.escaped);
+  printf {|(alias
+ (name runtest) (deps display.html))
+ |}
 ;;
