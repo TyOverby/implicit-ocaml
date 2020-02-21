@@ -55,7 +55,7 @@ let parse (linebuf : Line_buffer.t) =
             Dpoint.add dpoint ~id;
             dpoint
           | None -> Dpoint.create ~id p2));
-  let ends = Point.Table.data ends |> Tree.create (Tree.Good 25) in
+  let ends = Point.Table.data ends |> Tree.create Tree.Random in
   { dict; ends }
 ;;
 

@@ -25,7 +25,7 @@ let eval_connect profile backend shape ~width ~height =
     eval_lines profile backend shape ~width ~height
   in
   Profile.start profile "connect lines";
-  let connected = Line_join.f linebuf in
+  let connected = Line_join.f profile linebuf in
   Profile.stop profile "connect lines";
   return connected
 ;;

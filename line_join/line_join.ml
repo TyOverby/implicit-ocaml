@@ -23,12 +23,18 @@ let process_single bi_map =
   run_with ~end_id ~current:start_pt ~acc:[]
 ;;
 
-let f linebuf =
+let f profile linebuf =
+  Profile.start profile "setup bimap";
   let bi_map = Bi_map.parse linebuf in
+  Profile.stop profile "setup bimap";
   let rec parse_all acc =
     if Bi_map.is_empty bi_map
     then acc
-    else parse_all (process_single bi_map :: acc)
+    else (
+      Profile.start profile "proc sing";
+      let r = process_single bi_map :: acc in
+      Profile.stop profile "proc sing";
+      parse_all r)
   in
   parse_all []
 ;;
