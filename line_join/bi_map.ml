@@ -12,13 +12,20 @@ module Dpoint = struct
   let create ~id { Point.x; y } = { ids = [ id ]; x; y }
   let query { Point.x; y } = { ids = []; x; y }
 
+  (* so fast! *)
+  let dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
+    let dx = x1 -. x2 in
+    let dy = y1 -. y2 in
+    (dx *. dx) +. (dy *. dy)
+  ;;
+
   let _dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
     let dx = x1 -. x2 in
     let dy = y1 -. y2 in
     Float.sqrt ((dx *. dx) +. (dy *. dy))
   ;;
 
-  let dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
+  let _dist { x = x1; y = y1; _ } { x = x2; y = y2; _ } =
     let dx = x1 -. x2 in
     let dy = y1 -. y2 in
     Float.(abs dx + abs dy)
