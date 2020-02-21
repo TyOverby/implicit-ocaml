@@ -20,5 +20,6 @@ val compile_c : string -> string Deferred.Or_error.t
 val load : string -> Dl.library
 
 val jit
-  :  ('a, 'b -> 'c) Function.t
+  :  Shared_types.Profile.t
+  -> ('a, 'b -> 'c) Function.t
   -> (('b -> 'c) * Debug.t) Deferred.t

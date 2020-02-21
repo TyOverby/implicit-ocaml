@@ -12,7 +12,7 @@ end
 
 let test f g =
   let%bind f, { Compile.Debug.c_source; asm_source } =
-    Compile.jit f
+    Compile.jit (module Shared_types.Profile.Noop) f
   in
   print_endline "===== source =====";
   print_endline c_source;

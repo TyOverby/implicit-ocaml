@@ -272,8 +272,9 @@ let compile_c source =
 
 let load source = Dl.dlopen ~filename:source ~flags:[ Dl.RTLD_NOW ]
 
-let jit f =
+let jit profile f =
   let open Async.Deferred.Let_syntax in
+  Shared_types.Profile.start profile "jit";
   let c_source, name = compile f in
   let%bind compiled_filename =
     compile_c c_source |> Deferred.Or_error.ok_exn
@@ -303,5 +304,6 @@ gdb -batch "$1" -ex 'disassemble var_0' \
   in
   let library = load compiled_filename in
   let debug = { Debug.c_source; asm_source } in
+  Shared_types.Profile.stop profile "jit";
   return (Foreign.foreign ~from:library name f.typ, debug)
 ;;

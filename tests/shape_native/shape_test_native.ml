@@ -7,7 +7,9 @@ open Jitsy_native.Debug
 let test ?(print_source = false) ?(pos = 0, 0) shape =
   let x, y = pos in
   let chunk = Chunk.create ~width:88 ~height:88 ~x ~y in
-  let%bind debug = Eval.eval (module Jitsy_native) shape chunk in
+  let%bind debug =
+    Eval.eval (module Profile.Noop) (module Jitsy_native) shape chunk
+  in
   let debug_c = debug.c_source in
   let%bind _debug_asm = debug.asm_source () in
   if print_source

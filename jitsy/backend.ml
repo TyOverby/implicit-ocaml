@@ -8,11 +8,13 @@ module type S = sig
   end
 
   val run
-    :  ('a, 'b -> 'c) Function.t
+    :  Profile.t
+    -> ('a, 'b -> 'c) Function.t
     -> (('b -> 'c) * Debug.t) Deferred.t
 
   val apply
-    :  Chunk.t
+    :  Profile.t
+    -> Chunk.t
     -> f:(x:int -> y:int -> float Type.my_array -> int -> 'c)
     -> 'c
 end

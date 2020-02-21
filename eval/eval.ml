@@ -4,6 +4,7 @@ open Shared_types
 
 let eval
     (type d)
+    profile
     (module B : Jitsy.Backend.S with type Debug.t = d)
     shape
     chunk
@@ -42,8 +43,8 @@ let eval
          ]
          a)
   in
-  let%map fn, debug = B.run f in
+  let%map fn, debug = B.run profile f in
   let fn ~x ~y = fn x y in
-  let (_ : _) = B.apply chunk ~f:fn in
+  let (_ : _) = B.apply profile chunk ~f:fn in
   debug
 ;;

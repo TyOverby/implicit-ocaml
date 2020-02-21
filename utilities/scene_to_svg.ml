@@ -4,6 +4,8 @@ open Shared_types
 open Svg
 
 let main () =
+  let profile = Profile.create () in
+  Profile.start profile "all";
   let scene =
     In_channel.stdin
     |> In_channel.input_all
@@ -23,11 +25,12 @@ let main () =
   let layers =
     scene
     |> Scene.layers
-    |> List.map ~f:(fun layer ->
+    |> List.mapi ~f:(fun i layer ->
            let shape =
              layer
              |> Layer.shape
-             |> Pipeline.Reshape.reshape
+             |> Pipeline.reshape
+                  (Profile.split profile (sprintf "layer-%d" i))
                   bb_of_all_shapes
                   ~target_width
                   ~target_height
@@ -35,12 +38,19 @@ let main () =
            in
            { layer with shape })
   in
-  (*let () = layers |> [%sexp_of: Layer.t list] |> raise_s in *)
+  let viewbox =
+    Viewbox.create
+      ~min_x:0.0
+      ~min_y:0.0
+      ~width:(Float.of_int target_width)
+      ~height:(Float.of_int target_height)
+  in
   let%bind all_connected =
     layers
-    |> List.map ~f:(fun { shape; color } ->
+    |> List.mapi ~f:(fun i { shape; color } ->
            let%map connected =
              Pipeline.eval_connect
+               (Profile.split profile (sprintf "layer-%d" i))
                (module Jitsy_native)
                shape
                ~width:target_width
@@ -62,7 +72,8 @@ let main () =
         in
         Element.path joineds ~style)
   in
-  elements |> to_svg |> print_endline;
+  elements |> to_svg ~viewbox |> print_endline;
+  Profile.stop profile "all";
   return ()
 ;;
 

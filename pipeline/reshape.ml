@@ -2,7 +2,8 @@ open! Core_kernel
 open Shared_types
 open Box
 
-let reshape bb shape ~target_width ~target_height ~padding =
+let reshape profile bb shape ~target_width ~target_height ~padding =
+  Profile.start profile "reshape";
   let bb =
     match bb.positive with
     | Something bb -> bb
@@ -13,10 +14,14 @@ let reshape bb shape ~target_width ~target_height ~padding =
   let scale_x = target_width /. bb.Box.w in
   let scale_y = target_height /. bb.Box.h in
   let scale = Float.min scale_x scale_y in
+  let shape =
+    shape
+    |> Shape.translate ~dx:(-.bb.x) ~dy:(-.bb.y)
+    |> Shape.scale ~dx:scale ~dy:scale
+    |> Shape.translate
+         ~dx:(Float.of_int padding)
+         ~dy:(Float.of_int padding)
+  in
+  Profile.stop profile "reshape";
   shape
-  |> Shape.translate ~dx:(-.bb.x) ~dy:(-.bb.y)
-  |> Shape.scale ~dx:scale ~dy:scale
-  |> Shape.translate
-       ~dx:(Float.of_int padding)
-       ~dy:(Float.of_int padding)
 ;;

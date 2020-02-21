@@ -11,6 +11,7 @@ let main () =
   in
   let%bind lines =
     Pipeline.eval_lines
+      (module Profile.Noop)
       (module Jitsy_native)
       shape
       ~width:88

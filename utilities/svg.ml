@@ -67,10 +67,32 @@ module Element = struct
   ;;
 end
 
+module Viewbox = struct
+  type t =
+    { min_x : float
+    ; min_y : float
+    ; width : float
+    ; height : float
+    }
+  [@@deriving fields]
+
+  let create = Fields.create
+
+  let default =
+    { min_x = 0.0; min_y = 0.0; width = 88.0; height = 88.0 }
+  ;;
+
+  let to_string { min_x; min_y; width; height } =
+    sprintf "%f %f %f %f" min_x min_y width height
+  ;;
+end
+
 type t = Element.t list
 
-let to_svg t =
-  [ [ {|<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 88 88">|}
+let to_svg ?(viewbox = Viewbox.default) t =
+  [ [ sprintf
+        {|<svg xmlns="http://www.w3.org/2000/svg" viewBox="%s">|}
+        (Viewbox.to_string viewbox)
     ]
   ; List.map t ~f:Element.to_svg
   ; [ "</svg>" ]
