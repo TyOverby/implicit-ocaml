@@ -1,5 +1,6 @@
 _build
 _opam
+opam
 target
 *merlin-log*
 **/*merlin

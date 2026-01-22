@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open! Async
 open Shared_types
 module Debug = Compile.Debug

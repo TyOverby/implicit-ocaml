@@ -1,4 +1,4 @@
-module M = Core_kernel.Unique_id.Int ()
+module M = Core.Unique_id.Int ()
 
 type t = M.t
 

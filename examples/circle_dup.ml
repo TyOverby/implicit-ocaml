@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open Example_runner
 
 let repeat a ~every = a |> repeat_x ~every |> repeat_y ~every

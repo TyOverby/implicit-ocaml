@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 
 type t =
   (float, Bigarray.float32_elt, Bigarray.c_layout) Bigarray.Array1.t

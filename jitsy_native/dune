@@ -1,6 +1,6 @@
 (library
  (name jitsy_native)
- (libraries jitsy base core_kernel ctypes ctypes.foreign async)
+ (libraries jitsy base core core_unix ctypes ctypes.foreign async)
  (inline_tests)
  (preprocess
   (pps ppx_jane)))

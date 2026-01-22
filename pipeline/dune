@@ -1,7 +1,6 @@
 (library
  (name pipeline)
- (libraries async_kernel core_kernel bounding_box eval march shared_types
-   line_join)
+ (libraries async_kernel core bounding_box eval march shared_types line_join)
  (js_of_ocaml)
  (inline_tests)
  (preprocess

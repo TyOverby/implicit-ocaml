@@ -1,6 +1,6 @@
 (library
  (name jitsy)
- (libraries core_kernel shared_types ctypes async_kernel)
+ (libraries core shared_types ctypes async_kernel)
  (inline_tests)
  (js_of_ocaml)
  (preprocess

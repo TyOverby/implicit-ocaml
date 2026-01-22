@@ -1,4 +1,4 @@
-open Core_kernel
+open Core
 open Async
 open Jitsy
 
@@ -223,7 +223,7 @@ let rec compile_expression
 
 let compile ~name ~idgen { Function.expression; typ = _; param_map } =
   let buffer = Buffer.create 32 in
-  bprintf buffer "#include \"stdint.h\"\n";
+  bprintf buffer "#include \"stdint.h\"\n#include <math.h>\n";
   bprintf
     buffer
     "extern %s %s("
@@ -255,7 +255,8 @@ let compile f =
 
 let compile_c source =
   let open Async.Deferred.Or_error.Let_syntax in
-  let name, writer = Core.Filename.open_temp_file "prefix" ".c" in
+  let name = Filename_unix.temp_file "prefix" ".c" in
+  let writer = Out_channel.create name in
   Out_channel.output_string writer source;
   Out_channel.flush writer;
   Out_channel.close writer;
@@ -290,9 +291,8 @@ gdb -batch "$1" -ex 'disassemble var_0' \
     | cut --fields="2"
   |}
     in
-    let name, writer =
-      Core.Filename.open_temp_file "dump_asm" ".sh"
-    in
+    let name = Filename_unix.temp_file "dump_asm" ".sh" in
+    let writer = Out_channel.create name in
     Out_channel.output_string writer dump;
     Out_channel.flush writer;
     Out_channel.close writer;

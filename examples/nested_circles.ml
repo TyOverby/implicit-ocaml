@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open Example_runner
 
 let boilerplate shape =

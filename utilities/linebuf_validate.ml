@@ -26,15 +26,15 @@ let main () =
     |> List.fold
          ~init:(Point.Set.empty, Point.Set.empty)
          ~f:(fun (starts, ends) { Line.p1; p2 } ->
-           if Point.Set.mem starts p1
+           if Set.mem starts p1
            then
              print_s
                [%message (p1 : Point.t) "already included in starts"]
-           else if Point.Set.mem ends p2
+           else if Set.mem ends p2
            then
              print_s
                [%message (p2 : Point.t) "already included in ends"];
-           Point.Set.add starts p1, Point.Set.add ends p2)
+           Set.add starts p1, Set.add ends p2)
   in
   let length_tripple =
     List.length linebuf_list, Set.length starts, Set.length ends
