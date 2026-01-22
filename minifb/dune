@@ -1,22 +1,82 @@
 ; Build the Rust static library
+
 (rule
- (targets libminifb_ffi.a dllminifb_ffi.so)
- (deps (source_tree ../minifb-ffi/src) ../minifb-ffi/Cargo.toml ../minifb-ffi/cbindgen.toml ../minifb-ffi/build.rs)
+ (targets libminifb_ffi.a)
+ (deps
+  (source_tree ../minifb-ffi/src)
+  ../minifb-ffi/Cargo.toml
+  ../minifb-ffi/cbindgen.toml
+  ../minifb-ffi/build.rs)
  (action
   (progn
    (run cargo build --release --manifest-path ../minifb-ffi/Cargo.toml)
-   (copy ../minifb-ffi/target/release/libminifb_ffi.a libminifb_ffi.a)
-   (copy ../minifb-ffi/target/release/libminifb_ffi.so dllminifb_ffi.so))))
+   (copy ../minifb-ffi/target/release/libminifb_ffi.a libminifb_ffi.a))))
+
+; Copy the generated C header
+
+(rule
+ (targets minifb_ffi.h)
+ (deps libminifb_ffi.a ../minifb-ffi/include/minifb_ffi.h)
+ (action
+  (copy ../minifb-ffi/include/minifb_ffi.h minifb_ffi.h)))
+
+; Type definitions module (shared between generator and library)
+
+(library
+ (name minifb_types)
+ (modules minifb_types)
+ (libraries ctypes))
+
+; Bindings description module
+
+(library
+ (name minifb_bindings)
+ (modules minifb_bindings)
+ (libraries ctypes minifb_types))
+
+; Stub generator executable
+
+(executable
+ (name minifb_stubs_gen)
+ (modules minifb_stubs_gen)
+ (libraries ctypes.stubs minifb_bindings))
+
+; Generate ML stubs
+
+(rule
+ (targets minifb_generated.ml)
+ (deps minifb_stubs_gen.exe)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ./minifb_stubs_gen.exe ml))))
+
+; Generate C stubs
+
+(rule
+ (targets minifb_stubs.c)
+ (deps minifb_stubs_gen.exe minifb_ffi.h)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ./minifb_stubs_gen.exe c))))
+
+; Main library with static linking
 
 (library
  (name minifb)
- (modules minifb)
+ (modules minifb_impl minifb_generated)
+ (libraries ctypes minifb_types minifb_bindings)
+ (foreign_stubs
+  (language c)
+  (names minifb_stubs)
+  (flags
+   (:standard -I.)))
  (foreign_archives minifb_ffi)
  (c_library_flags
-  (-lpthread -ldl -lX11))
- (preprocess
-  (pps ppx_jane))
- (libraries ctypes ctypes.foreign unix))
+  (-lpthread -ldl -lX11 -lm)))
+
+; Test executable
 
 (executable
  (name test_minifb)

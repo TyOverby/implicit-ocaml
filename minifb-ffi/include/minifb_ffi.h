@@ -9,6 +9,138 @@
 #include <stdlib.h>
 
 /*
+ Keyboard key codes (mirrors minifb::Key)
+ */
+typedef enum MiniFBKey {
+  Key0 = 0,
+  Key1,
+  Key2,
+  Key3,
+  Key4,
+  Key5,
+  Key6,
+  Key7,
+  Key8,
+  Key9,
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
+  K,
+  L,
+  M,
+  N,
+  O,
+  P,
+  Q,
+  R,
+  S,
+  T,
+  U,
+  V,
+  W,
+  X,
+  Y,
+  Z,
+  F1,
+  F2,
+  F3,
+  F4,
+  F5,
+  F6,
+  F7,
+  F8,
+  F9,
+  F10,
+  F11,
+  F12,
+  F13,
+  F14,
+  F15,
+  Down,
+  Left,
+  Right,
+  Up,
+  Apostrophe,
+  Backquote,
+  Backslash,
+  Comma,
+  Equal,
+  LeftBracket,
+  Minus,
+  Period,
+  RightBracket,
+  Semicolon,
+  Slash,
+  Backspace,
+  Delete,
+  End,
+  Enter,
+  Escape,
+  Home,
+  Insert,
+  Menu,
+  PageDown,
+  PageUp,
+  Pause,
+  Space,
+  Tab,
+  NumLock,
+  CapsLock,
+  ScrollLock,
+  LeftShift,
+  RightShift,
+  LeftCtrl,
+  RightCtrl,
+  NumPad0,
+  NumPad1,
+  NumPad2,
+  NumPad3,
+  NumPad4,
+  NumPad5,
+  NumPad6,
+  NumPad7,
+  NumPad8,
+  NumPad9,
+  NumPadDot,
+  NumPadSlash,
+  NumPadAsterisk,
+  NumPadMinus,
+  NumPadPlus,
+  NumPadEnter,
+  LeftAlt,
+  RightAlt,
+  LeftSuper,
+  RightSuper,
+  Unknown,
+  Count,
+} MiniFBKey;
+
+/*
+ Mouse coordinate mode
+ */
+typedef enum MiniFBMouseMode {
+  Pass = 0,
+  Clamp = 1,
+  Discard = 2,
+} MiniFBMouseMode;
+
+/*
+ Mouse button codes (prefixed to avoid C enum name collision with keys)
+ */
+typedef enum MiniFBMouseButton {
+  MouseLeft = 0,
+  MouseMiddle = 1,
+  MouseRight = 2,
+} MiniFBMouseButton;
+
+/*
  Opaque window handle
  */
 typedef struct MiniFBWindow MiniFBWindow;
@@ -23,6 +155,12 @@ typedef struct MiniFBWindowOptions {
   bool topmost;
   bool transparency;
 } MiniFBWindowOptions;
+
+/*
+ Get the last error message, or null if no error
+ The returned pointer is valid until the next minifb call
+ */
+const char *minifb_get_last_error(void);
 
 /*
  Create default window options
@@ -120,5 +258,79 @@ void minifb_window_set_background_color(struct MiniFBWindow *window,
                                         uint8_t red,
                                         uint8_t green,
                                         uint8_t blue);
+
+/*
+ Check if a key is currently held down
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+bool minifb_window_is_key_down(const struct MiniFBWindow *window, enum MiniFBKey key);
+
+/*
+ Check if a key was pressed this frame
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+bool minifb_window_is_key_pressed(const struct MiniFBWindow *window,
+                                  enum MiniFBKey key,
+                                  bool repeat);
+
+/*
+ Check if a key was released this frame
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+bool minifb_window_is_key_released(const struct MiniFBWindow *window, enum MiniFBKey key);
+
+/*
+ Get all currently pressed keys
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ - `out_keys` must point to an array of at least `max_keys` MiniFBKey values
+ - `out_count` must be a valid pointer
+
+ Returns the number of keys written to `out_keys` (as integer key codes)
+ */
+void minifb_window_get_keys(const struct MiniFBWindow *window,
+                            int32_t *out_keys,
+                            uintptr_t *out_count,
+                            uintptr_t max_keys);
+
+/*
+ Get mouse position
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ - `out_x` and `out_y` must be valid pointers
+
+ Returns true if position is available, false otherwise
+ */
+bool minifb_window_get_mouse_pos(const struct MiniFBWindow *window,
+                                 enum MiniFBMouseMode mode,
+                                 float *out_x,
+                                 float *out_y);
+
+/*
+ Check if a mouse button is currently held down
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+bool minifb_window_get_mouse_down(const struct MiniFBWindow *window, enum MiniFBMouseButton button);
+
+/*
+ Get scroll wheel movement
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ - `out_x` and `out_y` must be valid pointers
+
+ Returns true if scroll data is available, false otherwise
+ */
+bool minifb_window_get_scroll_wheel(const struct MiniFBWindow *window, float *out_x, float *out_y);
 
 #endif  /* MINIFB_FFI_H */

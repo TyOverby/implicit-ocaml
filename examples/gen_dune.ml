@@ -204,7 +204,8 @@ let () =
 |}
     (Display.display ~tests:shape_tests ~scenes:scene_tests
      |> String.escaped);
-  printf {|(rule
+  printf
+    {|(rule
  (alias runtest) (deps display.html) (action (progn)))
  |}
 ;;
