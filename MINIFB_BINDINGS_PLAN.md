@@ -80,13 +80,15 @@ implicit-ocaml/
 - [x] Interactive demo: Escape key closes window
 - [x] Mouse position affects rendering
 
-### 🔲 Stage 3: Full API (Complete Feature Set)
+### ✅ Stage 3: Full API (Complete Feature Set) - COMPLETE
 
-1. [ ] WindowOptions struct for creation parameters
-2. [ ] Window properties: `set_position`, `topmost`
-3. [ ] CursorStyle enum and cursor control
-4. [ ] Error handling improvements
-5. [ ] Documentation
+1. [x] WindowOptions struct for creation parameters (already in Stage 1)
+2. [x] Window properties: `set_position`, `get_position`, `set_topmost`
+3. [x] CursorStyle enum and cursor control (`set_cursor_visibility`, `set_cursor_style`)
+4. [x] Error handling improvements (detailed error messages from minifb)
+5. [x] Documentation (mli file with doc comments)
+
+**Note:** On i3 and other minimalist window managers, run with `XMODIFIERS=''` to avoid XIM issues.
 
 ## Current Usage
 
@@ -95,8 +97,16 @@ module M = Minifb.Minifb_impl
 
 let () =
   let width = 640 and height = 480 in
-  let window = M.create ~name:"My App" ~width ~height () in
+
+  (* Create with custom options *)
+  let options = { M.default_options with resize = true } in
+  let window = M.create ~name:"My App" ~width ~height ~options () in
   let buffer = M.create_buffer ~width ~height in
+
+  (* Window properties *)
+  M.set_position window ~x:100 ~y:100;
+  M.set_topmost window true;
+  M.set_cursor_style window M.CursorStyle.Crosshair;
 
   (* Fill buffer with red *)
   for i = 0 to width * height - 1 do
@@ -131,9 +141,12 @@ let () =
 # Build library
 dune build minifb/minifb.a
 
-# Build and run test
+# Build and run test (headless)
 dune build minifb/test_minifb.exe
 xvfb-run -a dune exec minifb/test_minifb.exe
+
+# Run on i3 or other minimalist WMs (workaround for XIM issue)
+XMODIFIERS='' dune exec minifb/test_minifb.exe
 
 # Or run directly (no LD_LIBRARY_PATH needed - static linking!)
 xvfb-run -a _build/default/minifb/test_minifb.exe

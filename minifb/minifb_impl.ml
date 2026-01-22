@@ -168,3 +168,32 @@ let get_scroll_wheel window =
   let valid = C.window_get_scroll_wheel window out_x out_y in
   if valid then Some (!@out_x, !@out_y) else None
 ;;
+
+(* Re-export CursorStyle *)
+module CursorStyle = T.CursorStyle
+
+(* Window properties *)
+let set_position window ~x ~y =
+  C.window_set_position
+    window
+    (Nativeint.of_int x)
+    (Nativeint.of_int y)
+;;
+
+let get_position window =
+  let out_x = allocate nativeint Nativeint.zero in
+  let out_y = allocate nativeint Nativeint.zero in
+  C.window_get_position window out_x out_y;
+  Nativeint.to_int !@out_x, Nativeint.to_int !@out_y
+;;
+
+let set_topmost window topmost = C.window_topmost window topmost
+
+(* Cursor control *)
+let set_cursor_visibility window visible =
+  C.window_set_cursor_visibility window visible
+;;
+
+let set_cursor_style window style =
+  C.window_set_cursor_style window (CursorStyle.to_int style)
+;;

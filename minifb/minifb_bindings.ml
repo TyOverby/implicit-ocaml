@@ -120,4 +120,39 @@ module Bindings (F : Ctypes.FOREIGN) = struct
       "minifb_window_get_scroll_wheel"
       (ptr Window.t @-> ptr float @-> ptr float @-> returning bool)
   ;;
+
+  (* Window properties *)
+  let window_set_position =
+    foreign
+      "minifb_window_set_position"
+      (ptr Window.t @-> nativeint @-> nativeint @-> returning void)
+  ;;
+
+  let window_get_position =
+    foreign
+      "minifb_window_get_position"
+      (ptr Window.t
+       @-> ptr nativeint
+       @-> ptr nativeint
+       @-> returning void)
+  ;;
+
+  let window_topmost =
+    foreign
+      "minifb_window_topmost"
+      (ptr Window.t @-> bool @-> returning void)
+  ;;
+
+  (* Cursor control *)
+  let window_set_cursor_visibility =
+    foreign
+      "minifb_window_set_cursor_visibility"
+      (ptr Window.t @-> bool @-> returning void)
+  ;;
+
+  let window_set_cursor_style =
+    foreign
+      "minifb_window_set_cursor_style"
+      (ptr Window.t @-> CursorStyle.t @-> returning void)
+  ;;
 end

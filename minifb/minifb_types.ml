@@ -399,3 +399,40 @@ module MouseMode = struct
 
   let t = int
 end
+
+(* Cursor style *)
+module CursorStyle = struct
+  type t =
+    | Arrow
+    | Ibeam
+    | Crosshair
+    | ClosedHand
+    | OpenHand
+    | ResizeLeftRight
+    | ResizeUpDown
+    | ResizeAll
+
+  let to_int = function
+    | Arrow -> 0
+    | Ibeam -> 1
+    | Crosshair -> 2
+    | ClosedHand -> 3
+    | OpenHand -> 4
+    | ResizeLeftRight -> 5
+    | ResizeUpDown -> 6
+    | ResizeAll -> 7
+  ;;
+
+  let of_int = function
+    | 0 -> Arrow
+    | 1 -> Ibeam
+    | 2 -> Crosshair
+    | 3 -> ClosedHand
+    | 4 -> OpenHand
+    | 5 -> ResizeLeftRight
+    | 6 -> ResizeUpDown
+    | _ -> ResizeAll
+  ;;
+
+  let t = int
+end

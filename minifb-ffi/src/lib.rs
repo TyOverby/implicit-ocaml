@@ -2,7 +2,7 @@
 //!
 //! This crate provides a C-compatible API for minifb, enabling use from OCaml via ctypes.
 
-use minifb::{Key, KeyRepeat, MouseButton, MouseMode, Window, WindowOptions};
+use minifb::{CursorStyle, Key, KeyRepeat, MouseButton, MouseMode, Window, WindowOptions};
 use std::cell::RefCell;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
@@ -409,6 +409,35 @@ impl MiniFBMouseMode {
     }
 }
 
+/// Cursor style for the window
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MiniFBCursorStyle {
+    Arrow = 0,
+    Ibeam = 1,
+    Crosshair = 2,
+    ClosedHand = 3,
+    OpenHand = 4,
+    ResizeLeftRight = 5,
+    ResizeUpDown = 6,
+    ResizeAll = 7,
+}
+
+impl MiniFBCursorStyle {
+    fn to_minifb(self) -> CursorStyle {
+        match self {
+            MiniFBCursorStyle::Arrow => CursorStyle::Arrow,
+            MiniFBCursorStyle::Ibeam => CursorStyle::Ibeam,
+            MiniFBCursorStyle::Crosshair => CursorStyle::Crosshair,
+            MiniFBCursorStyle::ClosedHand => CursorStyle::ClosedHand,
+            MiniFBCursorStyle::OpenHand => CursorStyle::OpenHand,
+            MiniFBCursorStyle::ResizeLeftRight => CursorStyle::ResizeLeftRight,
+            MiniFBCursorStyle::ResizeUpDown => CursorStyle::ResizeUpDown,
+            MiniFBCursorStyle::ResizeAll => CursorStyle::ResizeAll,
+        }
+    }
+}
+
 /// Opaque window handle
 pub struct MiniFBWindow {
     window: Window,
@@ -767,6 +796,91 @@ pub unsafe extern "C" fn minifb_window_get_scroll_wheel(
         }
         None => false,
     }
+}
+
+// ============================================================================
+// Window Properties
+// ============================================================================
+
+/// Set the window position
+///
+/// # Safety
+/// - `window` must be a valid pointer returned by `minifb_window_new`
+#[no_mangle]
+pub unsafe extern "C" fn minifb_window_set_position(
+    window: *mut MiniFBWindow,
+    x: isize,
+    y: isize,
+) {
+    if window.is_null() {
+        return;
+    }
+    (*window).window.set_position(x, y);
+}
+
+/// Get the window position
+///
+/// # Safety
+/// - `window` must be a valid pointer returned by `minifb_window_new`
+/// - `out_x` and `out_y` must be valid pointers
+#[no_mangle]
+pub unsafe extern "C" fn minifb_window_get_position(
+    window: *const MiniFBWindow,
+    out_x: *mut isize,
+    out_y: *mut isize,
+) {
+    if window.is_null() || out_x.is_null() || out_y.is_null() {
+        return;
+    }
+    let (x, y) = (*window).window.get_position();
+    *out_x = x;
+    *out_y = y;
+}
+
+/// Set whether the window should be topmost (always on top)
+///
+/// # Safety
+/// - `window` must be a valid pointer returned by `minifb_window_new`
+#[no_mangle]
+pub unsafe extern "C" fn minifb_window_topmost(window: *mut MiniFBWindow, topmost: bool) {
+    if window.is_null() {
+        return;
+    }
+    (*window).window.topmost(topmost);
+}
+
+// ============================================================================
+// Cursor Control
+// ============================================================================
+
+/// Set cursor visibility
+///
+/// # Safety
+/// - `window` must be a valid pointer returned by `minifb_window_new`
+#[no_mangle]
+pub unsafe extern "C" fn minifb_window_set_cursor_visibility(
+    window: *mut MiniFBWindow,
+    visible: bool,
+) {
+    if window.is_null() {
+        return;
+    }
+    (*window).window.set_cursor_visibility(visible);
+}
+
+/// Set cursor style
+///
+/// # Safety
+/// - `window` must be a valid pointer returned by `minifb_window_new`
+#[no_mangle]
+pub unsafe extern "C" fn minifb_window_set_cursor_style(
+    window: *mut MiniFBWindow,
+    style: MiniFBCursorStyle,
+) {
+    if window.is_null() {
+        return;
+    }
+    (*window).window.set_cursor_style(style.to_minifb());
 }
 
 #[cfg(test)]

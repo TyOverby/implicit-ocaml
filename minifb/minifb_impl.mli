@@ -186,3 +186,27 @@ val get_mouse_pos
 
 val is_mouse_down : t -> MouseButton.t -> bool
 val get_scroll_wheel : t -> (float * float) option
+
+(** Cursor styles *)
+module CursorStyle : sig
+  type t =
+    | Arrow
+    | Ibeam
+    | Crosshair
+    | ClosedHand
+    | OpenHand
+    | ResizeLeftRight
+    | ResizeUpDown
+    | ResizeAll
+end
+
+(** Window properties *)
+
+val set_position : t -> x:int -> y:int -> unit
+val get_position : t -> int * int
+val set_topmost : t -> bool -> unit
+
+(** Cursor control *)
+
+val set_cursor_visibility : t -> bool -> unit
+val set_cursor_style : t -> CursorStyle.t -> unit

@@ -141,6 +141,20 @@ typedef enum MiniFBMouseButton {
 } MiniFBMouseButton;
 
 /*
+ Cursor style for the window
+ */
+typedef enum MiniFBCursorStyle {
+  Arrow = 0,
+  Ibeam = 1,
+  Crosshair = 2,
+  ClosedHand = 3,
+  OpenHand = 4,
+  ResizeLeftRight = 5,
+  ResizeUpDown = 6,
+  ResizeAll = 7,
+} MiniFBCursorStyle;
+
+/*
  Opaque window handle
  */
 typedef struct MiniFBWindow MiniFBWindow;
@@ -332,5 +346,48 @@ bool minifb_window_get_mouse_down(const struct MiniFBWindow *window, enum MiniFB
  Returns true if scroll data is available, false otherwise
  */
 bool minifb_window_get_scroll_wheel(const struct MiniFBWindow *window, float *out_x, float *out_y);
+
+/*
+ Set the window position
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+void minifb_window_set_position(struct MiniFBWindow *window, intptr_t x, intptr_t y);
+
+/*
+ Get the window position
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ - `out_x` and `out_y` must be valid pointers
+ */
+void minifb_window_get_position(const struct MiniFBWindow *window,
+                                intptr_t *out_x,
+                                intptr_t *out_y);
+
+/*
+ Set whether the window should be topmost (always on top)
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+void minifb_window_topmost(struct MiniFBWindow *window, bool topmost);
+
+/*
+ Set cursor visibility
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+void minifb_window_set_cursor_visibility(struct MiniFBWindow *window, bool visible);
+
+/*
+ Set cursor style
+
+ # Safety
+ - `window` must be a valid pointer returned by `minifb_window_new`
+ */
+void minifb_window_set_cursor_style(struct MiniFBWindow *window, enum MiniFBCursorStyle style);
 
 #endif  /* MINIFB_FFI_H */
