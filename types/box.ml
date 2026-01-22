@@ -100,8 +100,8 @@ let union_part a b =
   | Something a, Something b -> box_union a b |> Something
   | Hole a, Hole b ->
     (match box_intersection a b with
-    | Some h -> Hole h
-    | None -> Everything)
+     | Some h -> Hole h
+     | None -> Everything)
   | Hole h, Something _ | Something _, Hole h -> Hole h
 ;;
 
@@ -111,8 +111,8 @@ let intersection_part a b =
   | Everything, other | other, Everything -> other
   | Something a, Something b ->
     (match box_intersection a b with
-    | Some a -> Something a
-    | None -> Nothing)
+     | Some a -> Something a
+     | None -> Nothing)
   | Hole a, Hole b -> box_union a b |> Hole
   | Hole _, Something s | Something s, Hole _ -> Something s
 ;;
@@ -187,7 +187,7 @@ module BboxExpectTests = struct
 
   let intersection_box_test_some =
     box_test_stub (fun a b ->
-        box_intersection a b |> Option.value_exn)
+      box_intersection a b |> Option.value_exn)
   ;;
 
   let union_test = bounding_test_stub union_part

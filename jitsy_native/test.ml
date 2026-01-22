@@ -35,10 +35,10 @@ let%expect_test "b ? x : y" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f true 3 5 : int)]
-        ; [%message (f false 3 5 : int)]
-        ; [%message (f true 1 2 : int)]
-        ])
+      [ [%message (f true 3 5 : int)]
+      ; [%message (f false 3 5 : int)]
+      ; [%message (f true 1 2 : int)]
+      ])
   in
   [%expect
     {|
@@ -72,10 +72,10 @@ let%expect_test "x == y" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 3 5 : bool)]
-        ; [%message (f 3 3 : bool)]
-        ; [%message (f 5 5 : bool)]
-        ])
+      [ [%message (f 3 5 : bool)]
+      ; [%message (f 3 3 : bool)]
+      ; [%message (f 5 5 : bool)]
+      ])
   in
   [%expect
     {|
@@ -133,11 +133,11 @@ let%expect_test "int param" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 0 : int)]
-        ; [%message (f 1 : int)]
-        ; [%message (f (-2) : int)]
-        ; [%message (f 4 : int)]
-        ])
+      [ [%message (f 0 : int)]
+      ; [%message (f 1 : int)]
+      ; [%message (f (-2) : int)]
+      ; [%message (f 4 : int)]
+      ])
   in
   [%expect
     {|
@@ -168,11 +168,11 @@ let%expect_test "float param" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 0.9 : float)]
-        ; [%message (f 1.0 : float)]
-        ; [%message (f (-2.55) : float)]
-        ; [%message (f 999.00 : float)]
-        ])
+      [ [%message (f 0.9 : float)]
+      ; [%message (f 1.0 : float)]
+      ; [%message (f (-2.55) : float)]
+      ; [%message (f 999.00 : float)]
+      ])
   in
   [%expect
     {|
@@ -202,11 +202,11 @@ let%expect_test "float param" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 0.9 : float)]
-        ; [%message (f 1.0 : float)]
-        ; [%message (f (-2.55) : float)]
-        ; [%message (f 999.00 : float)]
-        ])
+      [ [%message (f 0.9 : float)]
+      ; [%message (f 1.0 : float)]
+      ; [%message (f (-2.55) : float)]
+      ; [%message (f 999.00 : float)]
+      ])
   in
   [%expect
     {|
@@ -341,10 +341,10 @@ let%expect_test "add int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1 3 : int)]
-        ; [%message (f 3 4 : int)]
-        ; [%message (f (-3) 3 : int)]
-        ])
+      [ [%message (f 1 3 : int)]
+      ; [%message (f 3 4 : int)]
+      ; [%message (f (-3) 3 : int)]
+      ])
   in
   [%expect
     {|
@@ -376,11 +376,11 @@ let%expect_test "add int32" =
   in
   let%bind () =
     test f (fun f ->
-        let open Int32 in
-        let sexp_of_t t = Sexp.Atom (to_string t) in
-        [ [%message (f (of_int_exn 1) (of_int_exn 3) : t)]
-        ; [%message (f (of_int_exn 3) (of_int_exn 4) : t)]
-        ])
+      let open Int32 in
+      let sexp_of_t t = Sexp.Atom (to_string t) in
+      [ [%message (f (of_int_exn 1) (of_int_exn 3) : t)]
+      ; [%message (f (of_int_exn 3) (of_int_exn 4) : t)]
+      ])
   in
   [%expect
     {|
@@ -411,11 +411,11 @@ let%expect_test "multiply int32" =
   in
   let%bind () =
     test f (fun f ->
-        let open Int32 in
-        let sexp_of_t t = Sexp.Atom (to_string t) in
-        [ [%message (f (of_int_exn 1) (of_int_exn 3) : t)]
-        ; [%message (f (of_int_exn 3) (of_int_exn 4) : t)]
-        ])
+      let open Int32 in
+      let sexp_of_t t = Sexp.Atom (to_string t) in
+      [ [%message (f (of_int_exn 1) (of_int_exn 3) : t)]
+      ; [%message (f (of_int_exn 3) (of_int_exn 4) : t)]
+      ])
   in
   [%expect
     {|
@@ -447,12 +447,12 @@ let%expect_test "divide int32" =
   in
   let%bind () =
     test f (fun f ->
-        let open Int32 in
-        let sexp_of_t t = Sexp.Atom (to_string t) in
-        [ [%message (f (of_int_exn 6) (of_int_exn 3) : t)]
-        ; [%message (f (of_int_exn 123) (of_int_exn 4) : t)]
-        ; [%message (f (of_int_exn 3) (of_int_exn 3) : t)]
-        ])
+      let open Int32 in
+      let sexp_of_t t = Sexp.Atom (to_string t) in
+      [ [%message (f (of_int_exn 6) (of_int_exn 3) : t)]
+      ; [%message (f (of_int_exn 123) (of_int_exn 4) : t)]
+      ; [%message (f (of_int_exn 3) (of_int_exn 3) : t)]
+      ])
   in
   [%expect
     {|
@@ -710,11 +710,11 @@ let%expect_test "sqrt int32" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f (Int32.of_int_exn 0) : int32)]
-        ; [%message (f (Int32.of_int_exn 4) : int32)]
-        ; [%message (f (Int32.of_int_exn 3) : int32)]
-        ; [%message (f (Int32.of_int_exn 153) : int32)]
-        ])
+      [ [%message (f (Int32.of_int_exn 0) : int32)]
+      ; [%message (f (Int32.of_int_exn 4) : int32)]
+      ; [%message (f (Int32.of_int_exn 3) : int32)]
+      ; [%message (f (Int32.of_int_exn 153) : int32)]
+      ])
   in
   [%expect
     {|
@@ -866,10 +866,10 @@ let%expect_test "sqrt float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 4.0 : float)]
-        ; [%message (f 3.0 : float)]
-        ; [%message (f 153.0 : float)]
-        ])
+      [ [%message (f 4.0 : float)]
+      ; [%message (f 3.0 : float)]
+      ; [%message (f 153.0 : float)]
+      ])
   in
   [%expect
     {|
@@ -905,10 +905,10 @@ let%expect_test "add float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.0 3.0 : float)]
-        ; [%message (f 3.0 4.0 : float)]
-        ; [%message (f (-3.0) 3.0 : float)]
-        ])
+      [ [%message (f 1.0 3.0 : float)]
+      ; [%message (f 3.0 4.0 : float)]
+      ; [%message (f (-3.0) 3.0 : float)]
+      ])
   in
   [%expect
     {|
@@ -940,10 +940,10 @@ let%expect_test "sub float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.0 3.0 : float)]
-        ; [%message (f 3.0 4.0 : float)]
-        ; [%message (f (-3.0) 3.0 : float)]
-        ])
+      [ [%message (f 1.0 3.0 : float)]
+      ; [%message (f 3.0 4.0 : float)]
+      ; [%message (f (-3.0) 3.0 : float)]
+      ])
   in
   [%expect
     {|
@@ -975,10 +975,10 @@ let%expect_test "mul float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.0 3.0 : float)]
-        ; [%message (f 3.0 4.0 : float)]
-        ; [%message (f (-3.0) 3.0 : float)]
-        ])
+      [ [%message (f 1.0 3.0 : float)]
+      ; [%message (f 3.0 4.0 : float)]
+      ; [%message (f (-3.0) 3.0 : float)]
+      ])
   in
   [%expect
     {|
@@ -1010,10 +1010,10 @@ let%expect_test "div float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.0 3.0 : float)]
-        ; [%message (f 3.0 4.0 : float)]
-        ; [%message (f (-3.0) 3.0 : float)]
-        ])
+      [ [%message (f 1.0 3.0 : float)]
+      ; [%message (f 3.0 4.0 : float)]
+      ; [%message (f (-3.0) 3.0 : float)]
+      ])
   in
   [%expect
     {|
@@ -1045,10 +1045,10 @@ let%expect_test "eq int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1 1 : bool)]
-        ; [%message (f 3 4 : bool)]
-        ; [%message (f 0 0 : bool)]
-        ])
+      [ [%message (f 1 1 : bool)]
+      ; [%message (f 3 4 : bool)]
+      ; [%message (f 0 0 : bool)]
+      ])
   in
   [%expect
     {|
@@ -1080,11 +1080,11 @@ let%expect_test "int32 to float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f (Int32.of_int_exn 1) : float)]
-        ; [%message (f (Int32.of_int_exn 3) : float)]
-        ; [%message (f (Int32.of_int_exn (-3)) : float)]
-        ; [%message (f (Int32.of_int_exn 0) : float)]
-        ])
+      [ [%message (f (Int32.of_int_exn 1) : float)]
+      ; [%message (f (Int32.of_int_exn 3) : float)]
+      ; [%message (f (Int32.of_int_exn (-3)) : float)]
+      ; [%message (f (Int32.of_int_exn 0) : float)]
+      ])
   in
   [%expect
     {|
@@ -1117,11 +1117,11 @@ let%expect_test "int to float" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1 : float)]
-        ; [%message (f 3 : float)]
-        ; [%message (f (-3) : float)]
-        ; [%message (f 0 : float)]
-        ])
+      [ [%message (f 1 : float)]
+      ; [%message (f 3 : float)]
+      ; [%message (f (-3) : float)]
+      ; [%message (f 0 : float)]
+      ])
   in
   [%expect
     {|
@@ -1154,11 +1154,11 @@ let%expect_test "float to int32" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.5 : int32)]
-        ; [%message (f 3.0 : int32)]
-        ; [%message (f (-1.3) : int32)]
-        ; [%message (f 0.25 : int32)]
-        ])
+      [ [%message (f 1.5 : int32)]
+      ; [%message (f 3.0 : int32)]
+      ; [%message (f (-1.3) : int32)]
+      ; [%message (f 0.25 : int32)]
+      ])
   in
   [%expect
     {|
@@ -1190,11 +1190,11 @@ let%expect_test "float to int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1.5 : int)]
-        ; [%message (f 3.0 : int)]
-        ; [%message (f (-1.3) : int)]
-        ; [%message (f 0.25 : int)]
-        ])
+      [ [%message (f 1.5 : int)]
+      ; [%message (f 3.0 : int)]
+      ; [%message (f (-1.3) : int)]
+      ; [%message (f 0.25 : int)]
+      ])
   in
   [%expect
     {|
@@ -1227,10 +1227,10 @@ let%expect_test "sub int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1 3 : int)]
-        ; [%message (f 3 4 : int)]
-        ; [%message (f (-3) 3 : int)]
-        ])
+      [ [%message (f 1 3 : int)]
+      ; [%message (f 3 4 : int)]
+      ; [%message (f (-3) 3 : int)]
+      ])
   in
   [%expect
     {|
@@ -1263,10 +1263,10 @@ let%expect_test "mul int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 1 3 : int)]
-        ; [%message (f 3 4 : int)]
-        ; [%message (f (-3) 3 : int)]
-        ])
+      [ [%message (f 1 3 : int)]
+      ; [%message (f 3 4 : int)]
+      ; [%message (f (-3) 3 : int)]
+      ])
   in
   [%expect
     {|
@@ -1299,10 +1299,10 @@ let%expect_test "div int" =
   in
   let%bind () =
     test f (fun f ->
-        [ [%message (f 6 3 : int)]
-        ; [%message (f (-123) 4 : int)]
-        ; [%message (f (-3) 3 : int)]
-        ])
+      [ [%message (f 6 3 : int)]
+      ; [%message (f (-123) 4 : int)]
+      ; [%message (f (-3) 3 : int)]
+      ])
   in
   [%expect
     {|
@@ -1353,14 +1353,14 @@ let%expect_test "range2" =
   in
   let%bind () =
     test f (fun f ->
-        let bigarray =
-          Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 25
-        in
-        Bigarray.Array1.fill bigarray 0.0;
-        let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
-        let (_ : int) = f (Obj.magic ptr) 0 in
-        let list = bigarray_to_list bigarray in
-        [ [%message (list : float list)] ])
+      let bigarray =
+        Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 25
+      in
+      Bigarray.Array1.fill bigarray 0.0;
+      let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
+      let (_ : int) = f (Obj.magic ptr) 0 in
+      let list = bigarray_to_list bigarray in
+      [ [%message (list : float list)] ])
   in
   [%expect
     {|
@@ -1430,19 +1430,19 @@ let%expect_test "big-array" =
   in
   let%bind () =
     test f (fun f ->
-        let bigarray =
-          Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 10
-        in
-        Bigarray.Array1.fill bigarray 0.0;
-        let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
-        let ptr2 = Obj.magic ptr in
-        let (_ : int) = f ptr2 1 in
-        let (_ : int) = f ptr2 2 in
-        let (_ : int) = f ptr2 3 in
-        let (_ : int) = f ptr2 4 in
-        let (_ : int) = f ptr2 5 in
-        let list = bigarray_to_list bigarray |> Fn.flip List.take 6 in
-        [ [%message (list : float list)] ])
+      let bigarray =
+        Bigarray.Array1.create Bigarray.float32 Bigarray.C_layout 10
+      in
+      Bigarray.Array1.fill bigarray 0.0;
+      let ptr = Ctypes.bigarray_start Ctypes.array1 bigarray in
+      let ptr2 = Obj.magic ptr in
+      let (_ : int) = f ptr2 1 in
+      let (_ : int) = f ptr2 2 in
+      let (_ : int) = f ptr2 3 in
+      let (_ : int) = f ptr2 4 in
+      let (_ : int) = f ptr2 5 in
+      let list = bigarray_to_list bigarray |> Fn.flip List.take 6 in
+      [ [%message (list : float list)] ])
   in
   [%expect
     {|

@@ -20,21 +20,21 @@ let to_underlying t = t.array
 module Debug = struct
   let debug t ~f =
     List.iter (List.range ~stride:2 0 t.height) ~f:(fun y ->
-        List.iter (List.range ~stride:2 0 t.width) ~f:(fun x ->
-            let idx = (y * 88) + x in
-            let v = Float_bigarray.get t.array idx in
-            let s = f v in
-            Out_channel.(output_string stdout s));
-        print_endline "")
+      List.iter (List.range ~stride:2 0 t.width) ~f:(fun x ->
+        let idx = (y * 88) + x in
+        let v = Float_bigarray.get t.array idx in
+        let s = f v in
+        Out_channel.(output_string stdout s));
+      print_endline "")
   ;;
 
   let borders =
     debug ~f:(fun v ->
-        (match Float.sign_exn v with
-        | Sign.Neg -> '_'
-        | Sign.Zero -> '-'
-        | Sign.Pos -> '#')
-        |> Char.to_string)
+      (match Float.sign_exn v with
+       | Sign.Neg -> '_'
+       | Sign.Zero -> '-'
+       | Sign.Pos -> '#')
+      |> Char.to_string)
   ;;
 
   let values = debug ~f:(fun v -> Float.to_string_hum v ^ " ")

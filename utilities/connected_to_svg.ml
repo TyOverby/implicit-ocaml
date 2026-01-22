@@ -14,8 +14,8 @@ let main () =
   in
   connected
   |> List.map ~f:(function
-         | Disjoint _ -> failwith "svg of disjoint is not implemented"
-         | Joined points -> points)
+    | Disjoint _ -> failwith "svg of disjoint is not implemented"
+    | Joined points -> points)
   |> Element.path ~style
   |> List.return
   |> to_svg

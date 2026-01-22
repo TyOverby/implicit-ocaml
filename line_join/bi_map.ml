@@ -55,13 +55,13 @@ let parse (linebuf : Line_buffer.t) =
   let dict = Id.Table.create () in
   let ends = Point.Table.create () in
   Line_buffer.iter linebuf ~f:(fun ({ p1 = _; p2 } as line) ->
-      let id = Id.create () in
-      Hashtbl.add_exn dict ~key:id ~data:line;
-      Hashtbl.update ends p2 ~f:(function
-          | Some dpoint ->
-            Dpoint.add dpoint ~id;
-            dpoint
-          | None -> Dpoint.create ~id p2));
+    let id = Id.create () in
+    Hashtbl.add_exn dict ~key:id ~data:line;
+    Hashtbl.update ends p2 ~f:(function
+      | Some dpoint ->
+        Dpoint.add dpoint ~id;
+        dpoint
+      | None -> Dpoint.create ~id p2));
   let ends = Hashtbl.data ends |> Tree.create Tree.Random in
   { dict; ends }
 ;;
@@ -75,10 +75,10 @@ let first { dict; _ } =
    * dict and remove them when necessary *)
   let least = ref None in
   Hashtbl.iter_keys dict ~f:(fun id ->
-      match !least with
-      | None -> least := Some id
-      | Some a when Id.( < ) id a -> least := Some id
-      | _ -> ());
+    match !least with
+    | None -> least := Some id
+    | Some a when Id.( < ) id a -> least := Some id
+    | _ -> ());
   Option.value_exn !least
 ;;
 

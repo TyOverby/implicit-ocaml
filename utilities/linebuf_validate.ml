@@ -11,9 +11,9 @@ let main () =
   in
   Line_buffer.iteri
     linebuf
-    ~f:(fun i
-            { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } }
-            ->
+    ~f:
+      (fun
+        i { Line.p1 = { x = x1; y = y1 }; p2 = { x = x2; y = y2 } } ->
       if Float.is_nan x1
          || Float.is_nan y1
          || Float.is_nan x2

@@ -3,11 +3,11 @@ open! Async_kernel
 open Shared_types
 
 let eval
-    (type d)
-    profile
-    (module B : Jitsy.Backend.S with type Debug.t = d)
-    shape
-    chunk
+  (type d)
+  profile
+  (module B : Jitsy.Backend.S with type Debug.t = d)
+  shape
+  chunk
   =
   let compiled = Compile.compile shape in
   let f =

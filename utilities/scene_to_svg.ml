@@ -26,17 +26,17 @@ let main () =
     scene
     |> Scene.layers
     |> List.mapi ~f:(fun i layer ->
-           let shape =
-             layer
-             |> Layer.shape
-             |> Pipeline.reshape
-                  (Profile.split profile (sprintf "layer-%d" i))
-                  bb_of_all_shapes
-                  ~target_width
-                  ~target_height
-                  ~padding
-           in
-           { layer with shape })
+      let shape =
+        layer
+        |> Layer.shape
+        |> Pipeline.reshape
+             (Profile.split profile (sprintf "layer-%d" i))
+             bb_of_all_shapes
+             ~target_width
+             ~target_height
+             ~padding
+      in
+      { layer with shape })
   in
   let viewbox =
     Viewbox.create
@@ -48,29 +48,29 @@ let main () =
   let%bind all_connected =
     layers
     |> List.mapi ~f:(fun i { shape; color } ->
-           let%map connected =
-             Pipeline.eval_connect
-               (Profile.split profile (sprintf "layer-%d" i))
-               (module Jitsy_native)
-               shape
-               ~width:target_width
-               ~height:target_height
-           in
-           connected, color)
+      let%map connected =
+        Pipeline.eval_connect
+          (Profile.split profile (sprintf "layer-%d" i))
+          (module Jitsy_native)
+          shape
+          ~width:target_width
+          ~height:target_height
+      in
+      connected, color)
     |> Deferred.all
   in
   let elements =
     List.map all_connected ~f:(fun (connecteds, color) ->
-        let joineds =
-          List.map connecteds ~f:(function
-              | Connected.Joined points -> points
-              | Connected.Disjoint _ ->
-                failwith "disjoint not implemented")
-        in
-        let style =
-          Style.[ Fill (Some color); Stroke None; Stroke_width 0 ]
-        in
-        Element.path joineds ~style)
+      let joineds =
+        List.map connecteds ~f:(function
+          | Connected.Joined points -> points
+          | Connected.Disjoint _ ->
+            failwith "disjoint not implemented")
+      in
+      let style =
+        Style.[ Fill (Some color); Stroke None; Stroke_width 0 ]
+      in
+      Element.path joineds ~style)
   in
   elements |> to_svg ~viewbox |> print_endline;
   Profile.stop profile "all";

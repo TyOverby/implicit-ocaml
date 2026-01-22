@@ -4,23 +4,23 @@ let display ~tests ~scenes =
   let scenes =
     scenes
     |> List.map ~f:(fun name ->
-           sprintf
-             {|
+      sprintf
+        {|
     <h2>%s</h2>
     <img src="./%s.svg"></img>|}
-             name
-             name)
+        name
+        name)
     |> String.concat ~sep:"\n"
   in
   let tests =
     tests
     |> List.map ~f:(fun name ->
-           sprintf
-             {|
+      sprintf
+        {|
     <h2>%s</h2>
     <img src="./%s.connected.svg"></img>|}
-             name
-             name)
+        name
+        name)
     |> String.concat ~sep:"\n"
   in
   sprintf

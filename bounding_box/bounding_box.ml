@@ -157,7 +157,7 @@ module ComputeBB_Test = struct
   ;;
 
   (*
-  let%expect_test _ =
+     let%expect_test _ =
     rect ~x:(-10.0) ~y:(-10.0) ~w:20.0 ~h:20.0
     |> scale ~dx:3.0 ~dy:3.0
     |> run_bb_test;
@@ -251,7 +251,7 @@ module ComputeBB_Test = struct
   ;;
 
   (*
-  let%expect_test _ =
+     let%expect_test _ =
     circle ~x:0.0 ~y:0.0 ~r:10.0
     |> drag ~dx:10.0 ~dy:0.0
     |> run_bb_test;

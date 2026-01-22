@@ -52,13 +52,13 @@ module Element = struct
       bprintf buffer "\n ";
       points
       |> List.iter ~f:(fun points ->
-             points
-             |> List.hd_exn
-             |> fun { Point.x; y } ->
-             bprintf buffer "M%f %f\n " x y;
-             List.iter points ~f:(fun { Point.x; y } ->
-                 bprintf buffer "L%f %f\n " x y);
-             bprintf buffer "Z\n ");
+        points
+        |> List.hd_exn
+        |> fun { Point.x; y } ->
+        bprintf buffer "M%f %f\n " x y;
+        List.iter points ~f:(fun { Point.x; y } ->
+          bprintf buffer "L%f %f\n " x y);
+        bprintf buffer "Z\n ");
       bprintf
         buffer
         {|" style="%s"></path>|}
