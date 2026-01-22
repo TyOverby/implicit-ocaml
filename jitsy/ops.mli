@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 
 module Float : sig
   val const : float -> float Expr_type.t

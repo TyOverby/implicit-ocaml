@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open! Async
 
 let command =
@@ -13,4 +13,4 @@ let command =
     ]
 ;;
 
-let () = Command.run command
+let () = Command_unix.run command

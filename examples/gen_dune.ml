@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 
 let shape_tests =
   [ "circle"
@@ -22,7 +22,7 @@ let executable_rule name =
    (name %s)
    (modules %s)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
  |}
     name
     name

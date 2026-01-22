@@ -12,6 +12,4 @@ dune build \
  @@types/runtest \
  @@examples/default \
  @@examples/runtest \
- utilities/utilities.exe \
- -w \
- --terminal-persistence=clear-on-rebuild
+ utilities/utilities.exe

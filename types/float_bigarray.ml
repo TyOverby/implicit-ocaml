@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 
 type t =
   (float, Bigarray.float32_elt, Bigarray.c_layout) Bigarray.Array1.t
@@ -19,8 +19,8 @@ let of_array arr =
   bigarray
 ;;
 
-let sexp_of_t t = t |> to_array |> sexp_of_float_array
-let t_of_sexp t = t |> float_array_of_sexp |> of_array
+let sexp_of_t t = t |> to_array |> [%sexp_of: float array]
+let t_of_sexp t = t |> [%of_sexp: float array] |> of_array
 let length = Bigarray.Array1.dim
 
 let create size =

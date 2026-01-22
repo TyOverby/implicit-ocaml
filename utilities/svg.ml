@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open Shared_types
 
 module Style = struct
@@ -74,7 +74,7 @@ module Viewbox = struct
     ; width : float
     ; height : float
     }
-  [@@deriving fields]
+  [@@deriving fields] [@@fields.no_zero_alloc]
 
   let create = Fields.create
 

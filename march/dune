@@ -10,7 +10,7 @@
 
 (executable
  (name march_js)
- (libraries core_kernel shared_types)
+ (libraries core shared_types)
  (modules march_js)
  (js_of_ocaml)
  (preprocess

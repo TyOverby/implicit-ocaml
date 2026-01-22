@@ -4,7 +4,7 @@
    (name circle)
    (modules circle)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to circle_actual.shape.sexp
       (run ./circle.exe)))
@@ -42,7 +42,7 @@
    (name circle_sub)
    (modules circle_sub)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to circle_sub_actual.shape.sexp
       (run ./circle_sub.exe)))
@@ -80,7 +80,7 @@
    (name circle_dup)
    (modules circle_dup)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to circle_dup_actual.shape.sexp
       (run ./circle_dup.exe)))
@@ -118,7 +118,7 @@
    (name intersection)
    (modules intersection)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to intersection_actual.shape.sexp
       (run ./intersection.exe)))
@@ -156,7 +156,7 @@
    (name union)
    (modules union)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to union_actual.shape.sexp
       (run ./union.exe)))
@@ -194,7 +194,7 @@
    (name kissing_circles)
    (modules kissing_circles)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to kissing_circles_actual.shape.sexp
       (run ./kissing_circles.exe)))
@@ -232,7 +232,7 @@
    (name scale)
    (modules scale)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to scale_actual.shape.sexp
       (run ./scale.exe)))
@@ -270,7 +270,7 @@
    (name mix)
    (modules mix)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to mix_actual.shape.sexp
       (run ./mix.exe)))
@@ -308,7 +308,7 @@
    (name motion_blur_test)
    (modules motion_blur_test)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to motion_blur_test_actual.shape.sexp
       (run ./motion_blur_test.exe)))
@@ -346,7 +346,7 @@
    (name bulls_eye)
    (modules bulls_eye)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to bulls_eye_actual.scene.sexp
       (run ./bulls_eye.exe)))
@@ -363,7 +363,7 @@
    (name motion_blur)
    (modules motion_blur)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to motion_blur_actual.scene.sexp
       (run ./motion_blur.exe)))
@@ -380,7 +380,7 @@
    (name nested_circles)
    (modules nested_circles)
    (preprocess (pps ppx_jane))
-   (libraries core_kernel eval example_runner))
+   (libraries core eval example_runner))
 (rule
      (with-stdout-to nested_circles_actual.scene.sexp
       (run ./nested_circles.exe)))

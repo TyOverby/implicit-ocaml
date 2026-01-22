@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open Shared_types
 
 let run shape =

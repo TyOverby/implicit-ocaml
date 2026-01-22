@@ -1,6 +1,6 @@
-open! Core_kernel
+open! Core
 open! Shared_types
-module Id : Core_kernel.Unique_id.Id
+module Id : Core.Unique_id.Id
 
 type t
 

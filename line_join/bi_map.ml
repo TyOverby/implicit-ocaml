@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 open! Shared_types
 module Id = Unique_id.Int ()
 
@@ -62,7 +62,7 @@ let parse (linebuf : Line_buffer.t) =
             Dpoint.add dpoint ~id;
             dpoint
           | None -> Dpoint.create ~id p2));
-  let ends = Point.Table.data ends |> Tree.create Tree.Random in
+  let ends = Hashtbl.data ends |> Tree.create Tree.Random in
   { dict; ends }
 ;;
 

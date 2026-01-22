@@ -1,4 +1,4 @@
-open! Core_kernel
+open! Core
 
 module type S = sig
   val start : string -> unit
@@ -23,19 +23,19 @@ module Noop : S = struct
 end
 
 let create () : (module S) =
-  let table = String.Table.create () in
+  let table = Hashtbl.create (module String) in
   let module A = struct
     let start s =
-      if String.Table.mem table s
+      if Hashtbl.mem table s
       then raise_s [%message "profile already has" (s : string)];
       let now = Time_ns.now () in
-      String.Table.set table ~key:s ~data:now
+      Hashtbl.set table ~key:s ~data:now
     ;;
 
     let stop s =
-      let past = String.Table.find_exn table s in
-      String.Table.remove table s;
-      let count = String.Table.length table in
+      let past = Hashtbl.find_exn table s in
+      Hashtbl.remove table s;
+      let count = Hashtbl.length table in
       let now = Time_ns.now () in
       let diff = Time_ns.Span.to_string_hum (Time_ns.diff now past) in
       let spaces = String.make (count * 2) ' ' in
