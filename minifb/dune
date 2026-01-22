@@ -1,0 +1,24 @@
+; Build the Rust static library
+(rule
+ (targets libminifb_ffi.a dllminifb_ffi.so)
+ (deps (source_tree ../minifb-ffi/src) ../minifb-ffi/Cargo.toml ../minifb-ffi/cbindgen.toml ../minifb-ffi/build.rs)
+ (action
+  (progn
+   (run cargo build --release --manifest-path ../minifb-ffi/Cargo.toml)
+   (copy ../minifb-ffi/target/release/libminifb_ffi.a libminifb_ffi.a)
+   (copy ../minifb-ffi/target/release/libminifb_ffi.so dllminifb_ffi.so))))
+
+(library
+ (name minifb)
+ (modules minifb)
+ (foreign_archives minifb_ffi)
+ (c_library_flags
+  (-lpthread -ldl -lX11))
+ (preprocess
+  (pps ppx_jane))
+ (libraries ctypes ctypes.foreign unix))
+
+(executable
+ (name test_minifb)
+ (modules test_minifb)
+ (libraries minifb))

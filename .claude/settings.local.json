@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebFetch(domain:crates.io)",
+      "WebFetch(domain:docs.rs)",
+      "WebSearch",
+      "Bash(find:*)",
+      "WebFetch(domain:dune.readthedocs.io)",
+      "Bash(./screenshot_test_demo.sh)"
     ]
   }
 }

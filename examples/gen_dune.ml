@@ -107,8 +107,8 @@ let connected_svg_rule name =
 
 let validate_test name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (deps %s.linebuf.sexp)
  (action (bash "cat %s.linebuf.sexp | %%{exe:../utilities/utilities.exe} linebuf-validate")))|}
     name
@@ -117,8 +117,8 @@ let validate_test name =
 
 let diff_against_actual_shape name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (action (diff %s.shape.sexp %s_actual.shape.sexp)))|}
     name
     name
@@ -126,8 +126,8 @@ let diff_against_actual_shape name =
 
 let diff_against_actual_connected name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (action (diff %s.connected.sexp %s_actual.connected.sexp)))|}
     name
     name
@@ -135,8 +135,8 @@ let diff_against_actual_connected name =
 
 let diff_against_actual_connected_svg name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (action (diff %s.connected.svg %s_actual.connected.svg)))|}
     name
     name
@@ -144,8 +144,8 @@ let diff_against_actual_connected_svg name =
 
 let diff_against_actual_scene_svg name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (action (diff %s.svg %s_actual.scene.svg)))|}
     name
     name
@@ -153,8 +153,8 @@ let diff_against_actual_scene_svg name =
 
 let diff_against_actual_parts_svg name =
   sprintf
-    {|(alias
- (name runtest)
+    {|(rule
+ (alias runtest)
  (action (diff %s.parts.svg %s_actual.parts.svg)))|}
     name
     name
@@ -204,7 +204,7 @@ let () =
 |}
     (Display.display ~tests:shape_tests ~scenes:scene_tests
      |> String.escaped);
-  printf {|(alias
- (name runtest) (deps display.html))
+  printf {|(rule
+ (alias runtest) (deps display.html) (action (progn)))
  |}
 ;;

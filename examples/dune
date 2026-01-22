@@ -17,8 +17,8 @@
   dune.inc.gen
   (run ./gen_dune.exe)))
 
-(alias
- (name runtest)
+(rule
+ (alias runtest)
  (action
   (diff dune.inc.sexp dune.inc.gen)))
 

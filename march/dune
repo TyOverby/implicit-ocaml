@@ -2,8 +2,10 @@
  (name march)
  (modules march)
  (js_of_ocaml)
- (c_names marching_squares)
- (c_flags :standard -O1)
+ (foreign_stubs
+  (language c)
+  (names marching_squares)
+  (flags :standard -O1))
  (preprocess
   (pps ppx_jane))
  (libraries ctypes ctypes.foreign shared_types))
