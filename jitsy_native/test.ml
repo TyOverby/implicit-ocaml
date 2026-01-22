@@ -50,12 +50,6 @@ let%expect_test "b ? x : y" =
     return var_4;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     test   %dil,%dil
     mov    %esi,%eax
@@ -93,12 +87,6 @@ let%expect_test "x == y" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     cmp    %esi,%edi
     sete   %al
@@ -128,12 +116,6 @@ let%expect_test "int literal" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    $0x5,%eax
     ret
@@ -166,12 +148,6 @@ let%expect_test "int param" =
     return var_1;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     ret
@@ -207,12 +183,6 @@ let%expect_test "float param" =
     return var_1;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     ret
     ====== out =======
@@ -247,12 +217,6 @@ let%expect_test "float param" =
     return var_1;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     ret
     ====== out =======
@@ -281,12 +245,6 @@ let%expect_test "float literal" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     movss  0xef4(%rip),%xmm0        # 0x2000
     ret
@@ -313,12 +271,6 @@ let%expect_test "bool literal" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    $0x1,%eax
     ret
@@ -345,12 +297,6 @@ let%expect_test "bool literal (false)" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     xor    %eax,%eax
     ret
@@ -377,12 +323,6 @@ let%expect_test "bool literal (true)" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    $0x1,%eax
     ret
@@ -416,12 +356,6 @@ let%expect_test "add int" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     lea    (%rdi,%rsi,1),%eax
     ret
@@ -458,12 +392,6 @@ let%expect_test "add int32" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     lea    (%rdi,%rsi,1),%eax
     ret
@@ -499,12 +427,6 @@ let%expect_test "multiply int32" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     imul   %esi,%eax
@@ -542,12 +464,6 @@ let%expect_test "divide int32" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     cltd
@@ -623,12 +539,6 @@ let%expect_test "sqrt sqrt int32" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     xor    %eax,%eax
     test   %edi,%edi
@@ -837,12 +747,6 @@ let%expect_test "sqrt int32" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     xor    %eax,%eax
     test   %edi,%edi
@@ -977,12 +881,6 @@ let%expect_test "sqrt float" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     pxor   %xmm1,%xmm1
     ucomiss %xmm0,%xmm1
@@ -1022,12 +920,6 @@ let%expect_test "add float" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     addss  %xmm1,%xmm0
     ret
@@ -1063,12 +955,6 @@ let%expect_test "sub float" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     subss  %xmm1,%xmm0
     ret
@@ -1104,12 +990,6 @@ let%expect_test "mul float" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mulss  %xmm1,%xmm0
     ret
@@ -1145,12 +1025,6 @@ let%expect_test "div float" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     divss  %xmm1,%xmm0
     ret
@@ -1186,12 +1060,6 @@ let%expect_test "eq int" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     cmp    %esi,%edi
     sete   %al
@@ -1228,12 +1096,6 @@ let%expect_test "int32 to float" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     pxor   %xmm0,%xmm0
     cvtsi2ss %edi,%xmm0
@@ -1271,12 +1133,6 @@ let%expect_test "int to float" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     pxor   %xmm0,%xmm0
     cvtsi2ss %edi,%xmm0
@@ -1314,12 +1170,6 @@ let%expect_test "float to int32" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     cvttss2si %xmm0,%eax
     ret
@@ -1356,12 +1206,6 @@ let%expect_test "float to int" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     cvttss2si %xmm0,%eax
     ret
@@ -1398,12 +1242,6 @@ let%expect_test "sub int" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     sub    %esi,%eax
@@ -1440,12 +1278,6 @@ let%expect_test "mul int" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     imul   %esi,%eax
@@ -1482,12 +1314,6 @@ let%expect_test "div int" =
     return var_3;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    %edi,%eax
     cltd
@@ -1558,12 +1384,6 @@ let%expect_test "range2" =
         return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     mov    0xef5(%rip),%rax        # 0x2000
     mov    0xef6(%rip),%rdx        # 0x2008
@@ -1637,12 +1457,6 @@ let%expect_test "big-array" =
     return var_2;
     }
     ====== asm =======
-    This GDB supports auto-downloading debuginfo from the following URLs:
-      <https://debuginfod.ubuntu.com>
-    Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
-    Debuginfod has been disabled.
-    To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
-    Dump of assembler code for function var_0:
     endbr64
     movslq %esi,%rdx
     pxor   %xmm0,%xmm0
